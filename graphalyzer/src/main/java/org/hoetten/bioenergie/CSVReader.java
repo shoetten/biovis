@@ -10,10 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jgrapht.alg.StrongConnectivityInspector;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
 import org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.DirectedSubgraph;
 
 /**
  *
@@ -27,6 +29,8 @@ public class CSVReader {
 	public static void main(String[] args) {
 		CSVReader reader = new CSVReader("data/");
 		DefaultDirectedWeightedGraph<Integer, DefaultWeightedEdge> graph = reader.readDirectedWeightedGraph();
+		
+		reader.calculateSCC();
 		reader.calculateCycles();
 	}
 
@@ -120,6 +124,20 @@ public class CSVReader {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void calculateSCC() {
+		// computes all the strongly connected components of the directed graph
+        StrongConnectivityInspector<Integer, DefaultWeightedEdge> sci =
+            new StrongConnectivityInspector<Integer, DefaultWeightedEdge>(this.graph);
+        List<DirectedSubgraph<Integer, DefaultWeightedEdge>> stronglyConnectedSubgraphs = sci.stronglyConnectedSubgraphs();
+
+        // prints the strongly connected components
+        System.out.println("Strongly connected components:");
+        for (int i = 0; i < stronglyConnectedSubgraphs.size(); i++) {
+            System.out.println(stronglyConnectedSubgraphs.get(i));
+        }
+        System.out.println();
 	}
 	
 	public void calculateCycles() {
