@@ -1,0 +1,40 @@
+/* Flexbox mixins
+-------------------------------------------------------------- */
+@mixin flexbox() {
+  display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;       /* TWEENER - IE 10 */
+  display: -webkit-flex;      /* NEW - Chrome */
+  display: flex;              /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+@mixin flex($values) {
+  -webkit-box-flex: $values;
+  -moz-box-flex:  $values;
+  -webkit-flex:  $values;
+  -ms-flex:  $values;
+  flex:  $values;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+@mixin flex-wrap($value) {
+  -webkit-flex-wrap: $value;
+  -ms-flex-wrap: $value;
+  flex-wrap: $value;          /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+@mixin justify-content($value) {
+  @if $value == space-between {
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+  @if $value == center {
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+}

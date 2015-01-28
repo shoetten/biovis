@@ -1,0 +1,270 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3/transition";
+@import "compass/css3/border-radius";
+@import "compass/css3/images";
+@import "compass/css3/box-shadow";
+@import "compass/css3/box-sizing";
+
+@import "font";
+@import "mixins";
+
+
+
+/* use border-box box-layout for each and every element */
+*, *:before, *:after {
+  @include box-sizing(border-box);
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  font-size: 62.5%;   /* font-size: 62.5% now means that 1.0 rem = 10px */
+  /* Corrects text resizing oddly in IE6/7 when body font-size is set using em units http://clagnut.com/blog/348/#c790 */
+}
+body {
+  line-height: 1.6;
+  font-size: 1.6em;
+}
+
+header, main, footer {
+  width: 100%;
+}
+
+.inner {
+  width: 95%;
+  margin: 0 auto;
+}
+
+/* Main styles
+-------------------------------------------------------------- */
+
+main .inner {
+  @include flexbox();
+  @include justify-content(space-between);
+
+  section#graph {
+    @include flex(0 0 70%);
+    width: 70%;
+  }
+  section#settings {
+    @include flex(0 0 28%);
+    width: 28%;
+  }
+
+  section#settings > section {
+    margin-bottom: 0.5em;
+  }
+}
+
+#bioGraph {
+    border: 1px solid lightgray;
+    height: 600px;
+}
+
+pre {padding: 5px; margin: 5px; }
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }
+
+.PhysicsConfiguration {
+  margin-bottom: 1em;
+}
+
+
+
+/* Buttons
+-------------------------------------------------------------- */
+a.button {
+  display: inline-block;
+  position: relative;
+  padding: 10px;
+  line-height: 1.1;
+  margin: 0.2em 1.6em 0.3em 0;
+
+  border: 1px solid #ccc;
+  @include border-radius(4px);
+  @include box-shadow(1px 1px 3px #ddd);
+  @include background-image(linear-gradient(rgba(#ddd,0.1), rgba(#ddd,0.5) 90%));
+
+  color: #444444;
+
+  &:hover {
+    //border: 1px solid $orange;
+    color: #000000;
+    @include box-shadow(2px 2px 4px #ddd);
+    @include background-image(linear-gradient(rgba(#ddd,0.1), rgba(#ddd,0.9) 90%));
+  }
+  &:active {
+    @include box-shadow(2px 2px 4px #ddd, 1px 1px 3px #ccc inset);
+  }
+}
+
+
+/* Typography
+-------------------------------------------------------------- */
+body, button, input, textarea, select {
+  font-family: 'open_sanslight', Helvetica, sans-serif;
+}
+
+/* Headings */
+h1 {
+  line-height: 60px;
+  line-height: 6rem;
+  font-size: 38px;
+  font-size: 3.8rem;
+}
+h2 {
+  line-height: 40px;
+  line-height: 4rem;
+  font-size: 30px;
+  font-size: 3rem;
+  padding-top: 0.3em;
+}
+h3 {
+  line-height: 35px;
+  font-size: 26px;
+  font-size: 2.6rem;
+  padding-top: 0.2em;
+}
+h4 {
+  line-height: 26px;
+  font-size: 18px;
+  font-size: 1.8rem;
+}
+
+h1,h2,h3,h4 {
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+hr {
+  background-color: #ccc;
+  border: 0;
+  height: 1px;
+  margin-bottom: 1.5em;
+}
+/* Text elements */
+ul,
+ol {
+  margin: 0 0 1.5em 3em;
+}
+ul {
+  list-style: disc;
+}
+ol {
+  list-style: decimal;
+}
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+  margin-bottom: 0;
+  margin-left: 1.5em;
+}
+dt {
+  font-weight: bold;
+}
+dd {
+  margin: 0 1.5em 1.5em;
+}
+b,
+strong {
+  font-weight: bold;
+}
+dfn,
+cite,
+em,
+i {
+  font-style: italic;
+}
+blockquote {
+  margin: 0 1.5em;
+}
+address {
+  margin: 0 0 1.5em;
+}
+pre {
+  background: #eee;
+  font-family: "Courier 10 Pitch", Courier, monospace;
+  font-size: 0.7em;
+  line-height: 1.5em;
+  margin-bottom: 1.6em;
+  padding: 1.6em;
+  overflow: auto;
+  max-width: 100%;
+  box-shadow: 0 3px 5px #ddd inset;
+}
+/* Links */
+a {
+  color: darken(#F6A81C, 20);
+  @include transition(all 0.4s ease-in-out);
+  text-decoration: none;
+  
+  &.ext-link:after {
+    padding-left: 3px;
+    content: "\e62a";       // new-tab icon
+    font-family: "icons";
+    font-size: 87%;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  }
+  &.no-icon.ext-link:after {
+    content: "";
+    padding: 0;
+  }
+}
+a:hover,
+a:focus,
+a:active {
+  color: #F6A81C;
+}
+/* Alignment */
+.alignleft {
+  display: inline;
+  float: left;
+  margin-right: 1.5em;
+}
+.alignright {
+  display: inline;
+  float: right;
+  margin-left: 1.5em;
+}
+.aligncenter {
+  clear: both;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+.center {
+  text-align: center;
+}
+
+
+
+/* Misc & mixens
+-------------------------------------------------------------- */
+
+.clearfix {
+  *zoom: 1;   // For IE 6/7 only
+  &:before, &:after {
+    content: " ";
+    display: table;
+    visibility: hidden;
+  }
+  &:after {
+    clear: both;
+  }
+}

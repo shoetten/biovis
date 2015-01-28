@@ -1,0 +1,501 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 17, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: 'open_sansregular';
+  src: url("font/OpenSans-Regular-webfont.eot");
+  src: url("font/OpenSans-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("font/OpenSans-Regular-webfont.woff") format("woff"), url("font/OpenSans-Regular-webfont.ttf") format("truetype"), url("font/OpenSans-Regular-webfont.svg#open_sansregular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansbold';
+  src: url("font/OpenSans-Bold-webfont.eot");
+  src: url("font/OpenSans-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("font/OpenSans-Bold-webfont.woff") format("woff"), url("font/OpenSans-Bold-webfont.ttf") format("truetype"), url("font/OpenSans-Bold-webfont.svg#open_sansbold") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansitalic';
+  src: url("font/OpenSans-Italic-webfont.eot");
+  src: url("font/OpenSans-Italic-webfont.eot?#iefix") format("embedded-opentype"), url("font/OpenSans-Italic-webfont.woff") format("woff"), url("font/OpenSans-Italic-webfont.ttf") format("truetype"), url("font/OpenSans-Italic-webfont.svg#open_sansitalic") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansbold_italic';
+  src: url("font/OpenSans-BoldItalic-webfont.eot");
+  src: url("font/OpenSans-BoldItalic-webfont.eot?#iefix") format("embedded-opentype"), url("font/OpenSans-BoldItalic-webfont.woff") format("woff"), url("font/OpenSans-BoldItalic-webfont.ttf") format("truetype"), url("font/OpenSans-BoldItalic-webfont.svg#open_sansbold_italic") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sanslight';
+  src: url("font/OpenSans-Light-webfont.eot");
+  src: url("font/OpenSans-Light-webfont.eot?#iefix") format("embedded-opentype"), url("font/OpenSans-Light-webfont.woff") format("woff"), url("font/OpenSans-Light-webfont.ttf") format("truetype"), url("font/OpenSans-Light-webfont.svg#open_sanslight") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sanslight_italic';
+  src: url("font/OpenSans-LightItalic-webfont.eot");
+  src: url("font/OpenSans-LightItalic-webfont.eot?#iefix") format("embedded-opentype"), url("font/OpenSans-LightItalic-webfont.woff") format("woff"), url("font/OpenSans-LightItalic-webfont.ttf") format("truetype"), url("font/OpenSans-LightItalic-webfont.svg#open_sanslight_italic") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* icon font */
+@font-face {
+  font-family: 'icons';
+  src: url("font/entypo.eot");
+  src: url("font/entypo.eot?#iefix") format("embedded-opentype"), url("font/entypo.ttf") format("truetype"), url("font/entypo.woff") format("woff"), url("font/entypo.svg#entypo") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Flexbox mixins
+-------------------------------------------------------------- */
+/* use border-box box-layout for each and every element */
+/* line 19, ../scss/screen.scss */
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 23, ../scss/screen.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 27, ../scss/screen.scss */
+html {
+  font-size: 62.5%;
+  /* font-size: 62.5% now means that 1.0 rem = 10px */
+  /* Corrects text resizing oddly in IE6/7 when body font-size is set using em units http://clagnut.com/blog/348/#c790 */
+}
+
+/* line 31, ../scss/screen.scss */
+body {
+  line-height: 1.6;
+  font-size: 1.6em;
+}
+
+/* line 36, ../scss/screen.scss */
+header, main, footer {
+  width: 100%;
+}
+
+/* line 40, ../scss/screen.scss */
+.inner {
+  width: 95%;
+  margin: 0 auto;
+}
+
+/* Main styles
+-------------------------------------------------------------- */
+/* line 48, ../scss/screen.scss */
+main .inner {
+  display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;
+  /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;
+  /* TWEENER - IE 10 */
+  display: -webkit-flex;
+  /* NEW - Chrome */
+  display: flex;
+  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+/* line 52, ../scss/screen.scss */
+main .inner section#graph {
+  -webkit-box-flex: 0 0 70%;
+  -moz-box-flex: 0 0 70%;
+  -webkit-flex: 0 0 70%;
+  -ms-flex: 0 0 70%;
+  flex: 0 0 70%;
+  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  width: 70%;
+}
+/* line 56, ../scss/screen.scss */
+main .inner section#settings {
+  -webkit-box-flex: 0 0 28%;
+  -moz-box-flex: 0 0 28%;
+  -webkit-flex: 0 0 28%;
+  -ms-flex: 0 0 28%;
+  flex: 0 0 28%;
+  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  width: 28%;
+}
+/* line 61, ../scss/screen.scss */
+main .inner section#settings > section {
+  margin-bottom: 0.5em;
+}
+
+/* line 66, ../scss/screen.scss */
+#bioGraph {
+  border: 1px solid lightgray;
+  height: 600px;
+}
+
+/* line 71, ../scss/screen.scss */
+pre {
+  padding: 5px;
+  margin: 5px;
+}
+
+/* line 72, ../scss/screen.scss */
+.string {
+  color: green;
+}
+
+/* line 73, ../scss/screen.scss */
+.number {
+  color: darkorange;
+}
+
+/* line 74, ../scss/screen.scss */
+.boolean {
+  color: blue;
+}
+
+/* line 75, ../scss/screen.scss */
+.null {
+  color: magenta;
+}
+
+/* line 76, ../scss/screen.scss */
+.key {
+  color: red;
+}
+
+/* line 78, ../scss/screen.scss */
+.PhysicsConfiguration {
+  margin-bottom: 1em;
+}
+
+/* Buttons
+-------------------------------------------------------------- */
+/* line 86, ../scss/screen.scss */
+a.button {
+  display: inline-block;
+  position: relative;
+  padding: 10px;
+  line-height: 1.1;
+  margin: 0.2em 1.6em 0.3em 0;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 1px 1px 3px #dddddd;
+  -moz-box-shadow: 1px 1px 3px #dddddd;
+  box-shadow: 1px 1px 3px #dddddd;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(221, 221, 221, 0.1)), color-stop(90%, rgba(221, 221, 221, 0.5)));
+  background-image: -webkit-linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.5) 90%);
+  background-image: -moz-linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.5) 90%);
+  background-image: -o-linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.5) 90%);
+  background-image: linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.5) 90%);
+  color: #444444;
+}
+/* line 100, ../scss/screen.scss */
+a.button:hover {
+  color: #000000;
+  -webkit-box-shadow: 2px 2px 4px #dddddd;
+  -moz-box-shadow: 2px 2px 4px #dddddd;
+  box-shadow: 2px 2px 4px #dddddd;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(221, 221, 221, 0.1)), color-stop(90%, rgba(221, 221, 221, 0.9)));
+  background-image: -webkit-linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.9) 90%);
+  background-image: -moz-linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.9) 90%);
+  background-image: -o-linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.9) 90%);
+  background-image: linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.9) 90%);
+}
+/* line 106, ../scss/screen.scss */
+a.button:active {
+  -webkit-box-shadow: 2px 2px 4px #dddddd, 1px 1px 3px #cccccc inset;
+  -moz-box-shadow: 2px 2px 4px #dddddd, 1px 1px 3px #cccccc inset;
+  box-shadow: 2px 2px 4px #dddddd, 1px 1px 3px #cccccc inset;
+}
+
+/* Typography
+-------------------------------------------------------------- */
+/* line 114, ../scss/screen.scss */
+body, button, input, textarea, select {
+  font-family: 'open_sanslight', Helvetica, sans-serif;
+}
+
+/* Headings */
+/* line 119, ../scss/screen.scss */
+h1 {
+  line-height: 60px;
+  line-height: 6rem;
+  font-size: 38px;
+  font-size: 3.8rem;
+}
+
+/* line 125, ../scss/screen.scss */
+h2 {
+  line-height: 40px;
+  line-height: 4rem;
+  font-size: 30px;
+  font-size: 3rem;
+  padding-top: 0.3em;
+}
+
+/* line 132, ../scss/screen.scss */
+h3 {
+  line-height: 35px;
+  font-size: 26px;
+  font-size: 2.6rem;
+  padding-top: 0.2em;
+}
+
+/* line 138, ../scss/screen.scss */
+h4 {
+  line-height: 26px;
+  font-size: 18px;
+  font-size: 1.8rem;
+}
+
+/* line 145, ../scss/screen.scss */
+h1:first-child, h2:first-child, h3:first-child, h4:first-child {
+  padding-top: 0;
+}
+
+/* line 150, ../scss/screen.scss */
+hr {
+  background-color: #ccc;
+  border: 0;
+  height: 1px;
+  margin-bottom: 1.5em;
+}
+
+/* Text elements */
+/* line 158, ../scss/screen.scss */
+ul,
+ol {
+  margin: 0 0 1.5em 3em;
+}
+
+/* line 161, ../scss/screen.scss */
+ul {
+  list-style: disc;
+}
+
+/* line 164, ../scss/screen.scss */
+ol {
+  list-style: decimal;
+}
+
+/* line 170, ../scss/screen.scss */
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+  margin-bottom: 0;
+  margin-left: 1.5em;
+}
+
+/* line 174, ../scss/screen.scss */
+dt {
+  font-weight: bold;
+}
+
+/* line 177, ../scss/screen.scss */
+dd {
+  margin: 0 1.5em 1.5em;
+}
+
+/* line 181, ../scss/screen.scss */
+b,
+strong {
+  font-weight: bold;
+}
+
+/* line 187, ../scss/screen.scss */
+dfn,
+cite,
+em,
+i {
+  font-style: italic;
+}
+
+/* line 190, ../scss/screen.scss */
+blockquote {
+  margin: 0 1.5em;
+}
+
+/* line 193, ../scss/screen.scss */
+address {
+  margin: 0 0 1.5em;
+}
+
+/* line 196, ../scss/screen.scss */
+pre {
+  background: #eee;
+  font-family: "Courier 10 Pitch", Courier, monospace;
+  font-size: 0.7em;
+  line-height: 1.5em;
+  margin-bottom: 1.6em;
+  padding: 1.6em;
+  overflow: auto;
+  max-width: 100%;
+  box-shadow: 0 3px 5px #ddd inset;
+}
+
+/* Links */
+/* line 208, ../scss/screen.scss */
+a {
+  color: #a56d07;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  text-decoration: none;
+}
+/* line 213, ../scss/screen.scss */
+a.ext-link:after {
+  padding-left: 3px;
+  content: "\e62a";
+  font-family: "icons";
+  font-size: 87%;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+}
+/* line 224, ../scss/screen.scss */
+a.no-icon.ext-link:after {
+  content: "";
+  padding: 0;
+}
+
+/* line 231, ../scss/screen.scss */
+a:hover,
+a:focus,
+a:active {
+  color: #F6A81C;
+}
+
+/* Alignment */
+/* line 235, ../scss/screen.scss */
+.alignleft {
+  display: inline;
+  float: left;
+  margin-right: 1.5em;
+}
+
+/* line 240, ../scss/screen.scss */
+.alignright {
+  display: inline;
+  float: right;
+  margin-left: 1.5em;
+}
+
+/* line 245, ../scss/screen.scss */
+.aligncenter {
+  clear: both;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* line 251, ../scss/screen.scss */
+.center {
+  text-align: center;
+}
+
+/* Misc & mixens
+-------------------------------------------------------------- */
+/* line 260, ../scss/screen.scss */
+.clearfix {
+  *zoom: 1;
+}
+/* line 262, ../scss/screen.scss */
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+  visibility: hidden;
+}
+/* line 267, ../scss/screen.scss */
+.clearfix:after {
+  clear: both;
+}

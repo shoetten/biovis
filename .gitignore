@@ -1,0 +1,13 @@
+.htaccess
+
+# compass
+.sass-cache*
+
+
+# mac
+.DS_Store
+
+# sublime
+.sublime
+*.sublime-project
+*.sublime-workspace
