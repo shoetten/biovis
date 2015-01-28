@@ -1,5 +1,9 @@
+biovis
+============
+Analyse und Visualisierung von causal-loop Diagrammen.
+
 Ideen
-===========
+------------
 - vis.js
 - Node-Kategorien durch Farben visualisiert
 - Bei Klick auf Node
