@@ -10,10 +10,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.StrongConnectivityInspector;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
 import org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.DirectedSubgraph;
 
@@ -24,28 +27,35 @@ import org.jgrapht.graph.DirectedSubgraph;
  * @package bioenergie
  *
  */
-public class CSVReader {
+public class Graphalyzer {
 	
 	public static void main(String[] args) {
-		CSVReader reader = new CSVReader("data/");
-		DefaultDirectedWeightedGraph<Integer, DefaultWeightedEdge> graph = reader.readDirectedWeightedGraph();
+		Graphalyzer graphalyzer = new Graphalyzer("data/", false);
+		graphalyzer.readDirectedGraph();
 		
-		reader.calculateSCC();
-		reader.calculateCycles();
+		graphalyzer.calculateSCC();
+		graphalyzer.calculateCycles();
 	}
 
 	private String path;
-	private DefaultDirectedWeightedGraph<Integer, DefaultWeightedEdge> graph;
+	private boolean weighted;
+	private DefaultDirectedGraph<Integer, DefaultEdge> graph;
+	private DefaultDirectedWeightedGraph<Integer, DefaultWeightedEdge> graphW;
 	private ArrayList<Vertex> vertices;
 	private List<List<Integer>> cycles;
 
-	public CSVReader(String path) {
+	public Graphalyzer(String path, boolean weighted) {
 		this.path = path;
 		this.vertices = new ArrayList<Vertex>();
-		this.graph = new DefaultDirectedWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+		this.weighted = weighted;
+		if (weighted) {
+			this.graphW = new DefaultDirectedWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+		} else {
+			this.graph = new DefaultDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
+		}
 	}
 
-	public DefaultDirectedWeightedGraph<Integer, DefaultWeightedEdge> readDirectedWeightedGraph() {
+	public void readDirectedGraph() {
 		this.readVertices();
 		
 		BufferedReader br = null;
@@ -59,12 +69,16 @@ public class CSVReader {
 				for (int to = 0; to < split.length -1; to++) {
 					int weight = Integer.parseInt(split[to+1]);
 					if (weight != 0) {
-						DefaultWeightedEdge e = this.graph.addEdge(this.vertices.get(from).getId(), this.vertices.get(to).getId());
-				        this.graph.setEdgeWeight(e, weight);
+						if (weighted) {
+							DefaultWeightedEdge e = this.graphW.addEdge(this.vertices.get(from).getId(), this.vertices.get(to).getId());
+							this.graphW.setEdgeWeight(e, weight);
+						} else {
+							this.graph.addEdge(this.vertices.get(from).getId(), this.vertices.get(to).getId());
+						}
 				        System.out.println("Added edge from "
-				        		+ this.vertices.get(from).getLabel()
+				        		+ from + ": " + this.vertices.get(from).getLabel()
 				        		+ " to "
-				        		+ this.vertices.get(to).getLabel()
+				        		+ to + ": " + this.vertices.get(to).getLabel()
 				        		+ " with weight " + weight);
 					}
 				}
@@ -86,7 +100,6 @@ public class CSVReader {
 			}
 		}
 		
-		return graph;
 	}
 
 	private void readVertices() {
@@ -103,7 +116,10 @@ public class CSVReader {
 				Vertex v = new Vertex(i, split[1]);
 				
 				this.vertices.add(v);
-				this.graph.addVertex(v.getId());
+				if (weighted)
+					this.graphW.addVertex(v.getId());
+				else
+					this.graph.addVertex(v.getId());
 				
 				System.out.println("Added " + v);
 
@@ -128,9 +144,9 @@ public class CSVReader {
 	
 	public void calculateSCC() {
 		// computes all the strongly connected components of the directed graph
-        StrongConnectivityInspector<Integer, DefaultWeightedEdge> sci =
-            new StrongConnectivityInspector<Integer, DefaultWeightedEdge>(this.graph);
-        List<DirectedSubgraph<Integer, DefaultWeightedEdge>> stronglyConnectedSubgraphs = sci.stronglyConnectedSubgraphs();
+        StrongConnectivityInspector<Integer, DefaultEdge> sci =
+            new StrongConnectivityInspector<Integer, DefaultEdge>(this.graph);
+        List<DirectedSubgraph<Integer, DefaultEdge>> stronglyConnectedSubgraphs = sci.stronglyConnectedSubgraphs();
 
         // prints the strongly connected components
         System.out.println("Strongly connected components:");
@@ -141,7 +157,7 @@ public class CSVReader {
 	}
 	
 	public void calculateCycles() {
-		JohnsonSimpleCycles<Integer, DefaultWeightedEdge> cycleDetector = new JohnsonSimpleCycles<Integer, DefaultWeightedEdge>();
+		JohnsonSimpleCycles<Integer, DefaultEdge> cycleDetector = new JohnsonSimpleCycles<Integer, DefaultEdge>();
 //		SzwarcfiterLauerSimpleCycles<Integer, DefaultWeightedEdge> cycleDetector = new SzwarcfiterLauerSimpleCycles<Integer, DefaultWeightedEdge>();
 		cycleDetector.setGraph(this.graph);
 		
