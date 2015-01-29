@@ -5,15 +5,20 @@ package org.hoetten.bioenergie;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JScrollPane;
+
+import org.jgraph.JGraph;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.StrongConnectivityInspector;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
 import org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles;
+import org.jgrapht.ext.VisioExporter;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -29,14 +34,6 @@ import org.jgrapht.graph.DirectedSubgraph;
  */
 public class Graphalyzer {
 	
-	public static void main(String[] args) {
-		Graphalyzer graphalyzer = new Graphalyzer("data/", false);
-		graphalyzer.readDirectedGraph();
-		
-		graphalyzer.calculateSCC();
-		graphalyzer.calculateCycles();
-	}
-
 	private String path;
 	private boolean weighted;
 	private DefaultDirectedGraph<Integer, DefaultEdge> graph;
@@ -107,13 +104,10 @@ public class Graphalyzer {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(this.path + "/nodes.csv"));
-			br.readLine(); //skip first line (column titles)
 			String line = br.readLine();
 
-			for (int i = 0; line != null; i++) {
-				String[] split = line.split(";");
-				
-				Vertex v = new Vertex(i, split[1]);
+			for (int i = 0; line != null; i++) {	
+				Vertex v = new Vertex(i, line);
 				
 				this.vertices.add(v);
 				if (weighted)
@@ -144,9 +138,9 @@ public class Graphalyzer {
 	
 	public void calculateSCC() {
 		// computes all the strongly connected components of the directed graph
-        StrongConnectivityInspector<Integer, DefaultEdge> sci =
-            new StrongConnectivityInspector<Integer, DefaultEdge>(this.graph);
-        List<DirectedSubgraph<Integer, DefaultEdge>> stronglyConnectedSubgraphs = sci.stronglyConnectedSubgraphs();
+        StrongConnectivityInspector<Integer, DefaultWeightedEdge> sci =
+            new StrongConnectivityInspector<Integer, DefaultWeightedEdge>(this.graphW);
+        List<DirectedSubgraph<Integer, DefaultWeightedEdge>> stronglyConnectedSubgraphs = sci.stronglyConnectedSubgraphs();
 
         // prints the strongly connected components
         System.out.println("Strongly connected components:");
@@ -157,11 +151,23 @@ public class Graphalyzer {
 	}
 	
 	public void calculateCycles() {
-		JohnsonSimpleCycles<Integer, DefaultEdge> cycleDetector = new JohnsonSimpleCycles<Integer, DefaultEdge>();
+		JohnsonSimpleCycles<Integer, DefaultWeightedEdge> cycleDetector = new JohnsonSimpleCycles<Integer, DefaultWeightedEdge>();
 //		SzwarcfiterLauerSimpleCycles<Integer, DefaultWeightedEdge> cycleDetector = new SzwarcfiterLauerSimpleCycles<Integer, DefaultWeightedEdge>();
-		cycleDetector.setGraph(this.graph);
+		cycleDetector.setGraph(this.graphW);
 		
 		this.cycles = cycleDetector.findSimpleCycles();
-		System.out.println(this.cycles.size());
+		System.out.println("Found " + this.cycles.size() + " cycles.");
+		System.out.println(this.cycles);
+		
+	}
+	
+	
+	public void visioExport(String file) {
+		VisioExporter<Integer, DefaultWeightedEdge> exporter = new VisioExporter<Integer, DefaultWeightedEdge>();
+		try {
+			exporter.export(new FileOutputStream(file), this.graphW);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }
