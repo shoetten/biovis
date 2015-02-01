@@ -22,6 +22,6 @@ Ideen
 - Bei Klick auf Node
 	- Feedbackloops durch Einfärbung der Kanten (Berechnung nach D.B. Johnson, Implementierung in [networkx](https://networkx.github.io/documentation/latest/reference/generated/networkx.algorithms.cycles.simple_cycles.html))
 	- Anzeige der Zentralität (Degree)
-	- Wahlweise Anzeige der Nachbarknoten (see http://visjs.org/examples/network/29_neighbourhood_highlight.html)
+	- Wahlweise Anzeige der Nachbarknoten
 - Größe der Nodes über Zentralität
 - Konsensindikator eines Feedbackloops
