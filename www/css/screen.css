@@ -144,18 +144,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .link {
   stroke: #999;
   stroke-opacity: .6;
+  stroke-width: 1px;
 }
-/* line 14, ../scss/_d3.scss */
+/* line 15, ../scss/_d3.scss */
 .link.highlight {
-  stroke-width: 2px;
+  stroke-width: 1.5px;
   stroke-opacity: .9;
 }
-/* line 18, ../scss/_d3.scss */
+/* line 19, ../scss/_d3.scss */
 .link.background {
   stroke-opacity: .3;
 }
 
-/* line 24, ../scss/_d3.scss */
+/* line 25, ../scss/_d3.scss */
 .d3-tip {
   line-height: 1;
   font-weight: bold;
@@ -167,7 +168,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Creates a small triangle extender for the tooltip */
-/* line 35, ../scss/_d3.scss */
+/* line 36, ../scss/_d3.scss */
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -180,7 +181,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Northward tooltips */
-/* line 47, ../scss/_d3.scss */
+/* line 48, ../scss/_d3.scss */
 .d3-tip.n:after {
   content: "\25BC";
   margin: -1px 0 0 0;
@@ -190,7 +191,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Eastward tooltips */
-/* line 56, ../scss/_d3.scss */
+/* line 57, ../scss/_d3.scss */
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -199,7 +200,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Southward tooltips */
-/* line 64, ../scss/_d3.scss */
+/* line 65, ../scss/_d3.scss */
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -209,7 +210,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Westward tooltips */
-/* line 73, ../scss/_d3.scss */
+/* line 74, ../scss/_d3.scss */
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;
@@ -336,14 +337,9 @@ pre {
   color: red;
 }
 
-/* line 78, ../scss/screen.scss */
-.PhysicsConfiguration {
-  margin-bottom: 1em;
-}
-
 /* Buttons
 -------------------------------------------------------------- */
-/* line 86, ../scss/screen.scss */
+/* line 83, ../scss/screen.scss */
 a.button {
   display: inline-block;
   position: relative;
@@ -366,7 +362,7 @@ a.button {
   background-image: linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.5) 90%);
   color: #444444;
 }
-/* line 100, ../scss/screen.scss */
+/* line 97, ../scss/screen.scss */
 a.button:hover {
   color: #000000;
   -webkit-box-shadow: 2px 2px 4px #dddddd;
@@ -378,7 +374,7 @@ a.button:hover {
   background-image: -o-linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.9) 90%);
   background-image: linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.9) 90%);
 }
-/* line 106, ../scss/screen.scss */
+/* line 103, ../scss/screen.scss */
 a.button:active {
   -webkit-box-shadow: 2px 2px 4px #dddddd, 1px 1px 3px #cccccc inset;
   -moz-box-shadow: 2px 2px 4px #dddddd, 1px 1px 3px #cccccc inset;
@@ -387,13 +383,13 @@ a.button:active {
 
 /* Typography
 -------------------------------------------------------------- */
-/* line 114, ../scss/screen.scss */
+/* line 111, ../scss/screen.scss */
 body, button, input, textarea, select {
   font-family: 'open_sanslight', Helvetica, sans-serif;
 }
 
 /* Headings */
-/* line 119, ../scss/screen.scss */
+/* line 116, ../scss/screen.scss */
 h1 {
   line-height: 60px;
   line-height: 6rem;
@@ -401,7 +397,7 @@ h1 {
   font-size: 3.8rem;
 }
 
-/* line 125, ../scss/screen.scss */
+/* line 122, ../scss/screen.scss */
 h2 {
   line-height: 40px;
   line-height: 4rem;
@@ -410,7 +406,7 @@ h2 {
   padding-top: 0.3em;
 }
 
-/* line 132, ../scss/screen.scss */
+/* line 129, ../scss/screen.scss */
 h3 {
   line-height: 35px;
   font-size: 26px;
@@ -418,19 +414,19 @@ h3 {
   padding-top: 0.2em;
 }
 
-/* line 138, ../scss/screen.scss */
+/* line 135, ../scss/screen.scss */
 h4 {
   line-height: 26px;
   font-size: 18px;
   font-size: 1.8rem;
 }
 
-/* line 145, ../scss/screen.scss */
+/* line 142, ../scss/screen.scss */
 h1:first-child, h2:first-child, h3:first-child, h4:first-child {
   padding-top: 0;
 }
 
-/* line 150, ../scss/screen.scss */
+/* line 147, ../scss/screen.scss */
 hr {
   background-color: #ccc;
   border: 0;
@@ -439,23 +435,23 @@ hr {
 }
 
 /* Text elements */
-/* line 158, ../scss/screen.scss */
+/* line 155, ../scss/screen.scss */
 ul,
 ol {
   margin: 0 0 1.5em 3em;
 }
 
-/* line 161, ../scss/screen.scss */
+/* line 158, ../scss/screen.scss */
 ul {
   list-style: disc;
 }
 
-/* line 164, ../scss/screen.scss */
+/* line 161, ../scss/screen.scss */
 ol {
   list-style: decimal;
 }
 
-/* line 170, ../scss/screen.scss */
+/* line 167, ../scss/screen.scss */
 ul ul,
 ol ol,
 ul ol,
@@ -464,23 +460,23 @@ ol ul {
   margin-left: 1.5em;
 }
 
-/* line 174, ../scss/screen.scss */
+/* line 171, ../scss/screen.scss */
 dt {
   font-weight: bold;
 }
 
-/* line 177, ../scss/screen.scss */
+/* line 174, ../scss/screen.scss */
 dd {
   margin: 0 1.5em 1.5em;
 }
 
-/* line 181, ../scss/screen.scss */
+/* line 178, ../scss/screen.scss */
 b,
 strong {
   font-weight: bold;
 }
 
-/* line 187, ../scss/screen.scss */
+/* line 184, ../scss/screen.scss */
 dfn,
 cite,
 em,
@@ -488,17 +484,17 @@ i {
   font-style: italic;
 }
 
-/* line 190, ../scss/screen.scss */
+/* line 187, ../scss/screen.scss */
 blockquote {
   margin: 0 1.5em;
 }
 
-/* line 193, ../scss/screen.scss */
+/* line 190, ../scss/screen.scss */
 address {
   margin: 0 0 1.5em;
 }
 
-/* line 196, ../scss/screen.scss */
+/* line 193, ../scss/screen.scss */
 pre {
   background: #eee;
   font-family: "Courier 10 Pitch", Courier, monospace;
@@ -512,7 +508,7 @@ pre {
 }
 
 /* Links */
-/* line 208, ../scss/screen.scss */
+/* line 205, ../scss/screen.scss */
 a {
   color: #a56d07;
   -webkit-transition: all 0.4s ease-in-out;
@@ -521,7 +517,7 @@ a {
   transition: all 0.4s ease-in-out;
   text-decoration: none;
 }
-/* line 213, ../scss/screen.scss */
+/* line 210, ../scss/screen.scss */
 a.ext-link:after {
   padding-left: 3px;
   content: "\e62a";
@@ -533,13 +529,13 @@ a.ext-link:after {
   text-transform: none;
   line-height: 1;
 }
-/* line 224, ../scss/screen.scss */
+/* line 221, ../scss/screen.scss */
 a.no-icon.ext-link:after {
   content: "";
   padding: 0;
 }
 
-/* line 231, ../scss/screen.scss */
+/* line 228, ../scss/screen.scss */
 a:hover,
 a:focus,
 a:active {
@@ -547,21 +543,21 @@ a:active {
 }
 
 /* Alignment */
-/* line 235, ../scss/screen.scss */
+/* line 232, ../scss/screen.scss */
 .alignleft {
   display: inline;
   float: left;
   margin-right: 1.5em;
 }
 
-/* line 240, ../scss/screen.scss */
+/* line 237, ../scss/screen.scss */
 .alignright {
   display: inline;
   float: right;
   margin-left: 1.5em;
 }
 
-/* line 245, ../scss/screen.scss */
+/* line 242, ../scss/screen.scss */
 .aligncenter {
   clear: both;
   display: block;
@@ -569,24 +565,24 @@ a:active {
   text-align: center;
 }
 
-/* line 251, ../scss/screen.scss */
+/* line 248, ../scss/screen.scss */
 .center {
   text-align: center;
 }
 
 /* Misc & mixens
 -------------------------------------------------------------- */
-/* line 260, ../scss/screen.scss */
+/* line 257, ../scss/screen.scss */
 .clearfix {
   *zoom: 1;
 }
-/* line 262, ../scss/screen.scss */
+/* line 259, ../scss/screen.scss */
 .clearfix:before, .clearfix:after {
   content: " ";
   display: table;
   visibility: hidden;
 }
-/* line 267, ../scss/screen.scss */
+/* line 264, ../scss/screen.scss */
 .clearfix:after {
   clear: both;
 }

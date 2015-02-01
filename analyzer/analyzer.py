@@ -36,10 +36,8 @@ sorted_degrees = sorted(degrees.items(), key=operator.itemgetter(1), reverse=Tru
 names = nx.get_node_attributes(G,'name')
 
 for node in sorted_degrees:
+	G.node[node[0]]['degree'] = G.degree(node[0])						# adds node degree as attribute
 	print G.degree(node[0]), node[0],":",names[node[0]]
-
-absDegrees = {k: round(v*len(G)-1) for k, v in degrees.items()}
-# print absDegrees
 
 
 ##### cycle (loops) analysis

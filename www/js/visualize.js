@@ -24,7 +24,7 @@
     }).direction('n').offset(function(d) {
       return [-(d.radius / 2 + 3), 0];
     });
-    force = d3.layout.force().charge(-200).linkDistance(100).size([width, height]);
+    force = d3.layout.force().charge(-250).linkDistance(120).size([width, height]);
     network = function(selection, graph) {
       var vis;
       allData = setupData(graph);
@@ -115,12 +115,16 @@
       });
     };
     setupData = function(data) {
-      var nodesMap;
+      var circleRadius, degreeExtent, nodesMap;
+      degreeExtent = d3.extent(data.nodes, function(d) {
+        return d.degree;
+      });
+      circleRadius = d3.scale.sqrt().range([5, 14]).domain(degreeExtent);
       data.nodes.forEach(function(n) {
         var randomnumber;
         n.x = randomnumber = Math.floor(Math.random() * width);
         n.y = randomnumber = Math.floor(Math.random() * height);
-        return n.radius = 8;
+        return n.radius = circleRadius(n.degree);
       });
       nodesMap = mapNodes(data.nodes);
       data.links.forEach(function(l) {

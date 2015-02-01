@@ -33,8 +33,8 @@ Network = () ->
 
   # Set up the force layout
   force = d3.layout.force()
-    .charge(-200)
-    .linkDistance(100)
+    .charge(-250)
+    .linkDistance(120)
     .size([width, height])
 
   # this method is returned at the end
@@ -154,7 +154,8 @@ Network = () ->
   # Returns modified data
   setupData = (data) ->
     # initialize circle radius scale
-    # circleRadius = d3.scale.sqrt().range([3, 12]).domain(countExtent)
+    degreeExtent = d3.extent(data.nodes, (d) -> d.degree)
+    circleRadius = d3.scale.sqrt().range([5, 14]).domain(degreeExtent)
 
     data.nodes.forEach (n) ->
       # set initial x/y to values within the width/height
@@ -162,8 +163,7 @@ Network = () ->
       n.x = randomnumber=Math.floor(Math.random()*width)
       n.y = randomnumber=Math.floor(Math.random()*height)
       # add radius to the node so we can use it later
-      # n.radius = circleRadius(n.playcount)
-      n.radius = 8;
+      n.radius = circleRadius(n.degree)
 
     # id's -> node objects
     nodesMap = mapNodes(data.nodes)
