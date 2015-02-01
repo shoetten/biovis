@@ -2,9 +2,19 @@ biovis
 ============
 Analyse und Visualisierung von causal-loop Diagrammen.
 
+ToDo
+------------
+- arrows
+- +/- arrow types
+- node colors
+- auto resize on change of parent size
+- feedback loop visualization
+- filters (by category and degree of consent)
+- search
+
 Ideen
 ------------
-- vis.js
+- d3.js
 - Node-Kategorien durch Farben visualisiert
 - Bei Klick auf Node
 	- Feedbackloops durch Einfärbung der Kanten
