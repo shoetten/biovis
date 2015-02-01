@@ -49,6 +49,21 @@ Network = () ->
     linksG = vis.append("g").attr("id", "links")
     nodesG = vis.append("g").attr("id", "nodes")
 
+    # setup svg arrow def
+    vis.append("defs").selectAll("marker")
+      .data(["arrow"])
+    .enter().append("marker")
+      .attr("id", (d) -> d)
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 25)
+      .attr("refY", 0)
+      .attr("markerWidth", 6)
+      .attr("markerHeight", 6)
+      .attr("orient", "auto")
+    .append("path")
+      .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
+      .attr("class", "link")
+
     # Invoke the tip in the context of your visualization
     vis.call(tip)
 
@@ -121,6 +136,7 @@ Network = () ->
       .attr("y1", (d) -> d.source.y)
       .attr("x2", (d) -> d.target.x)
       .attr("y2", (d) -> d.target.y)
+      .style("marker-end",  "url(#arrow)")
 
     link.exit().remove()
 

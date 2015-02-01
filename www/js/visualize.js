@@ -31,6 +31,9 @@
       vis = d3.select(selection).append("svg").attr("width", width).attr("height", height);
       linksG = vis.append("g").attr("id", "links");
       nodesG = vis.append("g").attr("id", "nodes");
+      vis.append("defs").selectAll("marker").data(["arrow"]).enter().append("marker").attr("id", function(d) {
+        return d;
+      }).attr("viewBox", "0 -5 10 10").attr("refX", 25).attr("refY", 0).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5").attr("class", "link");
       vis.call(tip);
       force.on("tick", forceTick);
       return update();
@@ -87,7 +90,7 @@
         return d.target.x;
       }).attr("y2", function(d) {
         return d.target.y;
-      });
+      }).style("marker-end", "url(#arrow)");
       return link.exit().remove();
     };
     filterNodes = function(allNodes) {
