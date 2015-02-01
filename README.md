@@ -6,7 +6,7 @@ ToDo
 ------------
 - arrows
 - +/- arrow types
-- node colors
+- node colors & size
 - auto resize on change of parent size
 - feedback loop visualization
 - filters (by category and degree of consent)
@@ -14,14 +14,12 @@ ToDo
 
 Ideen
 ------------
-- d3.js
+- [d3.js](http://d3js.org/)
+- [networkx](https://networkx.github.io/)
 - Node-Kategorien durch Farben visualisiert
 - Bei Klick auf Node
-	- Feedbackloops durch Einfärbung der Kanten
-		- Berechnung durch Strongly Connected Components
-		- http://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
+	- Feedbackloops durch Einfärbung der Kanten (Berechnung nach D.B. Johnson, Implementierung in [networkx](https://networkx.github.io/documentation/latest/reference/generated/networkx.algorithms.cycles.simple_cycles.html))
 	- Anzeige der Zentralität (Degree)
 	- Wahlweise Anzeige der Nachbarknoten (see http://visjs.org/examples/network/29_neighbourhood_highlight.html)
 - Größe der Nodes über Zentralität
-- Import von Gephi (see http://visjs.org/examples/network/30_importing_from_gephi.html)
 - Konsensindikator eines Feedbackloops
