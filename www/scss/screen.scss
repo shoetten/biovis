@@ -13,7 +13,7 @@
 @import "font";
 @import "mixins";
 
-
+@import "d3";
 
 /* use border-box box-layout for each and every element */
 *, *:before, *:after {
@@ -64,8 +64,8 @@ main .inner {
 }
 
 #bioGraph {
-    border: 1px solid lightgray;
-    height: 600px;
+  border: 1px solid lightgray;
+  height: 600px;
 }
 
 pre {padding: 5px; margin: 5px; }
