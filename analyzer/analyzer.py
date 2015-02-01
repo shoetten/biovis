@@ -1,5 +1,8 @@
 import csv
 import networkx as nx
+import json
+from networkx.readwrite import json_graph
+
 import operator
 
 
@@ -13,11 +16,12 @@ with open('data/graph.csv', 'rb') as csvfile:
 			for colIdx, column in enumerate(row):
 				if colIdx != 0:
 					if rowIdx == 0:										# use first row for labels
-						G.add_node(colIdx, name=column)
+						G.add_node(colIdx-1, name=column)
 					else:
 						weight = int(column)						# get int value of string
 						if weight != 0:
-							G.add_edge(rowIdx, colIdx, weight=weight)
+							# print "Added edge from",rowIdx-1,"to",colIdx-1
+							G.add_edge(rowIdx-1, colIdx-1, weight=weight)
 
 
 ############## analyze graph
@@ -40,8 +44,17 @@ absDegrees = {k: round(v*len(G)-1) for k, v in degrees.items()}
 
 ##### cycle (loops) analysis
 ############################
-copyG = G.copy()
-copyG.remove_node(6)		# remove pflanzenanbau
+# copyG = G.copy()
+# copyG.remove_node(6)		# remove pflanzenanbau
 
-print "SCCs:", list(nx.strongly_connected_components(copyG))
-print "Cycles:",len(list(nx.simple_cycles(copyG)))
+print "SCCs:", list(nx.strongly_connected_components(G))
+# print "Cycles:",len(list(nx.simple_cycles(copyG)))
+
+
+######### export json for d3
+############################
+# write json formatted data
+data = json_graph.node_link_data(G)				# node-link format to serialize
+# write json
+json.dump(data, open('out/graph.json','w'))
+print('Wrote node-link JSON data to out/graph.json')
