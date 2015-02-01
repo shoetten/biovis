@@ -49,20 +49,20 @@ Network = () ->
     linksG = vis.append("g").attr("id", "links")
     nodesG = vis.append("g").attr("id", "nodes")
 
-    # setup svg arrow def
+    # setup svg arrowhead def
     vis.append("defs").selectAll("marker")
-      .data(["arrow"])
+      .data(["arrowhead", "arrowhead-background"])
     .enter().append("marker")
       .attr("id", (d) -> d)
       .attr("viewBox", "0 -5 10 10")
-      .attr("refX", 25)
+      .attr("refX", 10)
       .attr("refY", 0)
-      .attr("markerWidth", 6)
-      .attr("markerHeight", 6)
+      .attr("markerWidth", 8)
+      .attr("markerHeight", 8)
       .attr("orient", "auto")
     .append("path")
-      .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
-      .attr("class", "link")
+      .attr("d", "M0,-5L10,0L0,5 L0,-5")
+      .attr("class", (d) -> d)
 
     # Invoke the tip in the context of your visualization
     vis.call(tip)
@@ -100,10 +100,7 @@ Network = () ->
 
   forceTick = () ->
     link
-      .attr("x1", (d) -> d.source.x)
-      .attr("y1", (d) -> d.source.y)
-      .attr("x2", (d) -> d.target.x)
-      .attr("y2", (d) -> d.target.y)
+      .attr("d", (d) -> linkPath(d))
 
       node
         .attr("cx", (d) -> d.x)
@@ -128,17 +125,39 @@ Network = () ->
 
   # enter/exit display for links
   updateLinks = () ->
-    link = linksG.selectAll("line.link")
+    link = linksG.selectAll(".link")
       .data(curLinksData, (d) -> "#{d.source.id}_#{d.target.id}")
-    link.enter().append("line")
+    link.enter().append("path")
       .attr("class", "link")
-      .attr("x1", (d) -> d.source.x)
-      .attr("y1", (d) -> d.source.y)
-      .attr("x2", (d) -> d.target.x)
-      .attr("y2", (d) -> d.target.y)
-      .style("marker-end",  "url(#arrow)")
+      .attr("d", (d) -> linkPath(d))
 
     link.exit().remove()
+
+  # Calculate line offset, subtracting radius from length, to let the line end at the edge of node, not in the center
+  linkPath = (d) ->
+    dx = d.target.x - d.source.x
+    dy = d.target.y - d.source.y
+    dr = Math.sqrt(dx * dx + dy * dy)
+    
+    # Math.atan2 returns the angle in the correct quadrant as opposed to Math.atan
+    gamma = Math.atan2(dy,dx)
+    tx = d.target.x - (Math.cos(gamma) * d.target.radius)
+    ty = d.target.y - (Math.sin(gamma) * d.target.radius)
+
+    "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty
+
+    # # Total difference in x and y from source to target
+    # diffX = d.target.x - d.source.x
+    # diffY = d.target.y - d.source.y
+
+    # # Length of path from center of source node to center of target node
+    # pathLength = Math.sqrt((diffX * diffX) + (diffY * diffY))
+
+    # # x and y distances from center to outside edge of target node
+    # offsetX = (diffX * d.target.radius) / pathLength;
+    # offsetY = (diffY * d.target.radius) / pathLength;
+
+    # "M" + d.source.x + "," + d.source.y + " L" + (d.target.x - offsetX) + "," + (d.target.y - offsetY)
 
   # Removes nodes from input array
   # based on current filter setting.

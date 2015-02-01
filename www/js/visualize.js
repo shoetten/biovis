@@ -7,7 +7,7 @@
   PREFIX = "";
 
   Network = function() {
-    var allData, color, curLinksData, curNodesData, filterLinks, filterNodes, force, forceTick, height, hideDetails, link, linkedByIndex, linksG, mapNodes, neighboring, network, node, nodesG, setupData, showDetails, tip, update, updateLinks, updateNodes, width;
+    var allData, color, curLinksData, curNodesData, filterLinks, filterNodes, force, forceTick, height, hideDetails, link, linkPath, linkedByIndex, linksG, mapNodes, neighboring, network, node, nodesG, setupData, showDetails, tip, update, updateLinks, updateNodes, width;
     width = 700;
     height = 600;
     nodesG = null;
@@ -31,9 +31,11 @@
       vis = d3.select(selection).append("svg").attr("width", width).attr("height", height);
       linksG = vis.append("g").attr("id", "links");
       nodesG = vis.append("g").attr("id", "nodes");
-      vis.append("defs").selectAll("marker").data(["arrow"]).enter().append("marker").attr("id", function(d) {
+      vis.append("defs").selectAll("marker").data(["arrowhead", "arrowhead-background"]).enter().append("marker").attr("id", function(d) {
         return d;
-      }).attr("viewBox", "0 -5 10 10").attr("refX", 25).attr("refY", 0).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5").attr("class", "link");
+      }).attr("viewBox", "0 -5 10 10").attr("refX", 10).attr("refY", 0).attr("markerWidth", 8).attr("markerHeight", 8).attr("orient", "auto").append("path").attr("d", "M0,-5L10,0L0,5 L0,-5").attr("class", function(d) {
+        return d;
+      });
       vis.call(tip);
       force.on("tick", forceTick);
       return update();
@@ -48,14 +50,8 @@
       return force.start();
     };
     forceTick = function() {
-      link.attr("x1", function(d) {
-        return d.source.x;
-      }).attr("y1", function(d) {
-        return d.source.y;
-      }).attr("x2", function(d) {
-        return d.target.x;
-      }).attr("y2", function(d) {
-        return d.target.y;
+      link.attr("d", function(d) {
+        return linkPath(d);
       });
       return node.attr("cx", function(d) {
         return d.x;
@@ -79,19 +75,23 @@
       return node.exit().remove();
     };
     updateLinks = function() {
-      link = linksG.selectAll("line.link").data(curLinksData, function(d) {
+      link = linksG.selectAll(".link").data(curLinksData, function(d) {
         return "" + d.source.id + "_" + d.target.id;
       });
-      link.enter().append("line").attr("class", "link").attr("x1", function(d) {
-        return d.source.x;
-      }).attr("y1", function(d) {
-        return d.source.y;
-      }).attr("x2", function(d) {
-        return d.target.x;
-      }).attr("y2", function(d) {
-        return d.target.y;
-      }).style("marker-end", "url(#arrow)");
+      link.enter().append("path").attr("class", "link").attr("d", function(d) {
+        return linkPath(d);
+      });
       return link.exit().remove();
+    };
+    linkPath = function(d) {
+      var dr, dx, dy, gamma, tx, ty;
+      dx = d.target.x - d.source.x;
+      dy = d.target.y - d.source.y;
+      dr = Math.sqrt(dx * dx + dy * dy);
+      gamma = Math.atan2(dy, dx);
+      tx = d.target.x - (Math.cos(gamma) * d.target.radius);
+      ty = d.target.y - (Math.sin(gamma) * d.target.radius);
+      return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty;
     };
     filterNodes = function(allNodes) {
       var cutoff, filteredNodes, playcounts;

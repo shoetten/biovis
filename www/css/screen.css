@@ -134,29 +134,49 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /* line 4, ../scss/_d3.scss */
 .node.highlight {
   stroke-width: 2px;
+  stroke: #000;
 }
-/* line 7, ../scss/_d3.scss */
+/* line 8, ../scss/_d3.scss */
 .node.background {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
-/* line 11, ../scss/_d3.scss */
+/* line 12, ../scss/_d3.scss */
 .link {
+  fill: none;
   stroke: #999;
   stroke-opacity: .6;
   stroke-width: 1px;
+  marker-end: url(#arrowhead);
 }
-/* line 15, ../scss/_d3.scss */
+/* line 18, ../scss/_d3.scss */
 .link.highlight {
-  stroke-width: 1.5px;
   stroke-opacity: .9;
 }
-/* line 19, ../scss/_d3.scss */
+/* line 22, ../scss/_d3.scss */
 .link.background {
   stroke-opacity: .3;
+  marker-end: url(#arrowhead-background);
 }
 
-/* line 25, ../scss/_d3.scss */
+/* line 27, ../scss/_d3.scss */
+.arrowhead, .arrowhead-background {
+  fill: #999;
+  stroke: #999;
+  stroke-width: 1px;
+}
+
+/* line 32, ../scss/_d3.scss */
+.arrowhead {
+  opacity: .6;
+}
+
+/* line 33, ../scss/_d3.scss */
+.arrowhead-background {
+  opacity: .3;
+}
+
+/* line 36, ../scss/_d3.scss */
 .d3-tip {
   line-height: 1;
   font-weight: bold;
@@ -168,7 +188,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Creates a small triangle extender for the tooltip */
-/* line 36, ../scss/_d3.scss */
+/* line 47, ../scss/_d3.scss */
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -181,7 +201,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Northward tooltips */
-/* line 48, ../scss/_d3.scss */
+/* line 59, ../scss/_d3.scss */
 .d3-tip.n:after {
   content: "\25BC";
   margin: -1px 0 0 0;
@@ -191,7 +211,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Eastward tooltips */
-/* line 57, ../scss/_d3.scss */
+/* line 68, ../scss/_d3.scss */
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -200,7 +220,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Southward tooltips */
-/* line 65, ../scss/_d3.scss */
+/* line 76, ../scss/_d3.scss */
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -210,7 +230,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Westward tooltips */
-/* line 74, ../scss/_d3.scss */
+/* line 85, ../scss/_d3.scss */
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;

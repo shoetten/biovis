@@ -3,23 +3,34 @@
     stroke-width: 1.5px;
     &.highlight {
       stroke-width: 2px;
+      stroke: #000;
     }
     &.background {
-      opacity: 0.5;
+      opacity: 0.3;
     }
   }
   .link {
-      stroke: #999;
-      stroke-opacity: .6;
-      stroke-width: 1px;
-      &.highlight {
-        stroke-width: 1.5px;
-        stroke-opacity: .9;
-      }
-      &.background {
-        stroke-opacity: .3;
-      }
+    fill: none;
+    stroke: #999;
+    stroke-opacity: .6;
+    stroke-width: 1px;
+    marker-end: url(#arrowhead);
+    &.highlight {
+      // stroke-width: 1.5px;
+      stroke-opacity: .9;
+    }
+    &.background {
+      stroke-opacity: .3;
+      marker-end: url(#arrowhead-background);
+    }
   }
+  .arrowhead, .arrowhead-background {
+    fill: #999;
+    stroke: #999;
+    stroke-width: 1px;
+  }
+  .arrowhead { opacity: .6; }
+  .arrowhead-background { opacity: .3; }
 
 
 .d3-tip {
