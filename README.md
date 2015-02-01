@@ -4,7 +4,6 @@ Analyse und Visualisierung von causal-loop Diagrammen.
 
 ToDo
 ------------
-- arrows
 - +/- arrow types
 - node colors & size
 - auto resize on change of parent size
