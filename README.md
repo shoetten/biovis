@@ -11,6 +11,9 @@ ToDo
 - feedback loop visualization
 - filters (by category and degree of consent)
 - search
+- zoom & pan
+- meta info of node in sidebar
+- zoom to node
 
 Ideen
 ------------
