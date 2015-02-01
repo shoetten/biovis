@@ -3,7 +3,6 @@
 # compass
 .sass-cache*
 
-
 # mac
 .DS_Store
 
@@ -15,3 +14,6 @@
 # eclipse
 .project
 .settings*
+
+# project
+interactive_network_demo/
