@@ -1,14 +1,18 @@
 root = exports ? this
 
 PREFIX = ""
+debug = true
 
 Network = () ->
   # Constants for the SVG
   width = 700
   height = 600
 
+  # vis holds the root svg element
+  vis = null
   # these will hold the svg groups for
   # accessing the nodes and links display
+  container = null
   nodesG = null
   linksG = null
   # these will point to the circles and lines
@@ -37,6 +41,49 @@ Network = () ->
     .linkDistance(120)
     .size([width, height])
 
+  # methods to handle zoom and dragging
+  zoomed = () ->
+    # container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")")
+    if (debug) then console.log("zoom", d3.event.translate, d3.event.scale)
+    # scaleFactor = d3.event.scale
+    # translation = d3.event.translate
+    forceTick()                                    # update positions
+
+  dragstarted = (d) ->
+    d3.event.sourceEvent.stopPropagation()
+    d3.select(this).classed("dragging", true)
+
+  dragged = (d) ->
+    # get mouse coordinates relative to the visualization
+    # coordinate system
+    mouse = d3.mouse(vis.node())
+    d.x = xScale.invert(mouse[0])
+    d.y = yScale.invert(mouse[1])
+    # d3.select(this).attr("cx", d.x = d.x).attr("cy", d.y = d.y)
+
+  dragended = (d) ->
+    d3.select(this).classed("dragging", false)
+
+  # set scales for zooming
+  xScale = d3.scale.linear()
+    .domain([0, width])
+    .range([0, width])
+  yScale = d3.scale.linear()
+    .domain([0, height])
+    .range([0, height])
+
+  # init the zoom behaviour
+  zoom = d3.behavior.zoom()
+    .x(xScale).y(yScale)
+    .scaleExtent([1, 10])
+    .on("zoom", zoomed)
+
+  drag = force.drag()
+    .origin((d) -> d )
+    .on("dragstart", dragstarted)
+    .on("drag", dragged)
+    .on("dragend", dragended)
+
   # this method is returned at the end
   network = (selection, graph) ->
     # format our data
@@ -46,8 +93,13 @@ Network = () ->
     vis = d3.select(selection).append("svg")
       .attr("width", width)
       .attr("height", height)
-    linksG = vis.append("g").attr("id", "links")
-    nodesG = vis.append("g").attr("id", "nodes")
+      .call(zoom)
+
+    # container to hold everything that's beeing zoomed
+    container = vis.append("g")
+
+    linksG = container.append("g").attr("id", "links")
+    nodesG = container.append("g").attr("id", "nodes")
 
     # setup svg arrowhead def
     vis.append("defs").selectAll("marker")
@@ -95,6 +147,9 @@ Network = () ->
     updateNodes()
     updateLinks()
 
+    # set height & width based on calculated svg element size
+    setSize()
+
     # start me up!
     force.start()
 
@@ -103,8 +158,8 @@ Network = () ->
       .attr("d", (d) -> linkPath(d))
 
       node
-        .attr("cx", (d) -> d.x)
-        .attr("cy", (d) -> d.y)
+        .attr("cx", (d) -> xScale(d.x))
+        .attr("cy", (d) -> yScale(d.y))
 
   # enter/exit display for nodes
   updateNodes = () ->
@@ -113,11 +168,11 @@ Network = () ->
 
     node.enter().append("circle")
       .attr("class", "node")
-      .attr("cx", (d) -> d.x)
-      .attr("cy", (d) -> d.y)
+      .attr("cx", (d) -> xScale(d.x))
+      .attr("cy", (d) -> yScale(d.y))
       .attr("r", (d) -> d.radius)
       .style("fill", (d) -> color(4))
-      .call(force.drag)
+      .call(drag)
       .on('mouseover', showDetails)
       .on('mouseout', hideDetails)
 
@@ -135,29 +190,16 @@ Network = () ->
 
   # Calculate line offset, subtracting radius from length, to let the line end at the edge of node, not in the center
   linkPath = (d) ->
-    dx = d.target.x - d.source.x
-    dy = d.target.y - d.source.y
+    dx = xScale(d.target.x - d.source.x)
+    dy = yScale(d.target.y - d.source.y)
     dr = Math.sqrt(dx * dx + dy * dy)
     
     # Math.atan2 returns the angle in the correct quadrant as opposed to Math.atan
     gamma = Math.atan2(dy,dx)
-    tx = d.target.x - (Math.cos(gamma) * d.target.radius)
-    ty = d.target.y - (Math.sin(gamma) * d.target.radius)
+    tx = xScale(d.target.x) - (Math.cos(gamma) * d.target.radius)
+    ty = yScale(d.target.y) - (Math.sin(gamma) * d.target.radius)
 
-    "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty
-
-    # # Total difference in x and y from source to target
-    # diffX = d.target.x - d.source.x
-    # diffY = d.target.y - d.source.y
-
-    # # Length of path from center of source node to center of target node
-    # pathLength = Math.sqrt((diffX * diffX) + (diffY * diffY))
-
-    # # x and y distances from center to outside edge of target node
-    # offsetX = (diffX * d.target.radius) / pathLength;
-    # offsetY = (diffY * d.target.radius) / pathLength;
-
-    # "M" + d.source.x + "," + d.source.y + " L" + (d.target.x - offsetX) + "," + (d.target.y - offsetY)
+    "M" + xScale(d.source.x) + "," + yScale(d.source.y) + "A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty
 
   # Removes nodes from input array
   # based on current filter setting.
@@ -262,6 +304,30 @@ Network = () ->
   neighboring = (a, b) ->
     linkedByIndex[a.id + "," + b.id] or
       linkedByIndex[b.id + "," + a.id]
+
+
+  # Set the display size based on the SVG size and re-draw
+  setSize = () ->
+    svgStyles = window.getComputedStyle(vis.node())
+    svgW = parseInt(svgStyles["width"])
+    svgH = parseInt(svgStyles["height"])
+    
+    # Set the output range of the scales
+    xScale.range([0, svgW])
+    yScale.range([0, svgH])
+    
+    # re-attach the scales to the zoom behaviour
+    zoom.x(xScale)
+        .y(yScale)
+   
+    if (debug) then console.log("resize", xScale.range(), yScale.range())
+    forceTick()              # re-draw
+
+  # make responsive by adapting size to window changes
+  window.addEventListener("resize", setSize, false)
+
+
+
 
   # Final act of Network() function is to return the inner 'network()' function.
   return network
