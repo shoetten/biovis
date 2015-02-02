@@ -190,16 +190,23 @@ Network = () ->
 
   # Calculate line offset, subtracting radius from length, to let the line end at the edge of node, not in the center
   linkPath = (d) ->
-    dx = xScale(d.target.x - d.source.x)
-    dy = yScale(d.target.y - d.source.y)
-    dr = Math.sqrt(dx * dx + dy * dy)
-    
+    dsx = xScale(d.source.x)    # scaled source x attribute
+    dsy = yScale(d.source.y)    # scaled source y attribute
+    dtx = xScale(d.target.x)    # scaled target x attribute
+    dty = yScale(d.target.y)    # scaled target y attribute
+    dx = dtx - dsx
+    dy = dty - dsy
+    dr = Math.sqrt(dx * dx + dy * dy)     # calculate arc radius without taking zoom scale into account
+
+    # now calculate angle with zoom scales
+    # dx = xScale(dx)                        
+    # dy = yScale(dy)
     # Math.atan2 returns the angle in the correct quadrant as opposed to Math.atan
     gamma = Math.atan2(dy,dx)
-    tx = xScale(d.target.x) - (Math.cos(gamma) * d.target.radius)
-    ty = yScale(d.target.y) - (Math.sin(gamma) * d.target.radius)
+    tx = dtx - (Math.cos(gamma) * d.target.radius)
+    ty = dty - (Math.sin(gamma) * d.target.radius)
 
-    "M" + xScale(d.source.x) + "," + yScale(d.source.y) + "A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty
+    "M" + dsx + "," + dsy + " A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty
 
   # Removes nodes from input array
   # based on current filter setting.

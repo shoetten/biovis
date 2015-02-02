@@ -114,14 +114,18 @@
       return link.exit().remove();
     };
     linkPath = function(d) {
-      var dr, dx, dy, gamma, tx, ty;
-      dx = xScale(d.target.x - d.source.x);
-      dy = yScale(d.target.y - d.source.y);
+      var dr, dsx, dsy, dtx, dty, dx, dy, gamma, tx, ty;
+      dsx = xScale(d.source.x);
+      dsy = yScale(d.source.y);
+      dtx = xScale(d.target.x);
+      dty = yScale(d.target.y);
+      dx = dtx - dsx;
+      dy = dty - dsy;
       dr = Math.sqrt(dx * dx + dy * dy);
       gamma = Math.atan2(dy, dx);
-      tx = xScale(d.target.x) - (Math.cos(gamma) * d.target.radius);
-      ty = yScale(d.target.y) - (Math.sin(gamma) * d.target.radius);
-      return "M" + xScale(d.source.x) + "," + yScale(d.source.y) + "A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty;
+      tx = dtx - (Math.cos(gamma) * d.target.radius);
+      ty = dty - (Math.sin(gamma) * d.target.radius);
+      return "M" + dsx + "," + dsy + " A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty;
     };
     filterNodes = function(allNodes) {
       var cutoff, filteredNodes, playcounts;
