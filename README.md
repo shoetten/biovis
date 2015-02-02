@@ -5,12 +5,10 @@ Analyse und Visualisierung von causal-loop Diagrammen.
 ToDo
 ------------
 - +/- arrow types
-- node colors & size
-- auto resize on change of parent size
+- node colors
 - feedback loop visualization
 - filters (by category and degree of consent)
 - search
-- zoom & pan
 - meta info of node in sidebar
 - zoom to node
 
