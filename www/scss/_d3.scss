@@ -8,7 +8,7 @@
   .node {
     stroke: #fff;
     stroke-width: 1.5px;
-    &.highlight {
+    &.highlight, &:hover {
       stroke-width: 2px;
       stroke: #000;
     }

@@ -142,7 +142,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   stroke-width: 1.5px;
 }
 /* line 11, ../scss/_d3.scss */
-#bioGraph svg .node.highlight {
+#bioGraph svg .node.highlight, #bioGraph svg .node:hover {
   stroke-width: 2px;
   stroke: #000;
 }
@@ -317,7 +317,7 @@ main .inner section#graph {
   width: 70%;
 }
 /* line 56, ../scss/screen.scss */
-main .inner section#settings {
+main .inner section#meta {
   -webkit-box-flex: 0 0 28%;
   -moz-box-flex: 0 0 28%;
   -webkit-flex: 0 0 28%;
@@ -327,7 +327,7 @@ main .inner section#settings {
   width: 28%;
 }
 /* line 61, ../scss/screen.scss */
-main .inner section#settings > section {
+main .inner section#meta > section {
   margin-bottom: 0.5em;
 }
 

@@ -22,7 +22,7 @@
     curLinksData = [];
     curNodesData = [];
     linkedByIndex = {};
-    color = d3.scale.ordinal().range(["#1f77b4", "#fd8d3c", "#74c476", "#9467bd"]);
+    color = d3.scale.ordinal().range(["#74c476", "#fd8d3c", "#1f77b4", "#9467bd"]);
     tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
       return d.name;
     }).direction('n').offset(function(d) {
@@ -57,7 +57,7 @@
     }).on("dragstart", dragstarted).on("drag", dragged).on("dragend", dragended);
     network = function(selection, graph) {
       var defs;
-      vis = d3.select(selection).append("svg").attr("width", width).attr("height", height).call(zoom);
+      vis = d3.select(selection).append("svg").attr("width", width).attr("height", height).call(zoom).on('click', hideDetails);
       allData = setupData(graph);
       container = vis.append("g");
       linksG = container.append("g").attr("id", "links");
@@ -105,7 +105,7 @@
         return d.radius;
       }).style("fill", function(d) {
         return color(d.category[0]);
-      }).call(drag).on('mouseover', showDetails).on('mouseout', hideDetails);
+      }).call(drag).on('mouseover', tip.show).on('mouseout', tip.hide).on('click', showDetails);
       return node.exit().remove();
     };
     updateLinks = function() {
@@ -191,7 +191,10 @@
       return nodesMap;
     };
     showDetails = function(d, i) {
-      tip.show(d);
+      if (d3.event.defaultPrevented) {
+        return;
+      }
+      d3.event.stopPropagation();
       if (link) {
         link.classed("highlight", function(l) {
           if (l.source === d || l.target === d) {
@@ -228,7 +231,6 @@
       });
     };
     hideDetails = function(d, i) {
-      tip.hide(d);
       node.classed("highlight", function(n) {
         if (!n.searched) {
           return false;

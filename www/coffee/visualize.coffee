@@ -27,7 +27,7 @@ Network = () ->
 
   # Set up the colour scale
   color = d3.scale.ordinal()
-    .range(["#1f77b4", "#fd8d3c", "#74c476", "#9467bd"])
+    .range(["#74c476", "#fd8d3c", "#1f77b4", "#9467bd"])
 
   # setup tooltips
   tip = d3.tip()
@@ -95,6 +95,7 @@ Network = () ->
       .attr("width", width)
       .attr("height", height)
       .call(zoom)
+      .on('click', hideDetails)
 
     # format our data
     allData = setupData(graph)
@@ -181,8 +182,9 @@ Network = () ->
       .attr("r", (d) -> d.radius)
       .style("fill", (d) -> color(d.category[0]))
       .call(drag)
-      .on('mouseover', showDetails)
-      .on('mouseout', hideDetails)
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
+      .on('click', showDetails)
 
     node.exit().remove()
 
@@ -287,7 +289,10 @@ Network = () ->
 
   # Mouseover function to show tooltop and highlight
   showDetails = (d,i) ->
-    tip.show(d)
+    if (d3.event.defaultPrevented) then return      # click suppressed
+
+    d3.event.stopPropagation()                      # prevent other click events beeing executed
+    # tip.show(d)
 
     # higlight connected links
     if link
@@ -312,7 +317,7 @@ Network = () ->
 
   # Mouseout function
   hideDetails = (d,i) ->
-    tip.hide(d)
+    # tip.hide(d)
 
     # watch out - don't mess with node if search is currently matching
     node.classed("highlight", (n) -> if !n.searched then false else true)
