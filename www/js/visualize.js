@@ -9,7 +9,7 @@
   debug = true;
 
   Network = function() {
-    var allData, color, container, curLinksData, curNodesData, drag, dragended, dragged, dragstarted, filterLinks, filterNodes, force, forceTick, height, hideDetails, link, linkPath, linkedByIndex, linksG, mapNodes, neighboring, network, node, nodesG, setSize, setupData, showDetails, tip, update, updateLinks, updateNodes, vis, width, xScale, yScale, zoom, zoomed;
+    var allData, collide, color, container, curLinksData, curNodesData, drag, dragended, dragged, dragstarted, filterLinks, filterNodes, force, forceTick, height, hideDetails, link, linkPath, linkedByIndex, linksG, mapNodes, neighboring, network, node, nodesG, setSize, setupData, showDetails, tip, update, updateLinks, updateNodes, vis, width, xScale, yScale, zoom, zoomed;
     width = 700;
     height = 600;
     vis = null;
@@ -22,7 +22,7 @@
     curLinksData = [];
     curNodesData = [];
     linkedByIndex = {};
-    color = d3.scale.category10();
+    color = d3.scale.ordinal().range(["#1f77b4", "#fd8d3c", "#74c476", "#9467bd"]);
     tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
       return d.name;
     }).direction('n').offset(function(d) {
@@ -56,14 +56,16 @@
       return d;
     }).on("dragstart", dragstarted).on("drag", dragged).on("dragend", dragended);
     network = function(selection, graph) {
-      allData = setupData(graph);
+      var defs;
       vis = d3.select(selection).append("svg").attr("width", width).attr("height", height).call(zoom);
+      allData = setupData(graph);
       container = vis.append("g");
       linksG = container.append("g").attr("id", "links");
       nodesG = container.append("g").attr("id", "nodes");
-      vis.append("defs").selectAll("marker").data(["arrowhead", "arrowhead-background", "arrowhead-highlight"]).enter().append("marker").attr("id", function(d) {
+      defs = vis.append("defs");
+      defs.selectAll("marker").data(["arrowhead", "arrowhead-background", "arrowhead-highlight"]).enter().append("marker").attr("id", function(d) {
         return d;
-      }).attr("viewBox", "0 -5 10 10").attr("refX", 10).attr("refY", 0).attr("markerWidth", 8).attr("markerHeight", 8).attr("orient", "auto").append("path").attr("d", "M0,-5L10,0L0,5 L0,-5").attr("class", function(d) {
+      }).attr("viewBox", "0 -5 10 10").attr("refX", 11).attr("refY", 0).attr("markerWidth", 11).attr("markerHeight", 11).attr("orient", "auto").append("path").attr("d", "M0,-5L10,0L0,5 L0,-5").attr("class", function(d) {
         return d;
       });
       vis.call(tip);
@@ -77,18 +79,19 @@
       force.links(curLinksData);
       updateNodes();
       updateLinks();
-      setSize();
-      return force.start();
+      force.start();
+      return setSize();
     };
     forceTick = function() {
       link.attr("d", function(d) {
         return linkPath(d);
       });
-      return node.attr("cx", function(d) {
+      node.attr("cx", function(d) {
         return xScale(d.x);
       }).attr("cy", function(d) {
         return yScale(d.y);
       });
+      return node.each(collide(0.5));
     };
     updateNodes = function() {
       node = nodesG.selectAll("circle.node").data(curNodesData, function(d) {
@@ -157,13 +160,19 @@
       degreeExtent = d3.extent(data.nodes, function(d) {
         return d.degree;
       });
-      circleRadius = d3.scale.sqrt().range([6, 16]).domain(degreeExtent);
+      circleRadius = d3.scale.sqrt().range([9, 17]).domain(degreeExtent);
       data.nodes.forEach(function(n) {
         var randomnumber;
-        n.x = randomnumber = Math.floor(Math.random() * width);
-        n.y = randomnumber = Math.floor(Math.random() * height);
-        n.radius = circleRadius(n.degree);
-        return n.fixed = false;
+        if (n.id === 5) {
+          n.x = width / 2;
+          n.y = height / 2;
+          n.fixed = true;
+        } else {
+          n.x = randomnumber = Math.floor(Math.random() * width);
+          n.y = randomnumber = Math.floor(Math.random() * height);
+          n.fixed = false;
+        }
+        return n.radius = circleRadius(n.degree);
       });
       nodesMap = mapNodes(data.nodes);
       data.links.forEach(function(l) {
@@ -244,8 +253,8 @@
     setSize = function() {
       var svgH, svgStyles, svgW;
       svgStyles = window.getComputedStyle(vis.node());
-      svgW = parseInt(svgStyles["width"]);
-      svgH = parseInt(svgStyles["height"]);
+      svgW = width = parseInt(svgStyles["width"]);
+      svgH = height = parseInt(svgStyles["height"]);
       xScale.range([0, svgW]);
       yScale.range([0, svgH]);
       zoom.x(xScale).y(yScale);
@@ -255,6 +264,34 @@
       return forceTick();
     };
     window.addEventListener("resize", setSize, false);
+    collide = function(alpha) {
+      var quadtree;
+      quadtree = d3.geom.quadtree(curNodesData);
+      return function(d) {
+        var nx1, nx2, ny1, ny2, rb;
+        rb = 2 * d.radius + 10;
+        nx1 = d.x - rb;
+        nx2 = d.x + rb;
+        ny1 = d.y - rb;
+        ny2 = d.y + rb;
+        return quadtree.visit(function(quad, x1, y1, x2, y2) {
+          var l, x, y;
+          if (quad.point && (quad.point !== d)) {
+            x = d.x - quad.point.x;
+            y = d.y - quad.point.y;
+            l = Math.sqrt(x * x + y * y);
+            if (l < rb) {
+              l = (l - rb) / l * alpha;
+              d.x -= x *= l;
+              d.y -= y *= l;
+              quad.point.x += x;
+              quad.point.y += y;
+            }
+          }
+          return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+        });
+      };
+    };
     return network;
   };
 

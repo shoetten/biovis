@@ -26,7 +26,8 @@ Network = () ->
   linkedByIndex = {}                # links between nodes, used for highlighting
 
   # Set up the colour scale
-  color = d3.scale.category10()
+  color = d3.scale.ordinal()
+    .range(["#1f77b4", "#fd8d3c", "#74c476", "#9467bd"])
 
   # setup tooltips
   tip = d3.tip()
@@ -89,14 +90,14 @@ Network = () ->
 
   # this method is returned at the end
   network = (selection, graph) ->
-    # format our data
-    allData = setupData(graph)
-
     # Append a SVG to the body of the html page. Assign this SVG as an object to svg
     vis = d3.select(selection).append("svg")
       .attr("width", width)
       .attr("height", height)
       .call(zoom)
+
+    # format our data
+    allData = setupData(graph)
 
     # container to hold everything that's beeing zoomed
     container = vis.append("g")
@@ -104,16 +105,18 @@ Network = () ->
     linksG = container.append("g").attr("id", "links")
     nodesG = container.append("g").attr("id", "nodes")
 
+    # append section for svg defs
+    defs = vis.append("defs")
     # setup svg arrowhead def
-    vis.append("defs").selectAll("marker")
+    defs.selectAll("marker")
       .data(["arrowhead", "arrowhead-background", "arrowhead-highlight"])
     .enter().append("marker")
       .attr("id", (d) -> d)
       .attr("viewBox", "0 -5 10 10")
-      .attr("refX", 10)
+      .attr("refX", 11)
       .attr("refY", 0)
-      .attr("markerWidth", 8)
-      .attr("markerHeight", 8)
+      .attr("markerWidth", 11)
+      .attr("markerHeight", 11)
       .attr("orient", "auto")
     .append("path")
       .attr("d", "M0,-5L10,0L0,5 L0,-5")
@@ -150,19 +153,21 @@ Network = () ->
     updateNodes()
     updateLinks()
 
-    # set height & width based on calculated svg element size
-    setSize()
-
     # start me up!
     force.start()
+
+    # set height & width based on calculated svg element size
+    setSize()
 
   forceTick = () ->
     link
       .attr("d", (d) -> linkPath(d))
 
-      node
-        .attr("cx", (d) -> xScale(d.x))
-        .attr("cy", (d) -> yScale(d.y))
+    node
+      .attr("cx", (d) -> xScale(d.x))
+      .attr("cy", (d) -> yScale(d.y))
+
+    node.each(collide(0.5))     # collision detection
 
   # enter/exit display for nodes
   updateNodes = () ->
@@ -242,16 +247,22 @@ Network = () ->
   setupData = (data) ->
     # initialize circle radius scale
     degreeExtent = d3.extent(data.nodes, (d) -> d.degree)
-    circleRadius = d3.scale.sqrt().range([6, 16]).domain(degreeExtent)
+    circleRadius = d3.scale.sqrt().range([9, 17]).domain(degreeExtent)
 
     data.nodes.forEach (n) ->
       # set initial x/y to values within the width/height
       # of the visualization
-      n.x = randomnumber=Math.floor(Math.random()*width)
-      n.y = randomnumber=Math.floor(Math.random()*height)
+      if n.id == 5                    # planzenanbau zur energieerzeugung
+        n.x = width / 2
+        n.y = height / 2
+        n.fixed = true
+      else
+        n.x = randomnumber=Math.floor(Math.random()*width)
+        n.y = randomnumber=Math.floor(Math.random()*height)
+        n.fixed = false
+
       # add radius to the node so we can use it later
       n.radius = circleRadius(n.degree)
-      n.fixed = false
 
     # id's -> node objects
     nodesMap = mapNodes(data.nodes)
@@ -320,8 +331,8 @@ Network = () ->
   # Set the display size based on the SVG size and re-draw
   setSize = () ->
     svgStyles = window.getComputedStyle(vis.node())
-    svgW = parseInt(svgStyles["width"])
-    svgH = parseInt(svgStyles["height"])
+    svgW = width = parseInt(svgStyles["width"])
+    svgH = height = parseInt(svgStyles["height"])
     
     # Set the output range of the scales
     xScale.range([0, svgW])
@@ -338,6 +349,28 @@ Network = () ->
   window.addEventListener("resize", setSize, false)
 
 
+  # avoid overlapping nodes
+  collide = (alpha) ->
+    quadtree = d3.geom.quadtree(curNodesData)
+    return (d) ->
+      rb = 2* d.radius + 10      # min of 3px padding between nodes
+      nx1 = d.x - rb
+      nx2 = d.x + rb
+      ny1 = d.y - rb
+      ny2 = d.y + rb
+      quadtree.visit( (quad, x1, y1, x2, y2) ->
+        if (quad.point && (quad.point != d))
+          x = d.x - quad.point.x
+          y = d.y - quad.point.y
+          l = Math.sqrt(x * x + y * y)
+          if (l < rb)
+            l = (l - rb) / l * alpha
+            d.x -= x *= l
+            d.y -= y *= l
+            quad.point.x += x
+            quad.point.y += y
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1
+      )
 
 
   # Final act of Network() function is to return the inner 'network()' function.

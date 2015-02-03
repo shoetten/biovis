@@ -10,6 +10,7 @@
 .sublime
 *.sublime-project
 *.sublime-workspace
+sftp-config.json
 
 # eclipse
 .project
