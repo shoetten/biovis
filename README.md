@@ -11,6 +11,7 @@ ToDo
 - search
 - meta info of node in sidebar
 - zoom to node
+- fix node "Pflanzenanbau zur Energieerzeugung" to center
 
 Ideen
 ------------

@@ -26,7 +26,7 @@ Network = () ->
   linkedByIndex = {}                # links between nodes, used for highlighting
 
   # Set up the colour scale
-  color = d3.scale.category20()
+  color = d3.scale.category10()
 
   # setup tooltips
   tip = d3.tip()
@@ -41,10 +41,18 @@ Network = () ->
     .linkDistance(120)
     .size([width, height])
 
+  # set scales for zooming
+  xScale = d3.scale.linear()
+    .domain([0, width])
+    .range([0, width])
+  yScale = d3.scale.linear()
+    .domain([0, height])
+    .range([0, height])
+
   # methods to handle zoom and dragging
   zoomed = () ->
     # container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")")
-    if (debug) then console.log("zoom", d3.event.translate, d3.event.scale)
+    # if (debug) then console.log("zoom", d3.event.translate, d3.event.scale)
     # scaleFactor = d3.event.scale
     # translation = d3.event.translate
     forceTick()                                    # update positions
@@ -54,23 +62,18 @@ Network = () ->
     d3.select(this).classed("dragging", true)
 
   dragged = (d) ->
-    # get mouse coordinates relative to the visualization
-    # coordinate system
+    console.log("DRAG")
+    # if (d.fixed) then return     # root is fixed
+
+    # get mouse coordinates relative to the visualization coordinate system
     mouse = d3.mouse(vis.node())
     d.x = xScale.invert(mouse[0])
     d.y = yScale.invert(mouse[1])
+    if (debug) then console.log("drag", mouse[0], mouse[1], "scaled:", xScale.invert(mouse[0]), yScale.invert(mouse[1]))
     # d3.select(this).attr("cx", d.x = d.x).attr("cy", d.y = d.y)
 
   dragended = (d) ->
     d3.select(this).classed("dragging", false)
-
-  # set scales for zooming
-  xScale = d3.scale.linear()
-    .domain([0, width])
-    .range([0, width])
-  yScale = d3.scale.linear()
-    .domain([0, height])
-    .range([0, height])
 
   # init the zoom behaviour
   zoom = d3.behavior.zoom()
@@ -103,7 +106,7 @@ Network = () ->
 
     # setup svg arrowhead def
     vis.append("defs").selectAll("marker")
-      .data(["arrowhead", "arrowhead-background"])
+      .data(["arrowhead", "arrowhead-background", "arrowhead-highlight"])
     .enter().append("marker")
       .attr("id", (d) -> d)
       .attr("viewBox", "0 -5 10 10")
@@ -171,7 +174,7 @@ Network = () ->
       .attr("cx", (d) -> xScale(d.x))
       .attr("cy", (d) -> yScale(d.y))
       .attr("r", (d) -> d.radius)
-      .style("fill", (d) -> color(4))
+      .style("fill", (d) -> color(d.category[0]))
       .call(drag)
       .on('mouseover', showDetails)
       .on('mouseout', hideDetails)
@@ -239,7 +242,7 @@ Network = () ->
   setupData = (data) ->
     # initialize circle radius scale
     degreeExtent = d3.extent(data.nodes, (d) -> d.degree)
-    circleRadius = d3.scale.sqrt().range([5, 14]).domain(degreeExtent)
+    circleRadius = d3.scale.sqrt().range([6, 16]).domain(degreeExtent)
 
     data.nodes.forEach (n) ->
       # set initial x/y to values within the width/height
@@ -248,6 +251,7 @@ Network = () ->
       n.y = randomnumber=Math.floor(Math.random()*height)
       # add radius to the node so we can use it later
       n.radius = circleRadius(n.degree)
+      n.fixed = false
 
     # id's -> node objects
     nodesMap = mapNodes(data.nodes)
