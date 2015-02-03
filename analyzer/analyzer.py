@@ -7,21 +7,31 @@ import operator
 
 
 G = nx.DiGraph()							# new directed graph
+categoryNames = ["Umwelt","Politik","Technologie","Wirtschaft"]
 
 ######## read graph from csv
 ############################
 with open('data/graph.csv', 'rb') as csvfile:
 	reader = csv.reader(csvfile, delimiter=';', quotechar='"')
 	for rowIdx, row in enumerate(reader):
-			for colIdx, column in enumerate(row):
-				if colIdx != 0:
-					if rowIdx == 0:										# use first row for labels
-						G.add_node(colIdx-1, name=column)
-					else:
-						weight = int(column)						# get int value of string
-						if weight != 0:
-							# print "Added edge from",rowIdx-1,"to",colIdx-1
-							G.add_edge(rowIdx-1, colIdx-1, weight=weight)
+		d = dict()
+		for colIdx, column in enumerate(row):
+			if (colIdx < 4) and (rowIdx != 0):
+				column = int(column)							# get int value of string
+				if (column > 8):
+					d[categoryNames[colIdx]] = column
+					
+			elif (colIdx >= 5):
+				if rowIdx == 0:										# use first row for labels
+					# print "Added node",colIdx-5,column
+					G.add_node(colIdx-5, name=column)
+				else:
+					weight = int(column)						# get int value of string
+					if weight != 0:
+						# print "Added edge from",rowIdx-1,"to",colIdx-5
+						G.add_edge(rowIdx-1, colIdx-5, weight=weight)
+		if (rowIdx != 0):
+			G.node[rowIdx-1]['category'] = d
 
 
 ############## analyze graph
@@ -37,7 +47,9 @@ names = nx.get_node_attributes(G,'name')
 
 for node in sorted_degrees:
 	G.node[node[0]]['degree'] = G.degree(node[0])						# adds node degree as attribute
-	print G.degree(node[0]), node[0],":",names[node[0]]
+	G.node[node[0]]['category'] = sorted(G.node[node[0]]['category'].items(), key=operator.itemgetter(1), reverse=True)
+	G.node[node[0]]['category'] = [val[0] for val in G.node[node[0]]['category']]
+	print G.degree(node[0]), node[0],":",names[node[0]],"categories:",G.node[node[0]]['category']
 
 
 ##### cycle (loops) analysis

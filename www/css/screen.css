@@ -159,29 +159,35 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 /* line 24, ../scss/_d3.scss */
 #bioGraph svg .link.highlight {
-  stroke: #999999;
+  stroke: #777;
+  marker-end: url(#arrowhead-highlight);
 }
-/* line 27, ../scss/_d3.scss */
+/* line 28, ../scss/_d3.scss */
 #bioGraph svg .link.background {
   stroke-opacity: .3;
   marker-end: url(#arrowhead-background);
 }
-/* line 32, ../scss/_d3.scss */
-#bioGraph svg .arrowhead, #bioGraph svg .arrowhead-background {
-  fill: #bbbbbb;
-  stroke: #bbbbbb;
+/* line 33, ../scss/_d3.scss */
+#bioGraph svg .arrowhead, #bioGraph svg .arrowhead-background, #bioGraph svg .arrowhead-highlight {
+  fill: #aaaaaa;
+  stroke: #fff;
   stroke-width: 1px;
 }
-/* line 37, ../scss/_d3.scss */
-#bioGraph svg .arrowhead {
-  opacity: 1;
-}
 /* line 38, ../scss/_d3.scss */
+#bioGraph svg .arrowhead {
+  opacity: 0.9;
+}
+/* line 39, ../scss/_d3.scss */
+#bioGraph svg .arrowhead-highlight {
+  opacity: 1;
+  fill: #999999;
+}
+/* line 40, ../scss/_d3.scss */
 #bioGraph svg .arrowhead-background {
   opacity: .3;
 }
 
-/* line 41, ../scss/_d3.scss */
+/* line 43, ../scss/_d3.scss */
 .d3-tip {
   line-height: 1;
   font-weight: bold;
@@ -193,7 +199,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Creates a small triangle extender for the tooltip */
-/* line 52, ../scss/_d3.scss */
+/* line 54, ../scss/_d3.scss */
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -206,7 +212,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Northward tooltips */
-/* line 64, ../scss/_d3.scss */
+/* line 66, ../scss/_d3.scss */
 .d3-tip.n:after {
   content: "\25BC";
   margin: -1px 0 0 0;
@@ -216,7 +222,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Eastward tooltips */
-/* line 73, ../scss/_d3.scss */
+/* line 75, ../scss/_d3.scss */
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -225,7 +231,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Southward tooltips */
-/* line 81, ../scss/_d3.scss */
+/* line 83, ../scss/_d3.scss */
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -235,7 +241,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Westward tooltips */
-/* line 90, ../scss/_d3.scss */
+/* line 92, ../scss/_d3.scss */
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;

@@ -22,17 +22,16 @@
     curLinksData = [];
     curNodesData = [];
     linkedByIndex = {};
-    color = d3.scale.category20();
+    color = d3.scale.category10();
     tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
       return d.name;
     }).direction('n').offset(function(d) {
       return [-(d.radius / 2 + 3), 0];
     });
     force = d3.layout.force().charge(-250).linkDistance(120).size([width, height]);
+    xScale = d3.scale.linear().domain([0, width]).range([0, width]);
+    yScale = d3.scale.linear().domain([0, height]).range([0, height]);
     zoomed = function() {
-      if (debug) {
-        console.log("zoom", d3.event.translate, d3.event.scale);
-      }
       return forceTick();
     };
     dragstarted = function(d) {
@@ -41,15 +40,17 @@
     };
     dragged = function(d) {
       var mouse;
+      console.log("DRAG");
       mouse = d3.mouse(vis.node());
       d.x = xScale.invert(mouse[0]);
-      return d.y = yScale.invert(mouse[1]);
+      d.y = yScale.invert(mouse[1]);
+      if (debug) {
+        return console.log("drag", mouse[0], mouse[1], "scaled:", xScale.invert(mouse[0]), yScale.invert(mouse[1]));
+      }
     };
     dragended = function(d) {
       return d3.select(this).classed("dragging", false);
     };
-    xScale = d3.scale.linear().domain([0, width]).range([0, width]);
-    yScale = d3.scale.linear().domain([0, height]).range([0, height]);
     zoom = d3.behavior.zoom().x(xScale).y(yScale).scaleExtent([1, 10]).on("zoom", zoomed);
     drag = force.drag().origin(function(d) {
       return d;
@@ -60,7 +61,7 @@
       container = vis.append("g");
       linksG = container.append("g").attr("id", "links");
       nodesG = container.append("g").attr("id", "nodes");
-      vis.append("defs").selectAll("marker").data(["arrowhead", "arrowhead-background"]).enter().append("marker").attr("id", function(d) {
+      vis.append("defs").selectAll("marker").data(["arrowhead", "arrowhead-background", "arrowhead-highlight"]).enter().append("marker").attr("id", function(d) {
         return d;
       }).attr("viewBox", "0 -5 10 10").attr("refX", 10).attr("refY", 0).attr("markerWidth", 8).attr("markerHeight", 8).attr("orient", "auto").append("path").attr("d", "M0,-5L10,0L0,5 L0,-5").attr("class", function(d) {
         return d;
@@ -100,7 +101,7 @@
       }).attr("r", function(d) {
         return d.radius;
       }).style("fill", function(d) {
-        return color(4);
+        return color(d.category[0]);
       }).call(drag).on('mouseover', showDetails).on('mouseout', hideDetails);
       return node.exit().remove();
     };
@@ -156,12 +157,13 @@
       degreeExtent = d3.extent(data.nodes, function(d) {
         return d.degree;
       });
-      circleRadius = d3.scale.sqrt().range([5, 14]).domain(degreeExtent);
+      circleRadius = d3.scale.sqrt().range([6, 16]).domain(degreeExtent);
       data.nodes.forEach(function(n) {
         var randomnumber;
         n.x = randomnumber = Math.floor(Math.random() * width);
         n.y = randomnumber = Math.floor(Math.random() * height);
-        return n.radius = circleRadius(n.degree);
+        n.radius = circleRadius(n.degree);
+        return n.fixed = false;
       });
       nodesMap = mapNodes(data.nodes);
       data.links.forEach(function(l) {

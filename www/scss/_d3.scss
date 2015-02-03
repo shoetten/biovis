@@ -22,19 +22,21 @@
     stroke-width: 1px;
     marker-end: url(#arrowhead);
     &.highlight {
-      stroke: #999999;
+      stroke: #777;
+      marker-end: url(#arrowhead-highlight);
     }
     &.background {
       stroke-opacity: .3;
       marker-end: url(#arrowhead-background);
     }
   }
-  .arrowhead, .arrowhead-background {
-    fill: #bbbbbb;
-    stroke: #bbbbbb;
+  .arrowhead, .arrowhead-background, .arrowhead-highlight {
+    fill: #aaaaaa;
+    stroke: #fff;
     stroke-width: 1px;
   }
-  .arrowhead { opacity: 1; }
+  .arrowhead { opacity: 0.9; }
+  .arrowhead-highlight { opacity: 1; fill: #999999; }
   .arrowhead-background { opacity: .3; }
 }
 
