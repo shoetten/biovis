@@ -191,7 +191,7 @@
       return nodesMap;
     };
     showDetails = function(d, i) {
-      var meta;
+      var incoming, meta, outgoing;
       if (d3.event.defaultPrevented) {
         return;
       }
@@ -213,14 +213,14 @@
         });
       }
       node.classed("highlight", function(n) {
-        if (n.searched || neighboring(d, n)) {
+        if (n.searched || neighboring(d, n)[0]) {
           return true;
         } else {
           return false;
         }
       });
       node.classed("background", function(n) {
-        if (n.searched || neighboring(d, n)) {
+        if (n.searched || neighboring(d, n)[0]) {
           return false;
         } else {
           return true;
@@ -235,6 +235,20 @@
       meta += d.category.map(function(val) {
         return "<a href=\"#\" class=\"category " + (val.toLowerCase()) + "\">" + val + "</a>";
       }).join(" ");
+      meta += "</div>";
+      meta += "<div class=\"connected\">";
+      outgoing = "<h3>Beeinflusst..</h3><div class=\"outgoing\">";
+      incoming = "<h3>Wird beeinflusst von..</h3><div class=\"incoming\">";
+      node.each(function(n) {
+        if ((neighboring(d, n)[0]) && (neighboring(d, n)[1])) {
+          outgoing += "<a href=\"#\">" + n.name + "</a> ";
+        }
+        if ((neighboring(d, n)[0]) && !(neighboring(d, n)[1])) {
+          return incoming += "<a href=\"#\">" + n.name + "</a> ";
+        }
+      });
+      meta += outgoing + "</div>";
+      meta += incoming + "</div>";
       meta += "</div>";
       return $('#meta #node').html(meta);
     };
@@ -259,7 +273,13 @@
       return $("#meta #node").html("");
     };
     neighboring = function(a, b) {
-      return linkedByIndex[a.id + "," + b.id] || linkedByIndex[b.id + "," + a.id];
+      if (linkedByIndex[a.id + "," + b.id]) {
+        return [true, true];
+      } else if (linkedByIndex[b.id + "," + a.id]) {
+        return [true, false];
+      } else {
+        return [false, false];
+      }
     };
     setSize = function() {
       var svgH, svgStyles, svgW;

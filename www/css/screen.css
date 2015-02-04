@@ -286,8 +286,46 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 #meta .technologie:before {
   background: #9467bd;
 }
+/* line 100, ../scss/_d3.scss */
+#meta .connected {
+  width: 100%;
+  font-size: 80%;
+}
+/* line 103, ../scss/_d3.scss */
+#meta .connected .incoming, #meta .connected .outgoing {
+  width: 100%;
+  display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;
+  /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;
+  /* TWEENER - IE 10 */
+  display: -webkit-flex;
+  /* NEW - Chrome */
+  display: flex;
+  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+/* line 108, ../scss/_d3.scss */
+#meta .connected .incoming a, #meta .connected .outgoing a {
+  -webkit-box-flex: 0 0 48%;
+  -moz-box-flex: 0 0 48%;
+  -webkit-flex: 0 0 48%;
+  -ms-flex: 0 0 48%;
+  flex: 0 0 48%;
+  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  width: 48%;
+}
 
-/* line 101, ../scss/_d3.scss */
+/* line 117, ../scss/_d3.scss */
 .d3-tip {
   line-height: 1;
   font-weight: bold;
@@ -299,7 +337,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Creates a small triangle extender for the tooltip */
-/* line 112, ../scss/_d3.scss */
+/* line 128, ../scss/_d3.scss */
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -312,7 +350,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Northward tooltips */
-/* line 124, ../scss/_d3.scss */
+/* line 140, ../scss/_d3.scss */
 .d3-tip.n:after {
   content: "\25BC";
   margin: -1px 0 0 0;
@@ -322,7 +360,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Eastward tooltips */
-/* line 133, ../scss/_d3.scss */
+/* line 149, ../scss/_d3.scss */
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -331,7 +369,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Southward tooltips */
-/* line 141, ../scss/_d3.scss */
+/* line 157, ../scss/_d3.scss */
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -341,7 +379,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Westward tooltips */
-/* line 150, ../scss/_d3.scss */
+/* line 166, ../scss/_d3.scss */
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;
@@ -408,23 +446,23 @@ main .inner {
 }
 /* line 52, ../scss/screen.scss */
 main .inner section#graph {
-  -webkit-box-flex: 0 0 70%;
-  -moz-box-flex: 0 0 70%;
-  -webkit-flex: 0 0 70%;
-  -ms-flex: 0 0 70%;
-  flex: 0 0 70%;
+  -webkit-box-flex: 0 0 68%;
+  -moz-box-flex: 0 0 68%;
+  -webkit-flex: 0 0 68%;
+  -ms-flex: 0 0 68%;
+  flex: 0 0 68%;
   /* NEW, Spec - Opera 12.1, Firefox 20+ */
-  width: 70%;
+  width: 68%;
 }
 /* line 56, ../scss/screen.scss */
 main .inner section#meta {
-  -webkit-box-flex: 0 0 28%;
-  -moz-box-flex: 0 0 28%;
-  -webkit-flex: 0 0 28%;
-  -ms-flex: 0 0 28%;
-  flex: 0 0 28%;
+  -webkit-box-flex: 0 0 30%;
+  -moz-box-flex: 0 0 30%;
+  -webkit-flex: 0 0 30%;
+  -ms-flex: 0 0 30%;
+  flex: 0 0 30%;
   /* NEW, Spec - Opera 12.1, Firefox 20+ */
-  width: 28%;
+  width: 30%;
 }
 /* line 61, ../scss/screen.scss */
 main .inner section#meta > section {

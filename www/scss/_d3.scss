@@ -96,7 +96,23 @@
     &:hover { color: #9467bd; border-color: none; }
     &:before {background: #9467bd; }
   }
-}
+
+  .connected {
+    width: 100%;
+    font-size: 80%;
+    .incoming, .outgoing {
+      width: 100%;
+      @include flexbox();
+      @include flex-wrap(wrap);
+      @include justify-content(space-between);
+      a {
+        @include flex(0 0 48%);
+        width: 48%;
+      }
+    }
+  }
+
+} 
 
 .d3-tip {
   line-height: 1;

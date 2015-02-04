@@ -308,9 +308,9 @@ Network = () ->
     # highlight neighboring nodes
     # watch out - don't mess with node if search is currently matching
     node.classed("highlight", (n) ->
-      if (n.searched or neighboring(d, n)) then true else false)
+      if (n.searched or neighboring(d, n)[0]) then true else false)
     node.classed("background", (n) ->
-      if (n.searched or neighboring(d, n)) then false else true)
+      if (n.searched or neighboring(d, n)[0]) then false else true)
   
     # highlight the node being moused over
     d3.select(this).classed({'highlight': true, 'background': false})
@@ -322,6 +322,19 @@ Network = () ->
       "<a href=\"#\" class=\"category #{val.toLowerCase()}\">#{val}</a>"
     ).join(" "));
     meta += "</div>"
+    meta += "<div class=\"connected\">"
+    outgoing = "<h3>Beeinflusst..</h3><div class=\"outgoing\">"
+    incoming = "<h3>Wird beeinflusst von..</h3><div class=\"incoming\">"
+    node.each( (n) ->
+      if (neighboring(d, n)[0]) and (neighboring(d, n)[1])
+        outgoing += "<a href=\"#\">#{n.name}</a> "
+      if (neighboring(d, n)[0]) and !(neighboring(d, n)[1])
+        incoming += "<a href=\"#\">#{n.name}</a> "
+    )
+    meta += outgoing + "</div>"
+    meta += incoming + "</div>"
+    meta += "</div>"
+
 
     $('#meta #node').html(meta)
 
@@ -342,8 +355,12 @@ Network = () ->
   # there is a link between them.
   # Uses linkedByIndex initialized in setupData
   neighboring = (a, b) ->
-    linkedByIndex[a.id + "," + b.id] or
-      linkedByIndex[b.id + "," + a.id]
+    if linkedByIndex[a.id + "," + b.id]
+      return [true, true]                                            # true for outgoing link
+    else if linkedByIndex[b.id + "," + a.id]
+      return [true, false]                                           # false for incoming link
+    else
+      return [false, false]                                          # not a neighboring node
 
 
   # Set the display size based on the SVG size and re-draw
