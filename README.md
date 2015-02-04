@@ -5,13 +5,15 @@ Analyse und Visualisierung von causal-loop Diagrammen.
 ToDo
 ------------
 - +/- arrow types
-- node colors
+- node category colors
 - feedback loop visualization
 - filters (by category and degree of consent)
 - search
 - meta info of node in sidebar
+	add node description
+	- add type of influence in list (+/-)
+	- tooltip on hover (e.g. "Mehr x verursacht weniger y")
 - zoom to node
-- fix node "Pflanzenanbau zur Energieerzeugung" to center
 
 Ideen
 ------------
