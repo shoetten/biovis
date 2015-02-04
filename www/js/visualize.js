@@ -253,6 +253,9 @@
       return $('#meta #node').html(meta);
     };
     hideDetails = function(d, i) {
+      if (d3.event.defaultPrevented) {
+        return;
+      }
       node.classed("highlight", function(n) {
         if (!n.searched) {
           return false;

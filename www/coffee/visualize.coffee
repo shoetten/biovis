@@ -1,6 +1,8 @@
 root = exports ? this
 
 PREFIX = ""
+# PREFIX = "/uni/bioenergie"
+
 debug = true
 
 Network = () ->
@@ -340,6 +342,7 @@ Network = () ->
 
   # Mouseout function
   hideDetails = (d,i) ->
+    if (d3.event.defaultPrevented) then return      # click suppressed
     # tip.hide(d)
 
     # watch out - don't mess with node if search is currently matching
