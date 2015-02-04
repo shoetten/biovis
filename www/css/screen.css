@@ -148,7 +148,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 /* line 15, ../scss/_d3.scss */
 #bioGraph svg .node.background {
-  opacity: 0.3;
+  stroke-opacity: 0.3;
+  fill-opacity: 0.3;
 }
 /* line 19, ../scss/_d3.scss */
 #bioGraph svg .link {
@@ -175,16 +176,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 /* line 38, ../scss/_d3.scss */
 #bioGraph svg .arrowhead {
-  opacity: 0.9;
+  stroke-opacity: 0.9;
+  fill-opacity: 0.9;
 }
 /* line 39, ../scss/_d3.scss */
 #bioGraph svg .arrowhead-highlight {
-  opacity: 1;
+  stroke-opacity: 1;
+  fill-opacity: 1;
   fill: #999999;
 }
 /* line 40, ../scss/_d3.scss */
 #bioGraph svg .arrowhead-background {
-  opacity: .3;
+  stroke-opacity: 0.3;
+  fill-opacity: .3;
 }
 
 /* line 44, ../scss/_d3.scss */

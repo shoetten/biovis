@@ -13,7 +13,7 @@
       stroke: #000;
     }
     &.background {
-      opacity: 0.3;
+      stroke-opacity: 0.3; fill-opacity: 0.3;
     }
   }
   .link {
@@ -35,9 +35,9 @@
     stroke: #fff;
     stroke-width: 1px;
   }
-  .arrowhead { opacity: 0.9; }
-  .arrowhead-highlight { opacity: 1; fill: #999999; }
-  .arrowhead-background { opacity: .3; }
+  .arrowhead { stroke-opacity: 0.9; fill-opacity: 0.9; }
+  .arrowhead-highlight { stroke-opacity: 1; fill-opacity: 1; fill: #999999; }
+  .arrowhead-background { stroke-opacity: 0.3; fill-opacity: .3; }
 }
 
 #meta {
