@@ -22,7 +22,7 @@
     curLinksData = [];
     curNodesData = [];
     linkedByIndex = {};
-    color = d3.scale.ordinal().range(["#74c476", "#fd8d3c", "#1f77b4", "#9467bd"]);
+    color = d3.scale.ordinal().range(["#74c476", "#fd8d3c", "#207ec2", "#9467bd"]);
     tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
       return d.name;
     }).direction('n').offset(function(d) {
@@ -191,6 +191,7 @@
       return nodesMap;
     };
     showDetails = function(d, i) {
+      var meta;
       if (d3.event.defaultPrevented) {
         return;
       }
@@ -225,10 +226,17 @@
           return true;
         }
       });
-      return d3.select(this).classed({
+      d3.select(this).classed({
         'highlight': true,
         'background': false
       });
+      meta = "<h2>" + d.name + "</h2>";
+      meta += "<div class=\"categories\">";
+      meta += d.category.map(function(val) {
+        return "<a href=\"#\" class=\"category " + (val.toLowerCase()) + "\">" + val + "</a>";
+      }).join(" ");
+      meta += "</div>";
+      return $('#meta #node').html(meta);
     };
     hideDetails = function(d, i) {
       node.classed("highlight", function(n) {
@@ -246,8 +254,9 @@
         }
       });
       if (link) {
-        return link.classed("highlight background", false);
+        link.classed("highlight background", false);
       }
+      return $("#meta #node").html("");
     };
     neighboring = function(a, b) {
       return linkedByIndex[a.id + "," + b.id] || linkedByIndex[b.id + "," + a.id];

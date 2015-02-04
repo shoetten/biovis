@@ -204,7 +204,7 @@ pre {
 /* Links */
 a {
   color: darken(#F6A81C, 20);
-  @include transition(all 0.4s ease-in-out);
+  @include transition(all 0.2s ease-in-out);
   text-decoration: none;
   
   &.ext-link:after {

@@ -187,7 +187,103 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   opacity: .3;
 }
 
-/* line 43, ../scss/_d3.scss */
+/* line 44, ../scss/_d3.scss */
+#meta .categories {
+  font-style: italic;
+  margin: 5px 0;
+}
+/* line 48, ../scss/_d3.scss */
+#meta .category {
+  color: #000;
+  display: inline-block;
+  line-height: 20px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid;
+  padding: 1px 6px 1px 23px;
+  margin: 0 0 6px 8px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+/* line 63, ../scss/_d3.scss */
+#meta .category:before {
+  content: " ";
+  font-size: 13px;
+  position: absolute;
+  left: 0px;
+  top: 0;
+  padding: 0 4px 0 6px;
+  border: none;
+  -webkit-border-radius: 2px 0px 0px 2px;
+  -moz-border-radius: 2px 0px 0px 2px;
+  -ms-border-radius: 2px 0px 0px 2px;
+  -o-border-radius: 2px 0px 0px 2px;
+  border-radius: 2px 0px 0px 2px;
+  z-index: -1;
+  height: 100%;
+  width: 20px;
+  line-height: 20px;
+  line-height: 2rem;
+}
+/* line 79, ../scss/_d3.scss */
+#meta .umwelt {
+  border-color: #74c476;
+}
+/* line 81, ../scss/_d3.scss */
+#meta .umwelt:hover {
+  color: #74c476;
+  border-color: none;
+}
+/* line 82, ../scss/_d3.scss */
+#meta .umwelt:before {
+  background: #74c476;
+}
+/* line 84, ../scss/_d3.scss */
+#meta .politik {
+  border-color: #fd8d3c;
+}
+/* line 86, ../scss/_d3.scss */
+#meta .politik:hover {
+  color: #fd8d3c;
+  border-color: none;
+}
+/* line 87, ../scss/_d3.scss */
+#meta .politik:before {
+  background: #fd8d3c;
+}
+/* line 89, ../scss/_d3.scss */
+#meta .wirtschaft {
+  border-color: #207ec2;
+}
+/* line 91, ../scss/_d3.scss */
+#meta .wirtschaft:hover {
+  color: #207EC2;
+  border-color: none;
+}
+/* line 92, ../scss/_d3.scss */
+#meta .wirtschaft:before {
+  background: #207EC2;
+}
+/* line 94, ../scss/_d3.scss */
+#meta .technologie {
+  border-color: #9467bd;
+}
+/* line 96, ../scss/_d3.scss */
+#meta .technologie:hover  {
+  color: #9467bd;
+  border-color: none;
+}
+/* line 97, ../scss/_d3.scss */
+#meta .technologie:before {
+  background: #9467bd;
+}
+
+/* line 101, ../scss/_d3.scss */
 .d3-tip {
   line-height: 1;
   font-weight: bold;
@@ -199,7 +295,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Creates a small triangle extender for the tooltip */
-/* line 54, ../scss/_d3.scss */
+/* line 112, ../scss/_d3.scss */
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -212,7 +308,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Northward tooltips */
-/* line 66, ../scss/_d3.scss */
+/* line 124, ../scss/_d3.scss */
 .d3-tip.n:after {
   content: "\25BC";
   margin: -1px 0 0 0;
@@ -222,7 +318,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Eastward tooltips */
-/* line 75, ../scss/_d3.scss */
+/* line 133, ../scss/_d3.scss */
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -231,7 +327,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Southward tooltips */
-/* line 83, ../scss/_d3.scss */
+/* line 141, ../scss/_d3.scss */
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -241,7 +337,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Westward tooltips */
-/* line 92, ../scss/_d3.scss */
+/* line 150, ../scss/_d3.scss */
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;
@@ -542,10 +638,10 @@ pre {
 /* line 205, ../scss/screen.scss */
 a {
   color: #a56d07;
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   text-decoration: none;
 }
 /* line 210, ../scss/screen.scss */

@@ -27,7 +27,7 @@ Network = () ->
 
   # Set up the colour scale
   color = d3.scale.ordinal()
-    .range(["#74c476", "#fd8d3c", "#1f77b4", "#9467bd"])
+    .range(["#74c476", "#fd8d3c", "#207ec2", "#9467bd"])
 
   # setup tooltips
   tip = d3.tip()
@@ -315,6 +315,16 @@ Network = () ->
     # highlight the node being moused over
     d3.select(this).classed({'highlight': true, 'background': false})
 
+    # add meta info to sidebar
+    meta = "<h2>#{d.name}</h2>"
+    meta += "<div class=\"categories\">"
+    meta += (d.category.map( (val) ->
+      "<a href=\"#\" class=\"category #{val.toLowerCase()}\">#{val}</a>"
+    ).join(" "));
+    meta += "</div>"
+
+    $('#meta #node').html(meta)
+
   # Mouseout function
   hideDetails = (d,i) ->
     # tip.hide(d)
@@ -324,6 +334,9 @@ Network = () ->
     node.classed("background", (n) -> if !n.searched then false else true)
     if link
       link.classed("highlight background", false)
+
+    # remove meta info from sidebar
+    $("#meta #node").html("")
 
   # Given two nodes a and b, returns true if
   # there is a link between them.
