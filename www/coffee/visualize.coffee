@@ -220,6 +220,36 @@ Network = () ->
 
     "M" + dsx + "," + dsy + " A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty
 
+
+  # Public function to update highlighted nodes
+  # from search
+  network.updateSearch = (searchTerm) ->
+    if searchTerm
+      searchRegEx = new RegExp(searchTerm.toLowerCase())
+      meta = "<h2>Suchergebnisse</h2><div class=\"flex\">"
+      node.each (d) ->
+        element = d3.select(this)
+        match = d.name.toLowerCase().search(searchRegEx)
+        if searchTerm.length > 0 and match >= 0
+          d.searched = true
+          element.classed("background", false)
+          meta += "<a href=\"#\">#{d.name}</a> "
+        else
+          d.searched = false
+          element.classed("background", true)
+
+        element.classed('searched', d.searched)
+        link.classed("background", true)
+      meta += "</div>"
+      $('#meta .searchResults').html(meta)
+    else
+      $('#meta .searchResults').html("")
+      node.classed('searched background', false)
+      node.attr('searched', false)
+      # node.classed('selected highlight background', false)
+      link.classed('highlight background', false)
+
+ 
   # Removes nodes from input array
   # based on current filter setting.
   # Returns array of nodes
@@ -289,7 +319,7 @@ Network = () ->
       nodesMap.set(n.id, n)
     nodesMap
 
-  # Mouseover function to show tooltop and highlight
+  # Show details on node click
   showDetails = (d,i) ->
     if (d3.event.defaultPrevented) then return      # click suppressed
 
@@ -310,12 +340,16 @@ Network = () ->
     # highlight neighboring nodes
     # watch out - don't mess with node if search is currently matching
     node.classed("highlight", (n) ->
-      if (n.searched or neighboring(d, n)[0]) then true else false)
+      if (!n.searched)
+        if (neighboring(d, n)[0]) then true else false)
     node.classed("background", (n) ->
-      if (n.searched or neighboring(d, n)[0]) then false else true)
+      if (!n.searched)
+        if (neighboring(d, n)[0]) then false else true)
+
+    node.classed("selected", false)         # set all nodes to not selected
   
     # highlight the node being moused over
-    d3.select(this).classed({'highlight': true, 'background': false})
+    d3.select(this).classed({'highlight selected': true, 'background': false})
 
     # add meta info to sidebar
     meta = "<h2>#{d.name}</h2>"
@@ -338,21 +372,23 @@ Network = () ->
     meta += "</div>"
 
 
-    $('#meta #node').html(meta)
+    $('#meta .node').html(meta)
 
-  # Mouseout function
+  # click on background function
   hideDetails = (d,i) ->
     if (d3.event.defaultPrevented) then return      # click suppressed
-    # tip.hide(d)
 
-    # watch out - don't mess with node if search is currently matching
-    node.classed("highlight", (n) -> if !n.searched then false else true)
-    node.classed("background", (n) -> if !n.searched then false else true)
+    node.classed("highlight background selected searched", false)
+    # node.classed("background", (n) -> if !n.searched then false else true)
     if link
       link.classed("highlight background", false)
 
     # remove meta info from sidebar
-    $("#meta #node").html("")
+    $("#meta .node").html("")
+    # clear search
+    $("#search").val("")
+    $('#meta .searchResults').html("")
+    node.attr('searched', false)
 
   # Given two nodes a and b, returns true if
   # there is a link between them.
@@ -417,6 +453,10 @@ Network = () ->
 
 $  ->
   myNetwork = Network()
+
+  $("#search").keyup () ->
+    searchTerm = $(this).val()
+    myNetwork.updateSearch(searchTerm)
 
   d3.json(PREFIX + "/data/graph.json", (json) ->
     myNetwork("#bioGraph", json))

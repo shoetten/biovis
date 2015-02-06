@@ -2,69 +2,353 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 17, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+/*--------------------------------------------------------------
+Reset
+-------------------------------------------------------------- */
+/* line 85, ../scss/_reset.scss */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
   padding: 0;
   border: 0;
+  vertical-align: baseline;
   font: inherit;
   font-size: 100%;
-  vertical-align: baseline;
 }
 
-/* line 22, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* HTML5 display-role reset for older browsers */
+/* line 104, ../scss/_reset.scss */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+/* line 107, ../scss/_reset.scss */
 html {
-  line-height: 1;
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: 100%;
+  /* Prevents iOS text size adjust after orientation change, without disabling user zoom */
+  -ms-text-size-adjust: 100%;
+  /* www.456bereastreet.com/archive/201012/controlling_text_size_in_safari_for_ios_without_disabling_user_zoom/ */
 }
 
-/* line 24, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-ol, ul {
+/* line 119, ../scss/_reset.scss */
+ol,
+ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* line 28, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-caption, th, td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-
-/* line 30, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-q, blockquote {
+/* line 123, ../scss/_reset.scss */
+blockquote,
+q {
   quotes: none;
 }
-/* line 103, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-q:before, q:after, blockquote:before, blockquote:after {
-  content: "";
+
+/* line 129, ../scss/_reset.scss */
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
   content: none;
 }
 
-/* line 32, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-a img {
-  border: none;
+/* line 133, ../scss/_reset.scss */
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
 }
 
-/* line 116, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
-  display: block;
+/* line 140, ../scss/_reset.scss */
+code,
+kbd,
+tt,
+var {
+  font: 15px Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+}
+
+/* line 144, ../scss/_reset.scss */
+abbr,
+acronym {
+  border-bottom: 1px dotted #666;
+  cursor: help;
+}
+
+/* line 149, ../scss/_reset.scss */
+mark,
+ins {
+  background: #fff9c0;
+  text-decoration: none;
+}
+
+/* line 154, ../scss/_reset.scss */
+sup,
+sub {
+  font-size: 75%;
+  height: 0;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+/* line 161, ../scss/_reset.scss */
+sup {
+  bottom: 1ex;
+}
+
+/* line 164, ../scss/_reset.scss */
+sub {
+  top: .5ex;
+}
+
+/* line 167, ../scss/_reset.scss */
+small {
+  font-size: 75%;
+}
+
+/* line 170, ../scss/_reset.scss */
+big {
+  font-size: 125%;
+}
+
+/* line 173, ../scss/_reset.scss */
+figure {
+  margin: 0;
+}
+
+/* line 176, ../scss/_reset.scss */
+table {
+  margin: 0 0 1.5em;
+  width: 100%;
+}
+
+/* line 180, ../scss/_reset.scss */
+th {
+  font-weight: bold;
+}
+
+/* line 186, ../scss/_reset.scss */
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  /* Corrects font size not being inherited in all browsers */
+  margin: 0;
+  /* Addresses margins set differently in IE6/7, F3/4, S5, Chrome */
+  vertical-align: baseline;
+  *vertical-align: middle;
+  /* Improves appearance and consistency in all browsers */
+}
+
+/* line 199, ../scss/_reset.scss */
+button,
+input {
+  line-height: normal;
+  /* Addresses FF3/4 setting line-height using !important in the UA stylesheet */
+  *overflow: visible;
+  /* Corrects inner spacing displayed oddly in IE6/7 */
+}
+
+/* line 210, ../scss/_reset.scss */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: rgba(200, 200, 200, 0.5);
+  color: rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+  /* Improves usability and consistency of cursor style between image-type 'input' and others */
+  -webkit-appearance: button;
+  /* Corrects inability to style clickable 'input' types in iOS */
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 0.8em 1.1em 0.7em;
+}
+
+/* line 229, ../scss/_reset.scss */
+button:hover,
+html input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover {
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  background: rgba(200, 200, 200, 0.9);
+  color: black;
+}
+
+/* line 243, ../scss/_reset.scss */
+button:focus,
+html input[type="button"]:focus,
+input[type="reset"]:focus,
+input[type="submit"]:focus,
+button:active,
+html input[type="button"]:active,
+input[type="reset"]:active,
+input[type="submit"]:active {
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+/* line 249, ../scss/_reset.scss */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* Addresses box sizing set to content-box in IE8/9 */
+  padding: 0;
+  /* Addresses excess padding in IE8/9 */
+}
+
+/* line 257, ../scss/_reset.scss */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* Addresses appearance set to searchfield in S5, Chrome */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* Addresses box sizing set to border-box in S5, Chrome (include -moz to future-proof) */
+  box-sizing: content-box;
+}
+
+/* line 267, ../scss/_reset.scss */
+input[type="search"]::-webkit-search-decoration {
+  /* Corrects inner padding displayed oddly in S5, Chrome on OSX */
+  -webkit-appearance: none;
+}
+
+/* line 273, ../scss/_reset.scss */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  /* Corrects inner padding and border displayed oddly in FF3/4 www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/ */
+  border: 0;
+  padding: 0;
+}
+
+/* line 282, ../scss/_reset.scss */
+input[type=text],
+input[type=email],
+input[type=tel],
+textarea {
+  color: #555;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+/* line 290, ../scss/_reset.scss */
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=tel]:focus,
+textarea:focus {
+  color: #101010;
+}
+
+/* line 295, ../scss/_reset.scss */
+input[type=text],
+input[type=email],
+input[type=tel] {
+  padding: 3px;
+}
+
+/* line 298, ../scss/_reset.scss */
+textarea {
+  overflow: auto;
+  /* Removes default vertical scrollbar in IE6/7/8/9 */
+  padding: 10px;
+  vertical-align: top;
+  /* Improves readability and alignment in all browsers */
 }
 
 @font-face {
@@ -126,8 +410,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 /* Flexbox mixins
 -------------------------------------------------------------- */
-/* line 1, ../scss/_d3.scss */
-#bioGraph svg {
+/* line 2, ../scss/_d3.scss */
+#graph #bioGraph {
+  position: relative;
+}
+/* line 5, ../scss/_d3.scss */
+#graph #bioGraph svg {
   display: block;
   /* required for firefox to give valid
   height and width used values for getComputedStyle()
@@ -136,67 +424,102 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   width: 100%;
   /* make it responsive */
 }
-/* line 8, ../scss/_d3.scss */
-#bioGraph svg .node {
+/* line 12, ../scss/_d3.scss */
+#graph #bioGraph svg .node {
   stroke: #fff;
   stroke-width: 1.5px;
 }
-/* line 11, ../scss/_d3.scss */
-#bioGraph svg .node.highlight, #bioGraph svg .node:hover {
+/* line 15, ../scss/_d3.scss */
+#graph #bioGraph svg .node.highlight, #graph #bioGraph svg .node:hover {
   stroke-width: 2px;
+  stroke: #666;
+}
+/* line 19, ../scss/_d3.scss */
+#graph #bioGraph svg .node.selected {
   stroke: #000;
 }
-/* line 15, ../scss/_d3.scss */
-#bioGraph svg .node.background {
+/* line 22, ../scss/_d3.scss */
+#graph #bioGraph svg .node.searched {
+  stroke: #000;
+  stroke-dasharray: 11px 4px;
+}
+/* line 26, ../scss/_d3.scss */
+#graph #bioGraph svg .node.background {
   stroke-opacity: 0.3;
   fill-opacity: 0.3;
 }
-/* line 19, ../scss/_d3.scss */
-#bioGraph svg .link {
+/* line 30, ../scss/_d3.scss */
+#graph #bioGraph svg .link {
   fill: none;
   stroke: #bbbbbb;
   stroke-width: 1px;
   marker-end: url(#arrowhead);
 }
-/* line 24, ../scss/_d3.scss */
-#bioGraph svg .link.highlight {
+/* line 35, ../scss/_d3.scss */
+#graph #bioGraph svg .link.highlight {
   stroke: #777;
   marker-end: url(#arrowhead-highlight);
 }
-/* line 28, ../scss/_d3.scss */
-#bioGraph svg .link.background {
+/* line 39, ../scss/_d3.scss */
+#graph #bioGraph svg .link.background {
   stroke-opacity: .3;
   marker-end: url(#arrowhead-background);
 }
-/* line 33, ../scss/_d3.scss */
-#bioGraph svg .arrowhead, #bioGraph svg .arrowhead-background, #bioGraph svg .arrowhead-highlight {
+/* line 44, ../scss/_d3.scss */
+#graph #bioGraph svg .arrowhead, #graph #bioGraph svg .arrowhead-background, #graph #bioGraph svg .arrowhead-highlight {
   fill: #aaaaaa;
   stroke: #fff;
   stroke-width: 1px;
 }
-/* line 38, ../scss/_d3.scss */
-#bioGraph svg .arrowhead {
+/* line 49, ../scss/_d3.scss */
+#graph #bioGraph svg .arrowhead {
   stroke-opacity: 0.9;
   fill-opacity: 0.9;
 }
-/* line 39, ../scss/_d3.scss */
-#bioGraph svg .arrowhead-highlight {
+/* line 50, ../scss/_d3.scss */
+#graph #bioGraph svg .arrowhead-highlight {
   stroke-opacity: 1;
   fill-opacity: 1;
   fill: #999999;
 }
-/* line 40, ../scss/_d3.scss */
-#bioGraph svg .arrowhead-background {
+/* line 51, ../scss/_d3.scss */
+#graph #bioGraph svg .arrowhead-background {
   stroke-opacity: 0.3;
   fill-opacity: .3;
 }
+/* line 54, ../scss/_d3.scss */
+#graph #bioGraph #search_section {
+  position: absolute;
+  right: 0;
+  top: -40px;
+  width: 40%;
+  max-width: 250px;
+}
+/* line 60, ../scss/_d3.scss */
+#graph #bioGraph #search_section input {
+  color: #888;
+  border: 1px solid #bbb;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 13px;
+  width: 100%;
+}
+/* line 67, ../scss/_d3.scss */
+#graph #bioGraph #search_section input:focus {
+  color: #000;
+  border: 1px solid #888888;
+}
 
-/* line 44, ../scss/_d3.scss */
+/* line 77, ../scss/_d3.scss */
 #meta .categories {
   font-style: italic;
   margin: 5px 0;
 }
-/* line 48, ../scss/_d3.scss */
+/* line 81, ../scss/_d3.scss */
 #meta .category {
   color: #000;
   display: inline-block;
@@ -214,7 +537,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   overflow: hidden;
   z-index: 1;
 }
-/* line 63, ../scss/_d3.scss */
+/* line 96, ../scss/_d3.scss */
 #meta .category:before {
   content: " ";
   font-size: 13px;
@@ -234,65 +557,65 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   line-height: 20px;
   line-height: 2rem;
 }
-/* line 79, ../scss/_d3.scss */
+/* line 112, ../scss/_d3.scss */
 #meta .umwelt {
   border-color: #74c476;
 }
-/* line 81, ../scss/_d3.scss */
+/* line 114, ../scss/_d3.scss */
 #meta .umwelt:hover {
   color: #74c476;
   border-color: none;
 }
-/* line 82, ../scss/_d3.scss */
+/* line 115, ../scss/_d3.scss */
 #meta .umwelt:before {
   background: #74c476;
 }
-/* line 84, ../scss/_d3.scss */
+/* line 117, ../scss/_d3.scss */
 #meta .politik {
   border-color: #fd8d3c;
 }
-/* line 86, ../scss/_d3.scss */
+/* line 119, ../scss/_d3.scss */
 #meta .politik:hover {
   color: #fd8d3c;
   border-color: none;
 }
-/* line 87, ../scss/_d3.scss */
+/* line 120, ../scss/_d3.scss */
 #meta .politik:before {
   background: #fd8d3c;
 }
-/* line 89, ../scss/_d3.scss */
+/* line 122, ../scss/_d3.scss */
 #meta .wirtschaft {
   border-color: #207ec2;
 }
-/* line 91, ../scss/_d3.scss */
+/* line 124, ../scss/_d3.scss */
 #meta .wirtschaft:hover {
   color: #207EC2;
   border-color: none;
 }
-/* line 92, ../scss/_d3.scss */
+/* line 125, ../scss/_d3.scss */
 #meta .wirtschaft:before {
   background: #207EC2;
 }
-/* line 94, ../scss/_d3.scss */
+/* line 127, ../scss/_d3.scss */
 #meta .technologie {
   border-color: #9467bd;
 }
-/* line 96, ../scss/_d3.scss */
+/* line 129, ../scss/_d3.scss */
 #meta .technologie:hover  {
   color: #9467bd;
   border-color: none;
 }
-/* line 97, ../scss/_d3.scss */
+/* line 130, ../scss/_d3.scss */
 #meta .technologie:before {
   background: #9467bd;
 }
-/* line 100, ../scss/_d3.scss */
+/* line 133, ../scss/_d3.scss */
 #meta .connected {
   width: 100%;
   font-size: 80%;
 }
-/* line 103, ../scss/_d3.scss */
-#meta .connected .incoming, #meta .connected .outgoing {
+/* line 137, ../scss/_d3.scss */
+#meta .incoming, #meta .outgoing, #meta .flex {
   width: 100%;
   display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
@@ -314,8 +637,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-/* line 108, ../scss/_d3.scss */
-#meta .connected .incoming a, #meta .connected .outgoing a {
+/* line 142, ../scss/_d3.scss */
+#meta .incoming a, #meta .outgoing a, #meta .flex a {
   -webkit-box-flex: 0 0 48%;
   -moz-box-flex: 0 0 48%;
   -webkit-flex: 0 0 48%;
@@ -325,19 +648,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   width: 48%;
 }
 
-/* line 117, ../scss/_d3.scss */
+/* line 150, ../scss/_d3.scss */
 .d3-tip {
   line-height: 1;
   font-weight: bold;
   padding: 12px;
   background: rgba(0, 0, 0, 0.7);
   color: #fff;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
   border-radius: 2px;
   pointer-events: none;
 }
 
 /* Creates a small triangle extender for the tooltip */
-/* line 128, ../scss/_d3.scss */
+/* line 161, ../scss/_d3.scss */
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -350,7 +677,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Northward tooltips */
-/* line 140, ../scss/_d3.scss */
+/* line 173, ../scss/_d3.scss */
 .d3-tip.n:after {
   content: "\25BC";
   margin: -1px 0 0 0;
@@ -360,7 +687,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Eastward tooltips */
-/* line 149, ../scss/_d3.scss */
+/* line 182, ../scss/_d3.scss */
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -369,7 +696,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Southward tooltips */
-/* line 157, ../scss/_d3.scss */
+/* line 190, ../scss/_d3.scss */
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -379,7 +706,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Westward tooltips */
-/* line 166, ../scss/_d3.scss */
+/* line 199, ../scss/_d3.scss */
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;
@@ -471,44 +798,49 @@ main .inner section#meta > section {
 
 /* line 66, ../scss/screen.scss */
 #bioGraph {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
   border: 1px solid lightgray;
   height: 600px;
 }
 
-/* line 71, ../scss/screen.scss */
+/* line 72, ../scss/screen.scss */
 pre {
   padding: 5px;
   margin: 5px;
 }
 
-/* line 72, ../scss/screen.scss */
+/* line 73, ../scss/screen.scss */
 .string {
   color: green;
 }
 
-/* line 73, ../scss/screen.scss */
+/* line 74, ../scss/screen.scss */
 .number {
   color: darkorange;
 }
 
-/* line 74, ../scss/screen.scss */
+/* line 75, ../scss/screen.scss */
 .boolean {
   color: blue;
 }
 
-/* line 75, ../scss/screen.scss */
+/* line 76, ../scss/screen.scss */
 .null {
   color: magenta;
 }
 
-/* line 76, ../scss/screen.scss */
+/* line 77, ../scss/screen.scss */
 .key {
   color: red;
 }
 
 /* Buttons
 -------------------------------------------------------------- */
-/* line 83, ../scss/screen.scss */
+/* line 84, ../scss/screen.scss */
 a.button {
   display: inline-block;
   position: relative;
@@ -531,7 +863,7 @@ a.button {
   background-image: linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.5) 90%);
   color: #444444;
 }
-/* line 97, ../scss/screen.scss */
+/* line 98, ../scss/screen.scss */
 a.button:hover {
   color: #000000;
   -webkit-box-shadow: 2px 2px 4px #dddddd;
@@ -543,7 +875,7 @@ a.button:hover {
   background-image: -o-linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.9) 90%);
   background-image: linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.9) 90%);
 }
-/* line 103, ../scss/screen.scss */
+/* line 104, ../scss/screen.scss */
 a.button:active {
   -webkit-box-shadow: 2px 2px 4px #dddddd, 1px 1px 3px #cccccc inset;
   -moz-box-shadow: 2px 2px 4px #dddddd, 1px 1px 3px #cccccc inset;
@@ -552,13 +884,13 @@ a.button:active {
 
 /* Typography
 -------------------------------------------------------------- */
-/* line 111, ../scss/screen.scss */
+/* line 112, ../scss/screen.scss */
 body, button, input, textarea, select {
   font-family: 'open_sanslight', Helvetica, sans-serif;
 }
 
 /* Headings */
-/* line 116, ../scss/screen.scss */
+/* line 117, ../scss/screen.scss */
 h1 {
   line-height: 60px;
   line-height: 6rem;
@@ -566,7 +898,7 @@ h1 {
   font-size: 3.8rem;
 }
 
-/* line 122, ../scss/screen.scss */
+/* line 123, ../scss/screen.scss */
 h2 {
   line-height: 40px;
   line-height: 4rem;
@@ -575,7 +907,7 @@ h2 {
   padding-top: 0.3em;
 }
 
-/* line 129, ../scss/screen.scss */
+/* line 130, ../scss/screen.scss */
 h3 {
   line-height: 35px;
   font-size: 26px;
@@ -583,19 +915,19 @@ h3 {
   padding-top: 0.2em;
 }
 
-/* line 135, ../scss/screen.scss */
+/* line 136, ../scss/screen.scss */
 h4 {
   line-height: 26px;
   font-size: 18px;
   font-size: 1.8rem;
 }
 
-/* line 142, ../scss/screen.scss */
+/* line 143, ../scss/screen.scss */
 h1:first-child, h2:first-child, h3:first-child, h4:first-child {
   padding-top: 0;
 }
 
-/* line 147, ../scss/screen.scss */
+/* line 148, ../scss/screen.scss */
 hr {
   background-color: #ccc;
   border: 0;
@@ -604,23 +936,23 @@ hr {
 }
 
 /* Text elements */
-/* line 155, ../scss/screen.scss */
+/* line 156, ../scss/screen.scss */
 ul,
 ol {
   margin: 0 0 1.5em 3em;
 }
 
-/* line 158, ../scss/screen.scss */
+/* line 159, ../scss/screen.scss */
 ul {
   list-style: disc;
 }
 
-/* line 161, ../scss/screen.scss */
+/* line 162, ../scss/screen.scss */
 ol {
   list-style: decimal;
 }
 
-/* line 167, ../scss/screen.scss */
+/* line 168, ../scss/screen.scss */
 ul ul,
 ol ol,
 ul ol,
@@ -629,23 +961,23 @@ ol ul {
   margin-left: 1.5em;
 }
 
-/* line 171, ../scss/screen.scss */
+/* line 172, ../scss/screen.scss */
 dt {
   font-weight: bold;
 }
 
-/* line 174, ../scss/screen.scss */
+/* line 175, ../scss/screen.scss */
 dd {
   margin: 0 1.5em 1.5em;
 }
 
-/* line 178, ../scss/screen.scss */
+/* line 179, ../scss/screen.scss */
 b,
 strong {
   font-weight: bold;
 }
 
-/* line 184, ../scss/screen.scss */
+/* line 185, ../scss/screen.scss */
 dfn,
 cite,
 em,
@@ -653,17 +985,17 @@ i {
   font-style: italic;
 }
 
-/* line 187, ../scss/screen.scss */
+/* line 188, ../scss/screen.scss */
 blockquote {
   margin: 0 1.5em;
 }
 
-/* line 190, ../scss/screen.scss */
+/* line 191, ../scss/screen.scss */
 address {
   margin: 0 0 1.5em;
 }
 
-/* line 193, ../scss/screen.scss */
+/* line 194, ../scss/screen.scss */
 pre {
   background: #eee;
   font-family: "Courier 10 Pitch", Courier, monospace;
@@ -677,7 +1009,7 @@ pre {
 }
 
 /* Links */
-/* line 205, ../scss/screen.scss */
+/* line 206, ../scss/screen.scss */
 a {
   color: #a56d07;
   -webkit-transition: all 0.2s ease-in-out;
@@ -686,7 +1018,7 @@ a {
   transition: all 0.2s ease-in-out;
   text-decoration: none;
 }
-/* line 210, ../scss/screen.scss */
+/* line 211, ../scss/screen.scss */
 a.ext-link:after {
   padding-left: 3px;
   content: "\e62a";
@@ -698,13 +1030,13 @@ a.ext-link:after {
   text-transform: none;
   line-height: 1;
 }
-/* line 221, ../scss/screen.scss */
+/* line 222, ../scss/screen.scss */
 a.no-icon.ext-link:after {
   content: "";
   padding: 0;
 }
 
-/* line 228, ../scss/screen.scss */
+/* line 229, ../scss/screen.scss */
 a:hover,
 a:focus,
 a:active {
@@ -712,21 +1044,21 @@ a:active {
 }
 
 /* Alignment */
-/* line 232, ../scss/screen.scss */
+/* line 233, ../scss/screen.scss */
 .alignleft {
   display: inline;
   float: left;
   margin-right: 1.5em;
 }
 
-/* line 237, ../scss/screen.scss */
+/* line 238, ../scss/screen.scss */
 .alignright {
   display: inline;
   float: right;
   margin-left: 1.5em;
 }
 
-/* line 242, ../scss/screen.scss */
+/* line 243, ../scss/screen.scss */
 .aligncenter {
   clear: both;
   display: block;
@@ -734,24 +1066,24 @@ a:active {
   text-align: center;
 }
 
-/* line 248, ../scss/screen.scss */
+/* line 249, ../scss/screen.scss */
 .center {
   text-align: center;
 }
 
 /* Misc & mixens
 -------------------------------------------------------------- */
-/* line 257, ../scss/screen.scss */
+/* line 258, ../scss/screen.scss */
 .clearfix {
   *zoom: 1;
 }
-/* line 259, ../scss/screen.scss */
+/* line 260, ../scss/screen.scss */
 .clearfix:before, .clearfix:after {
   content: " ";
   display: table;
   visibility: hidden;
 }
-/* line 264, ../scss/screen.scss */
+/* line 265, ../scss/screen.scss */
 .clearfix:after {
   clear: both;
 }

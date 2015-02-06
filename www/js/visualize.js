@@ -131,6 +131,35 @@
       ty = dty - (Math.sin(gamma) * d.target.radius);
       return "M" + dsx + "," + dsy + " A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty;
     };
+    network.updateSearch = function(searchTerm) {
+      var meta, searchRegEx;
+      if (searchTerm) {
+        searchRegEx = new RegExp(searchTerm.toLowerCase());
+        meta = "<h2>Suchergebnisse</h2><div class=\"flex\">";
+        node.each(function(d) {
+          var element, match;
+          element = d3.select(this);
+          match = d.name.toLowerCase().search(searchRegEx);
+          if (searchTerm.length > 0 && match >= 0) {
+            d.searched = true;
+            element.classed("background", false);
+            meta += "<a href=\"#\">" + d.name + "</a> ";
+          } else {
+            d.searched = false;
+            element.classed("background", true);
+          }
+          element.classed('searched', d.searched);
+          return link.classed("background", true);
+        });
+        meta += "</div>";
+        return $('#meta .searchResults').html(meta);
+      } else {
+        $('#meta .searchResults').html("");
+        node.classed('searched background', false);
+        node.attr('searched', false);
+        return link.classed('highlight background', false);
+      }
+    };
     filterNodes = function(allNodes) {
       var cutoff, filteredNodes, playcounts;
       filteredNodes = allNodes;
@@ -213,21 +242,26 @@
         });
       }
       node.classed("highlight", function(n) {
-        if (n.searched || neighboring(d, n)[0]) {
-          return true;
-        } else {
-          return false;
+        if (!n.searched) {
+          if ((neighboring(d, n)[0])) {
+            return true;
+          } else {
+            return false;
+          }
         }
       });
       node.classed("background", function(n) {
-        if (n.searched || neighboring(d, n)[0]) {
-          return false;
-        } else {
-          return true;
+        if (!n.searched) {
+          if ((neighboring(d, n)[0])) {
+            return false;
+          } else {
+            return true;
+          }
         }
       });
+      node.classed("selected", false);
       d3.select(this).classed({
-        'highlight': true,
+        'highlight selected': true,
         'background': false
       });
       meta = "<h2>" + d.name + "</h2>";
@@ -250,30 +284,20 @@
       meta += outgoing + "</div>";
       meta += incoming + "</div>";
       meta += "</div>";
-      return $('#meta #node').html(meta);
+      return $('#meta .node').html(meta);
     };
     hideDetails = function(d, i) {
       if (d3.event.defaultPrevented) {
         return;
       }
-      node.classed("highlight", function(n) {
-        if (!n.searched) {
-          return false;
-        } else {
-          return true;
-        }
-      });
-      node.classed("background", function(n) {
-        if (!n.searched) {
-          return false;
-        } else {
-          return true;
-        }
-      });
+      node.classed("highlight background selected searched", false);
       if (link) {
         link.classed("highlight background", false);
       }
-      return $("#meta #node").html("");
+      $("#meta .node").html("");
+      $("#search").val("");
+      $('#meta .searchResults').html("");
+      return node.attr('searched', false);
     };
     neighboring = function(a, b) {
       if (linkedByIndex[a.id + "," + b.id]) {
@@ -332,6 +356,11 @@
   $(function() {
     var myNetwork;
     myNetwork = Network();
+    $("#search").keyup(function() {
+      var searchTerm;
+      searchTerm = $(this).val();
+      return myNetwork.updateSearch(searchTerm);
+    });
     return d3.json(PREFIX + "/data/graph.json", function(json) {
       return myNetwork("#bioGraph", json);
     });
