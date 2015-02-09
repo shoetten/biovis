@@ -6,7 +6,7 @@ PREFIX = ""
 debug = true
 
 Network = () ->
-  # Constants for the SVG
+  # constants for the SVG
   width = 700
   height = 600
 
@@ -27,7 +27,7 @@ Network = () ->
   curNodesData = []                 # filtered nodes data
   linkedByIndex = {}                # links between nodes, used for highlighting
 
-  # Set up the colour scale
+  # Set up the color scale
   color = d3.scale.ordinal()
     .range(["#74c476", "#fd8d3c", "#207ec2", "#9467bd"])
 
@@ -52,7 +52,7 @@ Network = () ->
     .domain([0, height])
     .range([0, height])
 
-  # methods to handle zoom and dragging
+  # method to handle zoom and pan
   zoomed = () ->
     # container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")")
     # if (debug) then console.log("zoom", d3.event.translate, d3.event.scale)
@@ -60,12 +60,13 @@ Network = () ->
     # translation = d3.event.translate
     forceTick()                                    # update positions
 
+  # methods to handle dragging
   dragstarted = (d) ->
     d3.event.sourceEvent.stopPropagation()
     d3.select(this).classed("dragging", true)
 
   dragged = (d) ->
-    console.log("DRAG")
+    if (debug) then console.log("DRAG")
     # if (d.fixed) then return     # root is fixed
 
     # get mouse coordinates relative to the visualization coordinate system
@@ -221,8 +222,7 @@ Network = () ->
     "M" + dsx + "," + dsy + " A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty
 
 
-  # Public function to update highlighted nodes
-  # from search
+  # Public function to update highlighted nodes from search
   network.updateSearch = (searchTerm) ->
     if searchTerm
       searchRegEx = new RegExp(searchTerm.toLowerCase())
@@ -405,9 +405,12 @@ Network = () ->
   # Set the display size based on the SVG size and re-draw
   setSize = () ->
     svgStyles = window.getComputedStyle(vis.node())
-    svgW = width = parseInt(svgStyles["width"])
-    svgH = height = parseInt(svgStyles["height"])
+    svgW = parseInt(svgStyles["width"])
+    svgH = parseInt(svgStyles["height"])
     
+    vis.attr("width", svgW)
+      .attr("height", svgH)
+
     # Set the output range of the scales
     xScale.range([0, svgW])
     yScale.range([0, svgH])
@@ -415,8 +418,11 @@ Network = () ->
     # re-attach the scales to the zoom behaviour
     zoom.x(xScale)
         .y(yScale)
-   
-    if (debug) then console.log("resize", xScale.range(), yScale.range())
+
+    if (debug)
+      console.log("resize", xScale.range(), yScale.range())
+      console.log("x domain",xScale.domain(),"x range", xScale.range())
+
     forceTick()              # re-draw
 
   # make responsive by adapting size to window changes
@@ -447,6 +453,25 @@ Network = () ->
       )
 
 
+  # zoom to specified domain
+  zoomTo = (xDomain, yDomain) ->
+    d3.transition().duration(750).tween("zoom", ->
+      ix = d3.interpolate(xScale.domain(), xDomain)
+      iy = d3.interpolate(yScale.domain(), yDomain)
+      return (t) ->
+        zoom.x(xScale.domain(ix(t)))
+            .y(yScale.domain(iy(t)))
+
+        zoomed()
+    )
+
+  zoomToNode = (n) ->
+    zoomTo([n.x-100, n.x+100], [n.y-100, n.y+100])
+
+  # reset zoom and pan
+  network.reset = () ->
+    zoomTo([0, width], [0, height])
+
   # Final act of Network() function is to return the inner 'network()' function.
   return network
 
@@ -457,6 +482,9 @@ $  ->
   $("#search").keyup () ->
     searchTerm = $(this).val()
     myNetwork.updateSearch(searchTerm)
+
+  $("#reset").click () ->
+    myNetwork.reset()
 
   d3.json(PREFIX + "/data/graph.json", (json) ->
     myNetwork("#bioGraph", json))

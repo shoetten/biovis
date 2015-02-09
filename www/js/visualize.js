@@ -9,7 +9,7 @@
   debug = true;
 
   Network = function() {
-    var allData, collide, color, container, curLinksData, curNodesData, drag, dragended, dragged, dragstarted, filterLinks, filterNodes, force, forceTick, height, hideDetails, link, linkPath, linkedByIndex, linksG, mapNodes, neighboring, network, node, nodesG, setSize, setupData, showDetails, tip, update, updateLinks, updateNodes, vis, width, xScale, yScale, zoom, zoomed;
+    var allData, collide, color, container, curLinksData, curNodesData, drag, dragended, dragged, dragstarted, filterLinks, filterNodes, force, forceTick, height, hideDetails, link, linkPath, linkedByIndex, linksG, mapNodes, neighboring, network, node, nodesG, setSize, setupData, showDetails, tip, update, updateLinks, updateNodes, vis, width, xScale, yScale, zoom, zoomTo, zoomToNode, zoomed;
     width = 700;
     height = 600;
     vis = null;
@@ -40,7 +40,9 @@
     };
     dragged = function(d) {
       var mouse;
-      console.log("DRAG");
+      if (debug) {
+        console.log("DRAG");
+      }
       mouse = d3.mouse(vis.node());
       d.x = xScale.invert(mouse[0]);
       d.y = yScale.invert(mouse[1]);
@@ -311,13 +313,15 @@
     setSize = function() {
       var svgH, svgStyles, svgW;
       svgStyles = window.getComputedStyle(vis.node());
-      svgW = width = parseInt(svgStyles["width"]);
-      svgH = height = parseInt(svgStyles["height"]);
+      svgW = parseInt(svgStyles["width"]);
+      svgH = parseInt(svgStyles["height"]);
+      vis.attr("width", svgW).attr("height", svgH);
       xScale.range([0, svgW]);
       yScale.range([0, svgH]);
       zoom.x(xScale).y(yScale);
       if (debug) {
         console.log("resize", xScale.range(), yScale.range());
+        console.log("x domain", xScale.domain(), "x range", xScale.range());
       }
       return forceTick();
     };
@@ -350,6 +354,23 @@
         });
       };
     };
+    zoomTo = function(xDomain, yDomain) {
+      return d3.transition().duration(750).tween("zoom", function() {
+        var ix, iy;
+        ix = d3.interpolate(xScale.domain(), xDomain);
+        iy = d3.interpolate(yScale.domain(), yDomain);
+        return function(t) {
+          zoom.x(xScale.domain(ix(t))).y(yScale.domain(iy(t)));
+          return zoomed();
+        };
+      });
+    };
+    zoomToNode = function(n) {
+      return zoomTo([n.x - 100, n.x + 100], [n.y - 100, n.y + 100]);
+    };
+    network.reset = function() {
+      return zoomTo([0, width], [0, height]);
+    };
     return network;
   };
 
@@ -360,6 +381,9 @@
       var searchTerm;
       searchTerm = $(this).val();
       return myNetwork.updateSearch(searchTerm);
+    });
+    $("#reset").click(function() {
+      return myNetwork.reset();
     });
     return d3.json(PREFIX + "/data/graph.json", function(json) {
       return myNetwork("#bioGraph", json);

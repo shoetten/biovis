@@ -282,9 +282,10 @@ input[type="submit"]:active {
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  outline: 0;
 }
 
-/* line 249, ../scss/_reset.scss */
+/* line 250, ../scss/_reset.scss */
 input[type="checkbox"],
 input[type="radio"] {
   box-sizing: border-box;
@@ -293,7 +294,7 @@ input[type="radio"] {
   /* Addresses excess padding in IE8/9 */
 }
 
-/* line 257, ../scss/_reset.scss */
+/* line 258, ../scss/_reset.scss */
 input[type="search"] {
   -webkit-appearance: textfield;
   /* Addresses appearance set to searchfield in S5, Chrome */
@@ -303,13 +304,13 @@ input[type="search"] {
   box-sizing: content-box;
 }
 
-/* line 267, ../scss/_reset.scss */
+/* line 268, ../scss/_reset.scss */
 input[type="search"]::-webkit-search-decoration {
   /* Corrects inner padding displayed oddly in S5, Chrome on OSX */
   -webkit-appearance: none;
 }
 
-/* line 273, ../scss/_reset.scss */
+/* line 274, ../scss/_reset.scss */
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   /* Corrects inner padding and border displayed oddly in FF3/4 www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/ */
@@ -317,7 +318,7 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
-/* line 282, ../scss/_reset.scss */
+/* line 283, ../scss/_reset.scss */
 input[type=text],
 input[type=email],
 input[type=tel],
@@ -327,7 +328,7 @@ textarea {
   border-radius: 5px;
 }
 
-/* line 290, ../scss/_reset.scss */
+/* line 291, ../scss/_reset.scss */
 input[type=text]:focus,
 input[type=email]:focus,
 input[type=tel]:focus,
@@ -335,14 +336,14 @@ textarea:focus {
   color: #101010;
 }
 
-/* line 295, ../scss/_reset.scss */
+/* line 296, ../scss/_reset.scss */
 input[type=text],
 input[type=email],
 input[type=tel] {
   padding: 3px;
 }
 
-/* line 298, ../scss/_reset.scss */
+/* line 299, ../scss/_reset.scss */
 textarea {
   overflow: auto;
   /* Removes default vertical scrollbar in IE6/7/8/9 */
@@ -513,13 +514,19 @@ textarea {
   color: #000;
   border: 1px solid #888888;
 }
+/* line 74, ../scss/_d3.scss */
+#graph #bioGraph #reset {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 
-/* line 77, ../scss/_d3.scss */
+/* line 83, ../scss/_d3.scss */
 #meta .categories {
   font-style: italic;
   margin: 5px 0;
 }
-/* line 81, ../scss/_d3.scss */
+/* line 87, ../scss/_d3.scss */
 #meta .category {
   color: #000;
   display: inline-block;
@@ -537,7 +544,7 @@ textarea {
   overflow: hidden;
   z-index: 1;
 }
-/* line 96, ../scss/_d3.scss */
+/* line 102, ../scss/_d3.scss */
 #meta .category:before {
   content: " ";
   font-size: 13px;
@@ -557,64 +564,64 @@ textarea {
   line-height: 20px;
   line-height: 2rem;
 }
-/* line 112, ../scss/_d3.scss */
+/* line 118, ../scss/_d3.scss */
 #meta .umwelt {
   border-color: #74c476;
 }
-/* line 114, ../scss/_d3.scss */
+/* line 120, ../scss/_d3.scss */
 #meta .umwelt:hover {
   color: #74c476;
   border-color: none;
 }
-/* line 115, ../scss/_d3.scss */
+/* line 121, ../scss/_d3.scss */
 #meta .umwelt:before {
   background: #74c476;
 }
-/* line 117, ../scss/_d3.scss */
+/* line 123, ../scss/_d3.scss */
 #meta .politik {
   border-color: #fd8d3c;
 }
-/* line 119, ../scss/_d3.scss */
+/* line 125, ../scss/_d3.scss */
 #meta .politik:hover {
   color: #fd8d3c;
   border-color: none;
 }
-/* line 120, ../scss/_d3.scss */
+/* line 126, ../scss/_d3.scss */
 #meta .politik:before {
   background: #fd8d3c;
 }
-/* line 122, ../scss/_d3.scss */
+/* line 128, ../scss/_d3.scss */
 #meta .wirtschaft {
   border-color: #207ec2;
 }
-/* line 124, ../scss/_d3.scss */
+/* line 130, ../scss/_d3.scss */
 #meta .wirtschaft:hover {
   color: #207EC2;
   border-color: none;
 }
-/* line 125, ../scss/_d3.scss */
+/* line 131, ../scss/_d3.scss */
 #meta .wirtschaft:before {
   background: #207EC2;
 }
-/* line 127, ../scss/_d3.scss */
+/* line 133, ../scss/_d3.scss */
 #meta .technologie {
   border-color: #9467bd;
 }
-/* line 129, ../scss/_d3.scss */
+/* line 135, ../scss/_d3.scss */
 #meta .technologie:hover  {
   color: #9467bd;
   border-color: none;
 }
-/* line 130, ../scss/_d3.scss */
+/* line 136, ../scss/_d3.scss */
 #meta .technologie:before {
   background: #9467bd;
 }
-/* line 133, ../scss/_d3.scss */
+/* line 139, ../scss/_d3.scss */
 #meta .connected {
   width: 100%;
   font-size: 80%;
 }
-/* line 137, ../scss/_d3.scss */
+/* line 143, ../scss/_d3.scss */
 #meta .incoming, #meta .outgoing, #meta .flex {
   width: 100%;
   display: -webkit-box;
@@ -637,7 +644,7 @@ textarea {
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-/* line 142, ../scss/_d3.scss */
+/* line 148, ../scss/_d3.scss */
 #meta .incoming a, #meta .outgoing a, #meta .flex a {
   -webkit-box-flex: 0 0 48%;
   -moz-box-flex: 0 0 48%;
@@ -648,7 +655,7 @@ textarea {
   width: 48%;
 }
 
-/* line 150, ../scss/_d3.scss */
+/* line 156, ../scss/_d3.scss */
 .d3-tip {
   line-height: 1;
   font-weight: bold;
@@ -664,7 +671,7 @@ textarea {
 }
 
 /* Creates a small triangle extender for the tooltip */
-/* line 161, ../scss/_d3.scss */
+/* line 167, ../scss/_d3.scss */
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -677,7 +684,7 @@ textarea {
 }
 
 /* Northward tooltips */
-/* line 173, ../scss/_d3.scss */
+/* line 179, ../scss/_d3.scss */
 .d3-tip.n:after {
   content: "\25BC";
   margin: -1px 0 0 0;
@@ -687,7 +694,7 @@ textarea {
 }
 
 /* Eastward tooltips */
-/* line 182, ../scss/_d3.scss */
+/* line 188, ../scss/_d3.scss */
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -696,7 +703,7 @@ textarea {
 }
 
 /* Southward tooltips */
-/* line 190, ../scss/_d3.scss */
+/* line 196, ../scss/_d3.scss */
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -706,7 +713,7 @@ textarea {
 }
 
 /* Westward tooltips */
-/* line 199, ../scss/_d3.scss */
+/* line 205, ../scss/_d3.scss */
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;
