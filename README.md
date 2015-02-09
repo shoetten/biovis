@@ -13,7 +13,7 @@ ToDo
 	- add type of influence in list (+/-)
 	- tooltip on hover (e.g. "Mehr x verursacht weniger y")
 - zoom to node
-- clustered force layout?
+- [clustered force layout](http://bl.ocks.org/mbostock/7881887)?
 
 Ideen
 ------------
