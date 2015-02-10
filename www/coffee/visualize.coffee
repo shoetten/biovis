@@ -341,38 +341,60 @@ Network = () ->
     # watch out - don't mess with node if search is currently matching
     node.classed("highlight", (n) ->
       if (!n.searched)
-        if (neighboring(d, n)[0]) then true else false)
+        if (neighboring(d, n)[0] or neighboring(d, n)[1]) then true else false)
     node.classed("background", (n) ->
       if (!n.searched)
-        if (neighboring(d, n)[0]) then false else true)
+        if (neighboring(d, n)[0] or neighboring(d, n)[1]) then false else true)
 
     node.classed("selected", false)         # set all nodes to not selected
   
     # highlight the node being moused over
     d3.select(this).classed({'highlight selected': true, 'background': false})
 
-    # add meta info to sidebar
-    meta = "<h2>#{d.name}</h2>"
-    meta += "<div class=\"categories\">"
-    meta += (d.category.map( (val) ->
-      "<a href=\"#\" class=\"category #{val.toLowerCase()}\">#{val}</a>"
-    ).join(" "));
-    meta += "</div>"
-    meta += "<div class=\"connected\">"
-    outgoing = "<h3>Beeinflusst..</h3><div class=\"outgoing\">"
-    incoming = "<h3>Wird beeinflusst von..</h3><div class=\"incoming\">"
-    node.each( (n) ->
-      if (neighboring(d, n)[0]) and (neighboring(d, n)[1])
-        outgoing += "<a href=\"#\">#{n.name}</a> "
-      if (neighboring(d, n)[0]) and !(neighboring(d, n)[1])
-        incoming += "<a href=\"#\">#{n.name}</a> "
-    )
-    meta += outgoing + "</div>"
-    meta += incoming + "</div>"
-    meta += "</div>"
 
+    #################### add meta info to sidebar
+    #############################################
+    nodeMeta = d3.select("#meta .nodes")
+    # remove old stuff
+    nodeMeta.text(null)
 
-    $('#meta .node').html(meta)
+    # add heading
+    nodeMeta.append("h2")
+      .text(d.name)
+
+    # add categories
+    categories = nodeMeta.append("div").attr("class", "categories")
+    
+    categories.selectAll("a").data(d.category)
+      .enter().append("a")
+        .attr("href", '#')
+        .attr("class", (n) -> "category #{n.toLowerCase()}")
+        .text((n) -> n)
+
+    # add connected nodes
+    connected = nodeMeta.append("div").attr("class", "connected")
+    connectedData = curNodesData.filter((n) -> (neighboring(d, n)[0] or neighboring(d, n)[1]))
+
+    connected.append("h3").text("Beeinflusst..")
+    outgoing = connected.append("div").attr("class", "outgoing")
+      .selectAll(".node")
+      .data(connectedData.filter((n) -> neighboring(d, n)[0]), (n) -> n.id)
+
+    outgoing.enter().append("a")
+      .attr('href', '#')
+      .text((n) -> n.name)
+      .on('click', (n) -> zoomToNode(n))
+    
+    connected.append("h3").text("Wird beeinflusst von..")
+    incoming = connected.append("div").attr("class", "incoming")
+      .selectAll(".node")
+      .data(connectedData.filter((n) -> neighboring(d, n)[1]), (n) -> n.id)
+
+    incoming.enter().append("a")
+      .attr('href', '#')
+      .text((n) -> n.name)
+      .on('click', (n) -> zoomToNode(n))
+
 
   # click on background function
   hideDetails = (d,i) ->
@@ -384,22 +406,18 @@ Network = () ->
       link.classed("highlight background", false)
 
     # remove meta info from sidebar
-    $("#meta .node").html("")
+    d3.select("#meta .nodes").text(null)
     # clear search
     $("#search").val("")
-    $('#meta .searchResults').html("")
+    d3.select('#meta .searchResults').text(null)
     node.attr('searched', false)
 
   # Given two nodes a and b, returns true if
   # there is a link between them.
   # Uses linkedByIndex initialized in setupData
   neighboring = (a, b) ->
-    if linkedByIndex[a.id + "," + b.id]
-      return [true, true]                                            # true for outgoing link
-    else if linkedByIndex[b.id + "," + a.id]
-      return [true, false]                                           # false for incoming link
-    else
-      return [false, false]                                          # not a neighboring node
+    # first element of array for outgoing link, second for incoming link
+    [linkedByIndex[a.id + "," + b.id], linkedByIndex[b.id + "," + a.id]]
 
 
   # Set the display size based on the SVG size and re-draw

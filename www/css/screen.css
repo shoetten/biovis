@@ -668,10 +668,11 @@ textarea {
   -o-border-radius: 2px;
   border-radius: 2px;
   pointer-events: none;
+  z-index: 10;
 }
 
 /* Creates a small triangle extender for the tooltip */
-/* line 167, ../scss/_d3.scss */
+/* line 168, ../scss/_d3.scss */
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -684,7 +685,7 @@ textarea {
 }
 
 /* Northward tooltips */
-/* line 179, ../scss/_d3.scss */
+/* line 180, ../scss/_d3.scss */
 .d3-tip.n:after {
   content: "\25BC";
   margin: -1px 0 0 0;
@@ -694,7 +695,7 @@ textarea {
 }
 
 /* Eastward tooltips */
-/* line 188, ../scss/_d3.scss */
+/* line 189, ../scss/_d3.scss */
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -703,7 +704,7 @@ textarea {
 }
 
 /* Southward tooltips */
-/* line 196, ../scss/_d3.scss */
+/* line 197, ../scss/_d3.scss */
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -713,7 +714,7 @@ textarea {
 }
 
 /* Westward tooltips */
-/* line 205, ../scss/_d3.scss */
+/* line 206, ../scss/_d3.scss */
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;

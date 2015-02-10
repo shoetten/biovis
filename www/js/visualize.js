@@ -222,7 +222,7 @@
       return nodesMap;
     };
     showDetails = function(d, i) {
-      var incoming, meta, outgoing;
+      var categories, connected, connectedData, incoming, nodeMeta, outgoing;
       if (d3.event.defaultPrevented) {
         return;
       }
@@ -245,7 +245,7 @@
       }
       node.classed("highlight", function(n) {
         if (!n.searched) {
-          if ((neighboring(d, n)[0])) {
+          if (neighboring(d, n)[0] || neighboring(d, n)[1]) {
             return true;
           } else {
             return false;
@@ -254,7 +254,7 @@
       });
       node.classed("background", function(n) {
         if (!n.searched) {
-          if ((neighboring(d, n)[0])) {
+          if (neighboring(d, n)[0] || neighboring(d, n)[1]) {
             return false;
           } else {
             return true;
@@ -266,27 +266,41 @@
         'highlight selected': true,
         'background': false
       });
-      meta = "<h2>" + d.name + "</h2>";
-      meta += "<div class=\"categories\">";
-      meta += d.category.map(function(val) {
-        return "<a href=\"#\" class=\"category " + (val.toLowerCase()) + "\">" + val + "</a>";
-      }).join(" ");
-      meta += "</div>";
-      meta += "<div class=\"connected\">";
-      outgoing = "<h3>Beeinflusst..</h3><div class=\"outgoing\">";
-      incoming = "<h3>Wird beeinflusst von..</h3><div class=\"incoming\">";
-      node.each(function(n) {
-        if ((neighboring(d, n)[0]) && (neighboring(d, n)[1])) {
-          outgoing += "<a href=\"#\">" + n.name + "</a> ";
-        }
-        if ((neighboring(d, n)[0]) && !(neighboring(d, n)[1])) {
-          return incoming += "<a href=\"#\">" + n.name + "</a> ";
-        }
+      nodeMeta = d3.select("#meta .nodes");
+      nodeMeta.text(null);
+      nodeMeta.append("h2").text(d.name);
+      categories = nodeMeta.append("div").attr("class", "categories");
+      categories.selectAll("a").data(d.category).enter().append("a").attr("href", '#').attr("class", function(n) {
+        return "category " + (n.toLowerCase());
+      }).text(function(n) {
+        return n;
       });
-      meta += outgoing + "</div>";
-      meta += incoming + "</div>";
-      meta += "</div>";
-      return $('#meta .node').html(meta);
+      connected = nodeMeta.append("div").attr("class", "connected");
+      connectedData = curNodesData.filter(function(n) {
+        return neighboring(d, n)[0] || neighboring(d, n)[1];
+      });
+      connected.append("h3").text("Beeinflusst..");
+      outgoing = connected.append("div").attr("class", "outgoing").selectAll(".node").data(connectedData.filter(function(n) {
+        return neighboring(d, n)[0];
+      }), function(n) {
+        return n.id;
+      });
+      outgoing.enter().append("a").attr('href', '#').text(function(n) {
+        return n.name;
+      }).on('click', function(n) {
+        return zoomToNode(n);
+      });
+      connected.append("h3").text("Wird beeinflusst von..");
+      incoming = connected.append("div").attr("class", "incoming").selectAll(".node").data(connectedData.filter(function(n) {
+        return neighboring(d, n)[1];
+      }), function(n) {
+        return n.id;
+      });
+      return incoming.enter().append("a").attr('href', '#').text(function(n) {
+        return n.name;
+      }).on('click', function(n) {
+        return zoomToNode(n);
+      });
     };
     hideDetails = function(d, i) {
       if (d3.event.defaultPrevented) {
@@ -296,19 +310,13 @@
       if (link) {
         link.classed("highlight background", false);
       }
-      $("#meta .node").html("");
+      d3.select("#meta .nodes").text(null);
       $("#search").val("");
-      $('#meta .searchResults').html("");
+      d3.select('#meta .searchResults').text(null);
       return node.attr('searched', false);
     };
     neighboring = function(a, b) {
-      if (linkedByIndex[a.id + "," + b.id]) {
-        return [true, true];
-      } else if (linkedByIndex[b.id + "," + a.id]) {
-        return [true, false];
-      } else {
-        return [false, false];
-      }
+      return [linkedByIndex[a.id + "," + b.id], linkedByIndex[b.id + "," + a.id]];
     };
     setSize = function() {
       var svgH, svgStyles, svgW;
