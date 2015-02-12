@@ -424,71 +424,72 @@ textarea {
   */
   width: 100%;
   /* make it responsive */
+  height: 100%;
 }
-/* line 12, ../scss/_d3.scss */
+/* line 13, ../scss/_d3.scss */
 #graph #bioGraph svg .node {
   stroke: #fff;
   stroke-width: 1.5px;
 }
-/* line 15, ../scss/_d3.scss */
+/* line 16, ../scss/_d3.scss */
 #graph #bioGraph svg .node.highlight, #graph #bioGraph svg .node:hover {
   stroke-width: 2px;
   stroke: #666;
 }
-/* line 19, ../scss/_d3.scss */
+/* line 20, ../scss/_d3.scss */
 #graph #bioGraph svg .node.selected {
   stroke: #000;
 }
-/* line 22, ../scss/_d3.scss */
+/* line 23, ../scss/_d3.scss */
 #graph #bioGraph svg .node.searched {
   stroke: #000;
   stroke-dasharray: 11px 4px;
 }
-/* line 26, ../scss/_d3.scss */
+/* line 27, ../scss/_d3.scss */
 #graph #bioGraph svg .node.background {
   stroke-opacity: 0.3;
   fill-opacity: 0.3;
 }
-/* line 30, ../scss/_d3.scss */
+/* line 31, ../scss/_d3.scss */
 #graph #bioGraph svg .link {
   fill: none;
   stroke: #bbbbbb;
   stroke-width: 1px;
   marker-end: url(#arrowhead);
 }
-/* line 35, ../scss/_d3.scss */
+/* line 36, ../scss/_d3.scss */
 #graph #bioGraph svg .link.highlight {
   stroke: #777;
   marker-end: url(#arrowhead-highlight);
 }
-/* line 39, ../scss/_d3.scss */
+/* line 40, ../scss/_d3.scss */
 #graph #bioGraph svg .link.background {
   stroke-opacity: .3;
   marker-end: url(#arrowhead-background);
 }
-/* line 44, ../scss/_d3.scss */
+/* line 45, ../scss/_d3.scss */
 #graph #bioGraph svg .arrowhead, #graph #bioGraph svg .arrowhead-background, #graph #bioGraph svg .arrowhead-highlight {
   fill: #aaaaaa;
   stroke: #fff;
   stroke-width: 1px;
 }
-/* line 49, ../scss/_d3.scss */
+/* line 50, ../scss/_d3.scss */
 #graph #bioGraph svg .arrowhead {
   stroke-opacity: 0.9;
   fill-opacity: 0.9;
 }
-/* line 50, ../scss/_d3.scss */
+/* line 51, ../scss/_d3.scss */
 #graph #bioGraph svg .arrowhead-highlight {
   stroke-opacity: 1;
   fill-opacity: 1;
   fill: #999999;
 }
-/* line 51, ../scss/_d3.scss */
+/* line 52, ../scss/_d3.scss */
 #graph #bioGraph svg .arrowhead-background {
   stroke-opacity: 0.3;
   fill-opacity: .3;
 }
-/* line 54, ../scss/_d3.scss */
+/* line 55, ../scss/_d3.scss */
 #graph #bioGraph #search_section {
   position: absolute;
   right: 0;
@@ -496,7 +497,7 @@ textarea {
   width: 40%;
   max-width: 250px;
 }
-/* line 60, ../scss/_d3.scss */
+/* line 61, ../scss/_d3.scss */
 #graph #bioGraph #search_section input {
   color: #888;
   border: 1px solid #bbb;
@@ -509,12 +510,12 @@ textarea {
   font-size: 13px;
   width: 100%;
 }
-/* line 67, ../scss/_d3.scss */
+/* line 68, ../scss/_d3.scss */
 #graph #bioGraph #search_section input:focus {
   color: #000;
   border: 1px solid #888888;
 }
-/* line 74, ../scss/_d3.scss */
+/* line 75, ../scss/_d3.scss */
 #graph #bioGraph #reset {
   position: absolute;
   top: 10px;
@@ -522,11 +523,15 @@ textarea {
 }
 
 /* line 83, ../scss/_d3.scss */
+#meta {
+  position: relative;
+}
+/* line 86, ../scss/_d3.scss */
 #meta .categories {
   font-style: italic;
   margin: 5px 0;
 }
-/* line 87, ../scss/_d3.scss */
+/* line 90, ../scss/_d3.scss */
 #meta .category {
   color: #000;
   display: inline-block;
@@ -544,7 +549,7 @@ textarea {
   overflow: hidden;
   z-index: 1;
 }
-/* line 102, ../scss/_d3.scss */
+/* line 105, ../scss/_d3.scss */
 #meta .category:before {
   content: " ";
   font-size: 13px;
@@ -564,64 +569,64 @@ textarea {
   line-height: 20px;
   line-height: 2rem;
 }
-/* line 118, ../scss/_d3.scss */
+/* line 121, ../scss/_d3.scss */
 #meta .umwelt {
   border-color: #74c476;
 }
-/* line 120, ../scss/_d3.scss */
+/* line 123, ../scss/_d3.scss */
 #meta .umwelt:hover {
   color: #74c476;
   border-color: none;
 }
-/* line 121, ../scss/_d3.scss */
+/* line 124, ../scss/_d3.scss */
 #meta .umwelt:before {
   background: #74c476;
 }
-/* line 123, ../scss/_d3.scss */
+/* line 126, ../scss/_d3.scss */
 #meta .politik {
   border-color: #fd8d3c;
 }
-/* line 125, ../scss/_d3.scss */
+/* line 128, ../scss/_d3.scss */
 #meta .politik:hover {
   color: #fd8d3c;
   border-color: none;
 }
-/* line 126, ../scss/_d3.scss */
+/* line 129, ../scss/_d3.scss */
 #meta .politik:before {
   background: #fd8d3c;
 }
-/* line 128, ../scss/_d3.scss */
+/* line 131, ../scss/_d3.scss */
 #meta .wirtschaft {
   border-color: #207ec2;
 }
-/* line 130, ../scss/_d3.scss */
+/* line 133, ../scss/_d3.scss */
 #meta .wirtschaft:hover {
   color: #207EC2;
   border-color: none;
 }
-/* line 131, ../scss/_d3.scss */
+/* line 134, ../scss/_d3.scss */
 #meta .wirtschaft:before {
   background: #207EC2;
 }
-/* line 133, ../scss/_d3.scss */
+/* line 136, ../scss/_d3.scss */
 #meta .technologie {
   border-color: #9467bd;
 }
-/* line 135, ../scss/_d3.scss */
+/* line 138, ../scss/_d3.scss */
 #meta .technologie:hover  {
   color: #9467bd;
   border-color: none;
 }
-/* line 136, ../scss/_d3.scss */
+/* line 139, ../scss/_d3.scss */
 #meta .technologie:before {
   background: #9467bd;
 }
-/* line 139, ../scss/_d3.scss */
+/* line 142, ../scss/_d3.scss */
 #meta .connected {
   width: 100%;
   font-size: 80%;
 }
-/* line 143, ../scss/_d3.scss */
+/* line 146, ../scss/_d3.scss */
 #meta .incoming, #meta .outgoing, #meta .flex {
   width: 100%;
   display: -webkit-box;
@@ -644,8 +649,8 @@ textarea {
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-/* line 148, ../scss/_d3.scss */
-#meta .incoming a, #meta .outgoing a, #meta .flex a {
+/* line 151, ../scss/_d3.scss */
+#meta .incoming .node, #meta .outgoing .node, #meta .flex .node {
   -webkit-box-flex: 0 0 48%;
   -moz-box-flex: 0 0 48%;
   -webkit-flex: 0 0 48%;
@@ -654,9 +659,13 @@ textarea {
   /* NEW, Spec - Opera 12.1, Firefox 20+ */
   width: 48%;
 }
+/* line 154, ../scss/_d3.scss */
+#meta .incoming .node a, #meta .outgoing .node a, #meta .flex .node a {
+  margin-left: 5px;
+}
 
-/* line 156, ../scss/_d3.scss */
-.d3-tip {
+/* line 162, ../scss/_d3.scss */
+.d3-tip, .ui-tooltip {
   line-height: 1;
   font-weight: bold;
   padding: 12px;
@@ -671,9 +680,15 @@ textarea {
   z-index: 10;
 }
 
+/* line 173, ../scss/_d3.scss */
+.ui-tooltip {
+  max-width: 220px;
+  font-size: 80%;
+}
+
 /* Creates a small triangle extender for the tooltip */
-/* line 168, ../scss/_d3.scss */
-.d3-tip:after {
+/* line 179, ../scss/_d3.scss */
+.d3-tip:after, .ui-tooltip .arrow:after {
   box-sizing: border-box;
   display: inline;
   font-size: 10px;
@@ -684,18 +699,23 @@ textarea {
   pointer-events: none;
 }
 
+/* line 189, ../scss/_d3.scss */
+.ui-tooltip .arrow:after {
+  font-size: 12px;
+}
+
 /* Northward tooltips */
-/* line 180, ../scss/_d3.scss */
-.d3-tip.n:after {
+/* line 194, ../scss/_d3.scss */
+.d3-tip.n:after, .ui-tooltip .arrow.bottom:after {
   content: "\25BC";
-  margin: -1px 0 0 0;
+  margin: -2px 0 0 0;
   top: 100%;
   left: 0;
   text-align: center;
 }
 
 /* Eastward tooltips */
-/* line 189, ../scss/_d3.scss */
+/* line 203, ../scss/_d3.scss */
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -704,7 +724,7 @@ textarea {
 }
 
 /* Southward tooltips */
-/* line 197, ../scss/_d3.scss */
+/* line 211, ../scss/_d3.scss */
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -714,12 +734,25 @@ textarea {
 }
 
 /* Westward tooltips */
-/* line 206, ../scss/_d3.scss */
+/* line 220, ../scss/_d3.scss */
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;
   top: 50%;
   left: 100%;
+}
+
+/* jquery tooltip log */
+/* line 228, ../scss/_d3.scss */
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }
 
 /* use border-box box-layout for each and every element */
@@ -815,40 +848,9 @@ main .inner section#meta > section {
   height: 600px;
 }
 
-/* line 72, ../scss/screen.scss */
-pre {
-  padding: 5px;
-  margin: 5px;
-}
-
-/* line 73, ../scss/screen.scss */
-.string {
-  color: green;
-}
-
-/* line 74, ../scss/screen.scss */
-.number {
-  color: darkorange;
-}
-
-/* line 75, ../scss/screen.scss */
-.boolean {
-  color: blue;
-}
-
-/* line 76, ../scss/screen.scss */
-.null {
-  color: magenta;
-}
-
-/* line 77, ../scss/screen.scss */
-.key {
-  color: red;
-}
-
 /* Buttons
 -------------------------------------------------------------- */
-/* line 84, ../scss/screen.scss */
+/* line 75, ../scss/screen.scss */
 a.button {
   display: inline-block;
   position: relative;
@@ -871,7 +873,7 @@ a.button {
   background-image: linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.5) 90%);
   color: #444444;
 }
-/* line 98, ../scss/screen.scss */
+/* line 89, ../scss/screen.scss */
 a.button:hover {
   color: #000000;
   -webkit-box-shadow: 2px 2px 4px #dddddd;
@@ -883,7 +885,7 @@ a.button:hover {
   background-image: -o-linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.9) 90%);
   background-image: linear-gradient(rgba(221, 221, 221, 0.1), rgba(221, 221, 221, 0.9) 90%);
 }
-/* line 104, ../scss/screen.scss */
+/* line 95, ../scss/screen.scss */
 a.button:active {
   -webkit-box-shadow: 2px 2px 4px #dddddd, 1px 1px 3px #cccccc inset;
   -moz-box-shadow: 2px 2px 4px #dddddd, 1px 1px 3px #cccccc inset;
@@ -892,13 +894,13 @@ a.button:active {
 
 /* Typography
 -------------------------------------------------------------- */
-/* line 112, ../scss/screen.scss */
+/* line 103, ../scss/screen.scss */
 body, button, input, textarea, select {
   font-family: 'open_sanslight', Helvetica, sans-serif;
 }
 
 /* Headings */
-/* line 117, ../scss/screen.scss */
+/* line 108, ../scss/screen.scss */
 h1 {
   line-height: 60px;
   line-height: 6rem;
@@ -906,7 +908,7 @@ h1 {
   font-size: 3.8rem;
 }
 
-/* line 123, ../scss/screen.scss */
+/* line 114, ../scss/screen.scss */
 h2 {
   line-height: 40px;
   line-height: 4rem;
@@ -915,7 +917,7 @@ h2 {
   padding-top: 0.3em;
 }
 
-/* line 130, ../scss/screen.scss */
+/* line 121, ../scss/screen.scss */
 h3 {
   line-height: 35px;
   font-size: 26px;
@@ -923,19 +925,19 @@ h3 {
   padding-top: 0.2em;
 }
 
-/* line 136, ../scss/screen.scss */
+/* line 127, ../scss/screen.scss */
 h4 {
   line-height: 26px;
   font-size: 18px;
   font-size: 1.8rem;
 }
 
-/* line 143, ../scss/screen.scss */
+/* line 134, ../scss/screen.scss */
 h1:first-child, h2:first-child, h3:first-child, h4:first-child {
   padding-top: 0;
 }
 
-/* line 148, ../scss/screen.scss */
+/* line 139, ../scss/screen.scss */
 hr {
   background-color: #ccc;
   border: 0;
@@ -944,23 +946,23 @@ hr {
 }
 
 /* Text elements */
-/* line 156, ../scss/screen.scss */
+/* line 147, ../scss/screen.scss */
 ul,
 ol {
   margin: 0 0 1.5em 3em;
 }
 
-/* line 159, ../scss/screen.scss */
+/* line 150, ../scss/screen.scss */
 ul {
   list-style: disc;
 }
 
-/* line 162, ../scss/screen.scss */
+/* line 153, ../scss/screen.scss */
 ol {
   list-style: decimal;
 }
 
-/* line 168, ../scss/screen.scss */
+/* line 159, ../scss/screen.scss */
 ul ul,
 ol ol,
 ul ol,
@@ -969,23 +971,23 @@ ol ul {
   margin-left: 1.5em;
 }
 
-/* line 172, ../scss/screen.scss */
+/* line 163, ../scss/screen.scss */
 dt {
   font-weight: bold;
 }
 
-/* line 175, ../scss/screen.scss */
+/* line 166, ../scss/screen.scss */
 dd {
   margin: 0 1.5em 1.5em;
 }
 
-/* line 179, ../scss/screen.scss */
+/* line 170, ../scss/screen.scss */
 b,
 strong {
   font-weight: bold;
 }
 
-/* line 185, ../scss/screen.scss */
+/* line 176, ../scss/screen.scss */
 dfn,
 cite,
 em,
@@ -993,17 +995,17 @@ i {
   font-style: italic;
 }
 
-/* line 188, ../scss/screen.scss */
+/* line 179, ../scss/screen.scss */
 blockquote {
   margin: 0 1.5em;
 }
 
-/* line 191, ../scss/screen.scss */
+/* line 182, ../scss/screen.scss */
 address {
   margin: 0 0 1.5em;
 }
 
-/* line 194, ../scss/screen.scss */
+/* line 185, ../scss/screen.scss */
 pre {
   background: #eee;
   font-family: "Courier 10 Pitch", Courier, monospace;
@@ -1017,7 +1019,7 @@ pre {
 }
 
 /* Links */
-/* line 206, ../scss/screen.scss */
+/* line 197, ../scss/screen.scss */
 a {
   color: #a56d07;
   -webkit-transition: all 0.2s ease-in-out;
@@ -1026,7 +1028,7 @@ a {
   transition: all 0.2s ease-in-out;
   text-decoration: none;
 }
-/* line 211, ../scss/screen.scss */
+/* line 202, ../scss/screen.scss */
 a.ext-link:after {
   padding-left: 3px;
   content: "\e62a";
@@ -1038,13 +1040,13 @@ a.ext-link:after {
   text-transform: none;
   line-height: 1;
 }
-/* line 222, ../scss/screen.scss */
+/* line 213, ../scss/screen.scss */
 a.no-icon.ext-link:after {
   content: "";
   padding: 0;
 }
 
-/* line 229, ../scss/screen.scss */
+/* line 220, ../scss/screen.scss */
 a:hover,
 a:focus,
 a:active {
@@ -1052,21 +1054,21 @@ a:active {
 }
 
 /* Alignment */
-/* line 233, ../scss/screen.scss */
+/* line 224, ../scss/screen.scss */
 .alignleft {
   display: inline;
   float: left;
   margin-right: 1.5em;
 }
 
-/* line 238, ../scss/screen.scss */
+/* line 229, ../scss/screen.scss */
 .alignright {
   display: inline;
   float: right;
   margin-left: 1.5em;
 }
 
-/* line 243, ../scss/screen.scss */
+/* line 234, ../scss/screen.scss */
 .aligncenter {
   clear: both;
   display: block;
@@ -1074,24 +1076,24 @@ a:active {
   text-align: center;
 }
 
-/* line 249, ../scss/screen.scss */
+/* line 240, ../scss/screen.scss */
 .center {
   text-align: center;
 }
 
 /* Misc & mixens
 -------------------------------------------------------------- */
-/* line 258, ../scss/screen.scss */
+/* line 249, ../scss/screen.scss */
 .clearfix {
   *zoom: 1;
 }
-/* line 260, ../scss/screen.scss */
+/* line 251, ../scss/screen.scss */
 .clearfix:before, .clearfix:after {
   content: " ";
   display: table;
   visibility: hidden;
 }
-/* line 265, ../scss/screen.scss */
+/* line 256, ../scss/screen.scss */
 .clearfix:after {
   clear: both;
 }

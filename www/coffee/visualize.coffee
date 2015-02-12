@@ -9,6 +9,9 @@ Network = () ->
   # constants for the SVG
   width = 700
   height = 600
+  # actual width and height of the svg element
+  svgW = width
+  svgH = height
 
   # vis holds the root svg element
   vis = null
@@ -26,6 +29,7 @@ Network = () ->
   curLinksData = []                 # filtered links data
   curNodesData = []                 # filtered nodes data
   linkedByIndex = {}                # links between nodes, used for highlighting
+  linkWeight = {}                   # to quickly get the link weight
 
   # Set up the color scale
   color = d3.scale.ordinal()
@@ -44,7 +48,7 @@ Network = () ->
     .linkDistance(120)
     .size([width, height])
 
-  # set scales for zooming
+  # set scales for semantic zooming
   xScale = d3.scale.linear()
     .domain([0, width])
     .range([0, width])
@@ -55,7 +59,7 @@ Network = () ->
   # method to handle zoom and pan
   zoomed = () ->
     # container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")")
-    # if (debug) then console.log("zoom", d3.event.translate, d3.event.scale)
+    if (debug) then console.log("zoomed! translate:", d3.event.translate, "scale:", d3.event.scale)
     # scaleFactor = d3.event.scale
     # translation = d3.event.translate
     forceTick()                                    # update positions
@@ -82,6 +86,8 @@ Network = () ->
   # init the zoom behaviour
   zoom = d3.behavior.zoom()
     .x(xScale).y(yScale)
+    .translate([0, 0])
+    .scale(1)
     .scaleExtent([1, 10])
     .on("zoom", zoomed)
 
@@ -97,7 +103,6 @@ Network = () ->
     vis = d3.select(selection).append("svg")
       .attr("width", width)
       .attr("height", height)
-      .call(zoom)
       .on('click', hideDetails)
 
     # format our data
@@ -134,6 +139,10 @@ Network = () ->
 
     # perform rendering and start force layout
     update()
+
+    # start zoom behavior
+    vis.call(zoom)
+      .call(zoom.event)
 
 
   # The update() function performs the bulk of the
@@ -233,7 +242,7 @@ Network = () ->
         if searchTerm.length > 0 and match >= 0
           d.searched = true
           element.classed("background", false)
-          meta += "<a href=\"#\">#{d.name}</a> "
+          meta += "<a class=\"node\" href=\"#\">#{d.name}</a> "
         else
           d.searched = false
           element.classed("background", true)
@@ -308,6 +317,8 @@ Network = () ->
 
       # linkedByIndex is used for link sorting
       linkedByIndex["#{l.source.id},#{l.target.id}"] = 1
+      # linkWeight is used to quickly get the link weight
+      linkWeight["#{l.source.id},#{l.target.id}"] = l.weight
 
     data
 
@@ -380,20 +391,38 @@ Network = () ->
       .selectAll(".node")
       .data(connectedData.filter((n) -> neighboring(d, n)[0]), (n) -> n.id)
 
-    outgoing.enter().append("a")
-      .attr('href', '#')
-      .text((n) -> n.name)
-      .on('click', (n) -> zoomToNode(n))
+    outgoing.enter().append("div")
+      .attr("class", "node")
+      .text((n) ->
+        "(#{linkWeight[d.id + "," + n.id]})"
+        # (if linkWeight[d.id + "," + n.id] < 0 then "(-)" else "(+)")
+      )
+      .append("a")
+        .attr('href', '#')
+        .attr('title', (n) ->
+          "Mehr #{d.name} verursacht " + (if linkWeight[d.id + "," + n.id] < 0 then "weniger" else "mehr") + " #{n.name}"
+        )
+        .text((n) -> n.name)
+        .on('click', (n) -> zoomToNode(n))
     
     connected.append("h3").text("Wird beeinflusst von..")
     incoming = connected.append("div").attr("class", "incoming")
       .selectAll(".node")
       .data(connectedData.filter((n) -> neighboring(d, n)[1]), (n) -> n.id)
 
-    incoming.enter().append("a")
-      .attr('href', '#')
-      .text((n) -> n.name)
-      .on('click', (n) -> zoomToNode(n))
+    incoming.enter().append("div")
+      .attr("class", "node")
+      .text((n) ->
+        "(#{linkWeight[n.id + "," + d.id]})"
+        # (if linkWeight[d.id + "," + n.id] < 0 then "(-)" else "(+)")
+      )
+      .append("a")
+        .attr('href', '#')
+        .attr('title', (n) ->
+          "Mehr #{n.name} verursacht " + (if linkWeight[n.id + "," + d.id] < 0 then "weniger" else "mehr") + " #{d.name}"
+        )
+        .text((n) -> n.name)
+        .on('click', (n) -> zoomToNode(n))
 
 
   # click on background function
@@ -472,23 +501,32 @@ Network = () ->
 
 
   # zoom to specified domain
-  zoomTo = (xDomain, yDomain) ->
-    d3.transition().duration(750).tween("zoom", ->
-      ix = d3.interpolate(xScale.domain(), xDomain)
-      iy = d3.interpolate(yScale.domain(), yDomain)
-      return (t) ->
-        zoom.x(xScale.domain(ix(t)))
-            .y(yScale.domain(iy(t)))
+  # zoomTo = (xDomain, yDomain) ->
+  #   d3.transition().duration(750).tween("zoom", ->
+  #     ix = d3.interpolate(xScale.domain(), xDomain)
+  #     iy = d3.interpolate(yScale.domain(), yDomain)
+  #     return (t) ->
+  #       zoom.x(xScale.domain(ix(t)))
+  #           .y(yScale.domain(iy(t)))
 
-        zoomed()
-    )
-
+  #       zoomed()
+  #   )
+  
+  # zoom to specified node
   zoomToNode = (n) ->
-    zoomTo([n.x-100, n.x+100], [n.y-100, n.y+100])
+    console.log("zoom to node! width:#{width} svgW:#{svgW} height:#{height}")
+    scale = 4 
+    translate = [width / 2 - scale * n.x, height / 2 - scale * n.y]
+
+    vis.transition()
+      .duration(750)
+      .call(zoom.translate(translate).scale(scale).event)
 
   # reset zoom and pan
   network.reset = () ->
-    zoomTo([0, width], [0, height])
+    vis.transition()
+      .duration(750)
+      .call(zoom.translate([0, 0]).scale(1).event)
 
   # Final act of Network() function is to return the inner 'network()' function.
   return network
@@ -503,6 +541,22 @@ $  ->
 
   $("#reset").click () ->
     myNetwork.reset()
+
+  $('#meta').tooltip({
+    position: {
+      my: "center bottom-10",
+      at: "center top",
+      collision: 'none',
+      using: (position, feedback) ->
+        $( this ).css( position )
+        $( "<div>" )
+          .addClass( "arrow" )
+          .addClass( feedback.vertical )
+          .addClass( feedback.horizontal )
+          .appendTo( this )
+    },
+    hide: false
+  })
 
   d3.json(PREFIX + "/data/graph.json", (json) ->
     myNetwork("#bioGraph", json))

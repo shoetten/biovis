@@ -8,6 +8,7 @@
                       see https://bugzilla.mozilla.org/show_bug.cgi?id=874919 
                       */
       width: 100%;    /* make it responsive */
+      height: 100%;
       
       .node {
         stroke: #fff;
@@ -80,6 +81,8 @@
 }
 
 #meta {
+  position: relative;
+
   .categories {
     font-style: italic;
     margin: 5px 0;
@@ -145,15 +148,18 @@
     @include flexbox();
     @include flex-wrap(wrap);
     @include justify-content(space-between);
-    a {
+    .node {
       @include flex(0 0 48%);
       width: 48%;
+      a {
+        // display: block;
+        margin-left: 5px;
+      }
     }
   }
+}
 
-} 
-
-.d3-tip {
+.d3-tip, .ui-tooltip {
   line-height: 1;
   font-weight: bold;
   padding: 12px;
@@ -164,8 +170,13 @@
   z-index: 10;
 }
 
+.ui-tooltip {
+  max-width: 220px;
+  font-size: 80%;
+}
+
 /* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
+.d3-tip:after, .ui-tooltip .arrow:after {
   box-sizing: border-box;
   display: inline;
   font-size: 10px;
@@ -175,11 +186,14 @@
   position: absolute;
   pointer-events: none;
 }
+.ui-tooltip .arrow:after {
+  font-size: 12px;
+}
 
 /* Northward tooltips */
-.d3-tip.n:after {
+.d3-tip.n:after, .ui-tooltip .arrow.bottom:after {
   content: "\25BC";
-  margin: -1px 0 0 0;
+  margin: -2px 0 0 0;
   top: 100%;
   left: 0;
   text-align: center;
@@ -208,4 +222,16 @@
   margin: -4px 0 0 -1px;
   top: 50%;
   left: 100%;
+}
+
+/* jquery tooltip log */
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }

@@ -9,9 +9,11 @@
   debug = true;
 
   Network = function() {
-    var allData, collide, color, container, curLinksData, curNodesData, drag, dragended, dragged, dragstarted, filterLinks, filterNodes, force, forceTick, height, hideDetails, link, linkPath, linkedByIndex, linksG, mapNodes, neighboring, network, node, nodesG, setSize, setupData, showDetails, tip, update, updateLinks, updateNodes, vis, width, xScale, yScale, zoom, zoomTo, zoomToNode, zoomed;
+    var allData, collide, color, container, curLinksData, curNodesData, drag, dragended, dragged, dragstarted, filterLinks, filterNodes, force, forceTick, height, hideDetails, link, linkPath, linkWeight, linkedByIndex, linksG, mapNodes, neighboring, network, node, nodesG, setSize, setupData, showDetails, svgH, svgW, tip, update, updateLinks, updateNodes, vis, width, xScale, yScale, zoom, zoomToNode, zoomed;
     width = 700;
     height = 600;
+    svgW = width;
+    svgH = height;
     vis = null;
     container = null;
     nodesG = null;
@@ -22,6 +24,7 @@
     curLinksData = [];
     curNodesData = [];
     linkedByIndex = {};
+    linkWeight = {};
     color = d3.scale.ordinal().range(["#74c476", "#fd8d3c", "#207ec2", "#9467bd"]);
     tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
       return d.name;
@@ -32,6 +35,9 @@
     xScale = d3.scale.linear().domain([0, width]).range([0, width]);
     yScale = d3.scale.linear().domain([0, height]).range([0, height]);
     zoomed = function() {
+      if (debug) {
+        console.log("zoomed! translate:", d3.event.translate, "scale:", d3.event.scale);
+      }
       return forceTick();
     };
     dragstarted = function(d) {
@@ -53,13 +59,13 @@
     dragended = function(d) {
       return d3.select(this).classed("dragging", false);
     };
-    zoom = d3.behavior.zoom().x(xScale).y(yScale).scaleExtent([1, 10]).on("zoom", zoomed);
+    zoom = d3.behavior.zoom().x(xScale).y(yScale).translate([0, 0]).scale(1).scaleExtent([1, 10]).on("zoom", zoomed);
     drag = force.drag().origin(function(d) {
       return d;
     }).on("dragstart", dragstarted).on("drag", dragged).on("dragend", dragended);
     network = function(selection, graph) {
       var defs;
-      vis = d3.select(selection).append("svg").attr("width", width).attr("height", height).call(zoom).on('click', hideDetails);
+      vis = d3.select(selection).append("svg").attr("width", width).attr("height", height).on('click', hideDetails);
       allData = setupData(graph);
       container = vis.append("g");
       linksG = container.append("g").attr("id", "links");
@@ -72,7 +78,8 @@
       });
       vis.call(tip);
       force.on("tick", forceTick);
-      return update();
+      update();
+      return vis.call(zoom).call(zoom.event);
     };
     update = function() {
       curNodesData = allData.nodes;
@@ -145,7 +152,7 @@
           if (searchTerm.length > 0 && match >= 0) {
             d.searched = true;
             element.classed("background", false);
-            meta += "<a href=\"#\">" + d.name + "</a> ";
+            meta += "<a class=\"node\" href=\"#\">" + d.name + "</a> ";
           } else {
             d.searched = false;
             element.classed("background", true);
@@ -209,7 +216,8 @@
       data.links.forEach(function(l) {
         l.source = nodesMap.get(l.source);
         l.target = nodesMap.get(l.target);
-        return linkedByIndex["" + l.source.id + "," + l.target.id] = 1;
+        linkedByIndex["" + l.source.id + "," + l.target.id] = 1;
+        return linkWeight["" + l.source.id + "," + l.target.id] = l.weight;
       });
       return data;
     };
@@ -285,7 +293,11 @@
       }), function(n) {
         return n.id;
       });
-      outgoing.enter().append("a").attr('href', '#').text(function(n) {
+      outgoing.enter().append("div").attr("class", "node").text(function(n) {
+        return "(" + linkWeight[d.id + "," + n.id] + ")";
+      }).append("a").attr('href', '#').attr('title', function(n) {
+        return ("Mehr " + d.name + " verursacht ") + (linkWeight[d.id + "," + n.id] < 0 ? "weniger" : "mehr") + (" " + n.name);
+      }).text(function(n) {
         return n.name;
       }).on('click', function(n) {
         return zoomToNode(n);
@@ -296,7 +308,11 @@
       }), function(n) {
         return n.id;
       });
-      return incoming.enter().append("a").attr('href', '#').text(function(n) {
+      return incoming.enter().append("div").attr("class", "node").text(function(n) {
+        return "(" + linkWeight[n.id + "," + d.id] + ")";
+      }).append("a").attr('href', '#').attr('title', function(n) {
+        return ("Mehr " + n.name + " verursacht ") + (linkWeight[n.id + "," + d.id] < 0 ? "weniger" : "mehr") + (" " + d.name);
+      }).text(function(n) {
         return n.name;
       }).on('click', function(n) {
         return zoomToNode(n);
@@ -319,7 +335,7 @@
       return [linkedByIndex[a.id + "," + b.id], linkedByIndex[b.id + "," + a.id]];
     };
     setSize = function() {
-      var svgH, svgStyles, svgW;
+      var svgStyles;
       svgStyles = window.getComputedStyle(vis.node());
       svgW = parseInt(svgStyles["width"]);
       svgH = parseInt(svgStyles["height"]);
@@ -362,22 +378,15 @@
         });
       };
     };
-    zoomTo = function(xDomain, yDomain) {
-      return d3.transition().duration(750).tween("zoom", function() {
-        var ix, iy;
-        ix = d3.interpolate(xScale.domain(), xDomain);
-        iy = d3.interpolate(yScale.domain(), yDomain);
-        return function(t) {
-          zoom.x(xScale.domain(ix(t))).y(yScale.domain(iy(t)));
-          return zoomed();
-        };
-      });
-    };
     zoomToNode = function(n) {
-      return zoomTo([n.x - 100, n.x + 100], [n.y - 100, n.y + 100]);
+      var scale, translate;
+      console.log("zoom to node! width:" + width + " svgW:" + svgW + " height:" + height);
+      scale = 4;
+      translate = [width / 2 - scale * n.x, height / 2 - scale * n.y];
+      return vis.transition().duration(750).call(zoom.translate(translate).scale(scale).event);
     };
     network.reset = function() {
-      return zoomTo([0, width], [0, height]);
+      return vis.transition().duration(750).call(zoom.translate([0, 0]).scale(1).event);
     };
     return network;
   };
@@ -392,6 +401,18 @@
     });
     $("#reset").click(function() {
       return myNetwork.reset();
+    });
+    $('#meta').tooltip({
+      position: {
+        my: "center bottom-10",
+        at: "center top",
+        collision: 'none',
+        using: function(position, feedback) {
+          $(this).css(position);
+          return $("<div>").addClass("arrow").addClass(feedback.vertical).addClass(feedback.horizontal).appendTo(this);
+        }
+      },
+      hide: false
     });
     return d3.json(PREFIX + "/data/graph.json", function(json) {
       return myNetwork("#bioGraph", json);
