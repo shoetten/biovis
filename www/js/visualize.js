@@ -140,35 +140,6 @@
       ty = dty - (Math.sin(gamma) * d.target.radius);
       return "M" + dsx + "," + dsy + " A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty;
     };
-    network.updateSearch = function(searchTerm) {
-      var meta, searchRegEx;
-      if (searchTerm) {
-        searchRegEx = new RegExp(searchTerm.toLowerCase());
-        meta = "<h2>Suchergebnisse</h2><div class=\"flex\">";
-        node.each(function(d) {
-          var element, match;
-          element = d3.select(this);
-          match = d.name.toLowerCase().search(searchRegEx);
-          if (searchTerm.length > 0 && match >= 0) {
-            d.searched = true;
-            element.classed("background", false);
-            meta += "<a class=\"node\" href=\"#\">" + d.name + "</a> ";
-          } else {
-            d.searched = false;
-            element.classed("background", true);
-          }
-          element.classed('searched', d.searched);
-          return link.classed("background", true);
-        });
-        meta += "</div>";
-        return $('#meta .searchResults').html(meta);
-      } else {
-        $('#meta .searchResults').html("");
-        node.classed('searched background', false);
-        node.attr('searched', false);
-        return link.classed('highlight background', false);
-      }
-    };
     filterNodes = function(allNodes) {
       var cutoff, filteredNodes, playcounts;
       filteredNodes = allNodes;
@@ -228,6 +199,35 @@
         return nodesMap.set(n.id, n);
       });
       return nodesMap;
+    };
+    network.updateSearch = function(searchTerm) {
+      var meta, searchRegEx;
+      if (searchTerm) {
+        searchRegEx = new RegExp(searchTerm.toLowerCase());
+        meta = "<h2>Suchergebnisse</h2><div class=\"flex\">";
+        node.each(function(d) {
+          var element, match;
+          element = d3.select(this);
+          match = d.name.toLowerCase().search(searchRegEx);
+          if (searchTerm.length > 0 && match >= 0) {
+            d.searched = true;
+            element.classed("background", false);
+            meta += "<a class=\"node\" href=\"#\">" + d.name + "</a> ";
+          } else {
+            d.searched = false;
+            element.classed("background", true);
+          }
+          element.classed('searched', d.searched);
+          return link.classed("background", true);
+        });
+        meta += "</div>";
+        return $('#meta .searchResults').html(meta);
+      } else {
+        $('#meta .searchResults').html("");
+        node.classed('searched background', false);
+        node.attr('searched', false);
+        return link.classed('highlight background', false);
+      }
     };
     showDetails = function(d, i) {
       var categories, connected, connectedData, incoming, nodeMeta, outgoing;

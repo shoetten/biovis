@@ -229,35 +229,6 @@ Network = () ->
     ty = dty - (Math.sin(gamma) * d.target.radius)
 
     "M" + dsx + "," + dsy + " A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty
-
-
-  # Public function to update highlighted nodes from search
-  network.updateSearch = (searchTerm) ->
-    if searchTerm
-      searchRegEx = new RegExp(searchTerm.toLowerCase())
-      meta = "<h2>Suchergebnisse</h2><div class=\"flex\">"
-      node.each (d) ->
-        element = d3.select(this)
-        match = d.name.toLowerCase().search(searchRegEx)
-        if searchTerm.length > 0 and match >= 0
-          d.searched = true
-          element.classed("background", false)
-          meta += "<a class=\"node\" href=\"#\">#{d.name}</a> "
-        else
-          d.searched = false
-          element.classed("background", true)
-
-        element.classed('searched', d.searched)
-        link.classed("background", true)
-      meta += "</div>"
-      $('#meta .searchResults').html(meta)
-    else
-      $('#meta .searchResults').html("")
-      node.classed('searched background', false)
-      node.attr('searched', false)
-      # node.classed('selected highlight background', false)
-      link.classed('highlight background', false)
-
  
   # Removes nodes from input array
   # based on current filter setting.
@@ -329,6 +300,33 @@ Network = () ->
     nodes.forEach (n) ->
       nodesMap.set(n.id, n)
     nodesMap
+
+  # Public function to update highlighted nodes from search
+  network.updateSearch = (searchTerm) ->
+    if searchTerm
+      searchRegEx = new RegExp(searchTerm.toLowerCase())
+      meta = "<h2>Suchergebnisse</h2><div class=\"flex\">"
+      node.each (d) ->
+        element = d3.select(this)
+        match = d.name.toLowerCase().search(searchRegEx)
+        if searchTerm.length > 0 and match >= 0
+          d.searched = true
+          element.classed("background", false)
+          meta += "<a class=\"node\" href=\"#\">#{d.name}</a> "
+        else
+          d.searched = false
+          element.classed("background", true)
+
+        element.classed('searched', d.searched)
+        link.classed("background", true)
+      meta += "</div>"
+      $('#meta .searchResults').html(meta)
+    else
+      $('#meta .searchResults').html("")
+      node.classed('searched background', false)
+      node.attr('searched', false)
+      # node.classed('selected highlight background', false)
+      link.classed('highlight background', false)
 
   # Show details on node click
   showDetails = (d,i) ->
