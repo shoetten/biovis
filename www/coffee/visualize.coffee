@@ -25,6 +25,9 @@ Network = () ->
   node = null
   link = null
 
+  # variables to reflect the current settings of the visualization
+  filter = []
+
   allData = []                      # allData will store the unfiltered data
   curLinksData = []                 # filtered links data
   curNodesData = []                 # filtered nodes data
@@ -234,15 +237,8 @@ Network = () ->
   # based on current filter setting.
   # Returns array of nodes
   filterNodes = (allNodes) ->
-    filteredNodes = allNodes
-    if filter == "popular" or filter == "obscure"
-      playcounts = allNodes.map((d) -> d.playcount).sort(d3.ascending)
-      cutoff = d3.quantile(playcounts, 0.5)
-      filteredNodes = allNodes.filter (n) ->
-        if filter == "popular"
-          n.playcount > cutoff
-        else if filter == "obscure"
-          n.playcount <= cutoff
+    filteredNodes = allNodes.filter (n) ->
+      n.category
 
     filteredNodes
 
@@ -254,6 +250,25 @@ Network = () ->
     allLinks.filter (l) ->
       curNodes.get(l.source.id) and curNodes.get(l.target.id)
 
+  # helper function to find if target contains any element of toMatch
+  anyMatchInArray = (target, toMatch) ->
+    found = false
+    targetMap = {}
+
+    # Put all values in the `target` array into a map, where
+    # the keys are the values from the array
+    for cur in target
+      targetMap[cur] = true
+
+    # Loop over all items in the `toMatch` array and see if any of
+    # their values are in the map from before
+    while (i += 1) < toMatch.length && !found
+      cur = toMatch[i]
+      found = !!targetMap[cur]
+      # If found, `targetMap[cur]` will return true, otherwise it
+      # will return `undefined`...that's what the `!!` is for
+
+    found
 
   # called once to clean up raw data and switch links to
   # point to node instances
@@ -349,10 +364,10 @@ Network = () ->
     # highlight neighboring nodes
     # watch out - don't mess with node if search is currently matching
     node.classed("highlight", (n) ->
-      if (!n.searched)
+      # if (!n.searched)
         if (neighboring(d, n)[0] or neighboring(d, n)[1]) then true else false)
     node.classed("background", (n) ->
-      if (!n.searched)
+      # if (!n.searched)
         if (neighboring(d, n)[0] or neighboring(d, n)[1]) then false else true)
 
     node.classed("selected", false)         # set all nodes to not selected
@@ -398,7 +413,7 @@ Network = () ->
       .append("a")
         .attr('href', '#')
         .attr('title', (n) ->
-          "Mehr #{d.name} verursacht " + (if linkWeight[d.id + "," + n.id] < 0 then "weniger" else "mehr") + " #{n.name}"
+          "Mehr #{d.name} verursacht " + (if linkWeight[d.id + "," + n.id] < 0 then "weniger" else "mehr") + " #{n.name}."
         )
         .text((n) -> n.name)
         .on('click', (n) -> zoomToNode(n))
@@ -417,7 +432,7 @@ Network = () ->
       .append("a")
         .attr('href', '#')
         .attr('title', (n) ->
-          "Mehr #{n.name} verursacht " + (if linkWeight[n.id + "," + d.id] < 0 then "weniger" else "mehr") + " #{d.name}"
+          "Mehr #{n.name} verursacht " + (if linkWeight[n.id + "," + d.id] < 0 then "weniger" else "mehr") + " #{d.name}."
         )
         .text((n) -> n.name)
         .on('click', (n) -> zoomToNode(n))

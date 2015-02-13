@@ -9,7 +9,7 @@
   debug = true;
 
   Network = function() {
-    var allData, collide, color, container, curLinksData, curNodesData, drag, dragended, dragged, dragstarted, filterLinks, filterNodes, force, forceTick, height, hideDetails, link, linkPath, linkWeight, linkedByIndex, linksG, mapNodes, neighboring, network, node, nodesG, setSize, setupData, showDetails, svgH, svgW, tip, update, updateLinks, updateNodes, vis, width, xScale, yScale, zoom, zoomToNode, zoomed;
+    var allData, anyMatchInArray, collide, color, container, curLinksData, curNodesData, drag, dragended, dragged, dragstarted, filter, filterLinks, filterNodes, force, forceTick, height, hideDetails, link, linkPath, linkWeight, linkedByIndex, linksG, mapNodes, neighboring, network, node, nodesG, setSize, setupData, showDetails, svgH, svgW, tip, update, updateLinks, updateNodes, vis, width, xScale, yScale, zoom, zoomToNode, zoomed;
     width = 700;
     height = 600;
     svgW = width;
@@ -20,6 +20,7 @@
     linksG = null;
     node = null;
     link = null;
+    filter = [];
     allData = [];
     curLinksData = [];
     curNodesData = [];
@@ -141,21 +142,10 @@
       return "M" + dsx + "," + dsy + " A" + dr + "," + dr + " 0 0,0 " + tx + "," + ty;
     };
     filterNodes = function(allNodes) {
-      var cutoff, filteredNodes, playcounts;
-      filteredNodes = allNodes;
-      if (filter === "popular" || filter === "obscure") {
-        playcounts = allNodes.map(function(d) {
-          return d.playcount;
-        }).sort(d3.ascending);
-        cutoff = d3.quantile(playcounts, 0.5);
-        filteredNodes = allNodes.filter(function(n) {
-          if (filter === "popular") {
-            return n.playcount > cutoff;
-          } else if (filter === "obscure") {
-            return n.playcount <= cutoff;
-          }
-        });
-      }
+      var filteredNodes;
+      filteredNodes = allNodes.filter(function(n) {
+        return n.category;
+      });
       return filteredNodes;
     };
     filterLinks = function(allLinks, curNodes) {
@@ -163,6 +153,20 @@
       return allLinks.filter(function(l) {
         return curNodes.get(l.source.id) && curNodes.get(l.target.id);
       });
+    };
+    anyMatchInArray = function(target, toMatch) {
+      var cur, found, targetMap, _i, _len;
+      found = false;
+      targetMap = {};
+      for (_i = 0, _len = target.length; _i < _len; _i++) {
+        cur = target[_i];
+        targetMap[cur] = true;
+      }
+      while ((i += 1) < toMatch.length && !found) {
+        cur = toMatch[i];
+        found = !!targetMap[cur];
+      }
+      return found;
     };
     setupData = function(data) {
       var circleRadius, degreeExtent, nodesMap;
@@ -252,21 +256,17 @@
         });
       }
       node.classed("highlight", function(n) {
-        if (!n.searched) {
-          if (neighboring(d, n)[0] || neighboring(d, n)[1]) {
-            return true;
-          } else {
-            return false;
-          }
+        if (neighboring(d, n)[0] || neighboring(d, n)[1]) {
+          return true;
+        } else {
+          return false;
         }
       });
       node.classed("background", function(n) {
-        if (!n.searched) {
-          if (neighboring(d, n)[0] || neighboring(d, n)[1]) {
-            return false;
-          } else {
-            return true;
-          }
+        if (neighboring(d, n)[0] || neighboring(d, n)[1]) {
+          return false;
+        } else {
+          return true;
         }
       });
       node.classed("selected", false);
@@ -296,7 +296,7 @@
       outgoing.enter().append("div").attr("class", "node").text(function(n) {
         return "(" + linkWeight[d.id + "," + n.id] + ")";
       }).append("a").attr('href', '#').attr('title', function(n) {
-        return ("Mehr " + d.name + " verursacht ") + (linkWeight[d.id + "," + n.id] < 0 ? "weniger" : "mehr") + (" " + n.name);
+        return ("Mehr " + d.name + " verursacht ") + (linkWeight[d.id + "," + n.id] < 0 ? "weniger" : "mehr") + (" " + n.name + ".");
       }).text(function(n) {
         return n.name;
       }).on('click', function(n) {
@@ -311,7 +311,7 @@
       return incoming.enter().append("div").attr("class", "node").text(function(n) {
         return "(" + linkWeight[n.id + "," + d.id] + ")";
       }).append("a").attr('href', '#').attr('title', function(n) {
-        return ("Mehr " + n.name + " verursacht ") + (linkWeight[n.id + "," + d.id] < 0 ? "weniger" : "mehr") + (" " + d.name);
+        return ("Mehr " + n.name + " verursacht ") + (linkWeight[n.id + "," + d.id] < 0 ? "weniger" : "mehr") + (" " + d.name + ".");
       }).text(function(n) {
         return n.name;
       }).on('click', function(n) {

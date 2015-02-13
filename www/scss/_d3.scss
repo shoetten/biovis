@@ -24,6 +24,9 @@
           stroke: #000;
           stroke-dasharray: 11px 4px;
         }
+        &.searched.background {   // when searched & in background
+          stroke-opacity: 0.5; fill-opacity: 0.5;
+        }
         &.background {
           stroke-opacity: 0.3; fill-opacity: 0.3;
         }
@@ -171,7 +174,7 @@
 }
 
 .ui-tooltip {
-  max-width: 220px;
+  max-width: 250px;
   font-size: 80%;
 }
 
