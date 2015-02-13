@@ -18,7 +18,7 @@ with open('data/graph.csv', 'rb') as csvfile:
 		for colIdx, column in enumerate(row):
 			if (colIdx < 4) and (rowIdx != 0):
 				column = int(column)							# get int value of string
-				if (column > 8):
+				if (column > 0):
 					d[categoryNames[colIdx]] = column
 					
 			elif (colIdx >= 5):
