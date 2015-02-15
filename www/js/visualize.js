@@ -83,8 +83,13 @@
       return vis.call(zoom).call(zoom.event);
     };
     update = function() {
-      curNodesData = allData.nodes;
-      curLinksData = allData.links;
+      if (filter.length > 0) {
+        curNodesData = filterNodes(allData.nodes);
+        curLinksData = filterLinks(allData.links, curNodesData);
+      } else {
+        curNodesData = allData.nodes;
+        curLinksData = allData.links;
+      }
       force.nodes(curNodesData);
       force.links(curLinksData);
       updateNodes();
@@ -144,7 +149,7 @@
     filterNodes = function(allNodes) {
       var filteredNodes;
       filteredNodes = allNodes.filter(function(n) {
-        return n.category;
+        return anyMatchInArray(n.category, filter);
       });
       return filteredNodes;
     };
@@ -155,18 +160,24 @@
       });
     };
     anyMatchInArray = function(target, toMatch) {
-      var cur, found, targetMap, _i, _len;
+      var cur, found, i, targetMap, _i, _len;
       found = false;
       targetMap = {};
       for (_i = 0, _len = target.length; _i < _len; _i++) {
         cur = target[_i];
         targetMap[cur] = true;
       }
-      while ((i += 1) < toMatch.length && !found) {
+      i = 0;
+      while ((i < toMatch.length) && !found) {
         cur = toMatch[i];
         found = !!targetMap[cur];
+        i++;
       }
       return found;
+    };
+    network.setFilter = function(newFilter) {
+      filter = newFilter;
+      return update();
     };
     setupData = function(data) {
       var circleRadius, degreeExtent, nodesMap;
@@ -394,13 +405,24 @@
   $(function() {
     var myNetwork;
     myNetwork = Network();
-    $("#search").keyup(function() {
+    $("#graph #search").keyup(function() {
       var searchTerm;
       searchTerm = $(this).val();
       return myNetwork.updateSearch(searchTerm);
     });
-    $("#reset").click(function() {
+    $("#graph #reset").click(function() {
       return myNetwork.reset();
+    });
+    $('#graph #categories #filter').click(function() {
+      var filter;
+      filter = [];
+      $('#graph #categories :checkbox:checked').each(function() {
+        return filter.push($(this).val());
+      });
+      if (debug) {
+        console.log("filter", filter);
+      }
+      return myNetwork.setFilter(filter);
     });
     $('#meta').tooltip({
       position: {

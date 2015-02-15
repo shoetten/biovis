@@ -24,11 +24,21 @@
 				
 				<button id="reset">Reset</button>
 				<div id="search_section" class="control">
-	        <form id="search_form" action=""  method="post">
+	        <form id="search_form">
 	          <input type="text" class="text-input" id="search" placeholder="Suche.." value="" />
 	        </form>
 	      </div>
 	      
+			</div>
+			<div id="categories">
+				<span class="title">Kategoriefilter</span>
+				<div class="checkboxes">
+					<span class="category umwelt"><input type="checkbox" name="filter" value="Umwelt" /> Umwelt</span>
+					<span class="category politik"><input type="checkbox" name="filter" value="Politik" /> Politik</span>
+					<span class="category technologie"><input type="checkbox" name="filter" value="Technologie" /> Technologie</span>
+					<span class="category wirtschaft"><input type="checkbox" name="filter" value="Wirtschaft" /> Wirtschaft</span>
+				</div>
+				<button id="filter">Filter!</button>
 			</div>
 		</section>
 		

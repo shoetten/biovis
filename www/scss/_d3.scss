@@ -81,6 +81,85 @@
       left: 10px;
     }
   }
+
+  #categories {
+    position: relative;
+    margin: 13px 0;
+    .title {
+      font-size: 18px;
+      font-size: 1.8rem;
+    }
+    .checkboxes {
+      display: inline-block;
+      margin: 0 5px;
+      position: relative;
+      top: 6px;
+      
+      .category {
+        padding-left: 4px;
+        margin: 0 3px;
+        input {
+          margin-right: 3px;
+        }
+        &:before {
+          width: 22px;
+        }
+      }
+    }
+  }
+}
+
+.category {
+  color: #000;
+
+  display: inline-block;
+  line-height: 20px;
+  @include border-radius(3px);
+  border: 1px solid;
+  padding: 1px 6px;
+  margin: 0 0 6px 8px;
+  text-decoration: none;
+  
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  &:before {
+    content: " ";
+    font-size: 13px;
+    position: absolute;
+    left: 0px;
+    top: 0;
+    padding: 0 4px 0 6px;
+    border: none;
+    @include border-radius(2px 0px 0px 2px);
+    z-index: -1;
+    height: 100%;
+    width: 20px;
+    line-height: 20px;
+    line-height: 2rem;
+  }
+
+  &.umwelt {
+    border-color: #74c476;
+    &:hover { color: #74c476; border-color: none; }
+    &:before { background: #74c476; }
+  }
+  &.politik {
+    border-color: #fd8d3c;
+    &:hover { color: #fd8d3c; border-color: none; }
+    &:before { background: #fd8d3c; }
+  }
+  &.wirtschaft {
+    border-color: #207ec2;
+    &:hover { color: #207EC2; border-color: none; }
+    &:before { background: #207EC2; }
+  }
+  &.technologie {
+    border-color: #9467bd;
+    &:hover { color: #9467bd; border-color: none; }
+    &:before { background: #9467bd; }
+  }
 }
 
 #meta {
@@ -91,55 +170,8 @@
     margin: 5px 0;
   }
   .category {
-    color: #000;
+    padding-left: 23px;
 
-    display: inline-block;
-    line-height: 20px;
-    @include border-radius(3px);
-    border: 1px solid;
-    padding: 1px 6px 1px 23px;
-    margin: 0 0 6px 8px;
-    text-decoration: none;
-    
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    
-    &:before {
-      content: " ";
-      font-size: 13px;
-      position: absolute;
-      left: 0px;
-      top: 0;
-      padding: 0 4px 0 6px;
-      border: none;
-      @include border-radius(2px 0px 0px 2px);
-      z-index: -1;
-      height: 100%;
-      width: 20px;
-      line-height: 20px;
-      line-height: 2rem;
-    }
-  }
-  .umwelt {
-    border-color: #74c476;
-    &:hover { color: #74c476; border-color: none; }
-    &:before { background: #74c476; }
-  }
-  .politik {
-    border-color: #fd8d3c;
-    &:hover { color: #fd8d3c; border-color: none; }
-    &:before { background: #fd8d3c; }
-  }
-  .wirtschaft {
-    border-color: #207ec2;
-    &:hover { color: #207EC2; border-color: none; }
-    &:before { background: #207EC2; }
-  }
-  .technologie {
-    border-color: #9467bd;
-    &:hover { color: #9467bd; border-color: none; }
-    &:before { background: #9467bd; }
   }
 
   .connected {

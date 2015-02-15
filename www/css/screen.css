@@ -526,18 +526,39 @@ textarea {
   top: 10px;
   left: 10px;
 }
-
-/* line 86, ../scss/_d3.scss */
-#meta {
+/* line 85, ../scss/_d3.scss */
+#graph #categories {
   position: relative;
+  margin: 13px 0;
 }
-/* line 89, ../scss/_d3.scss */
-#meta .categories {
-  font-style: italic;
-  margin: 5px 0;
+/* line 88, ../scss/_d3.scss */
+#graph #categories .title {
+  font-size: 18px;
+  font-size: 1.8rem;
 }
-/* line 93, ../scss/_d3.scss */
-#meta .category {
+/* line 92, ../scss/_d3.scss */
+#graph #categories .checkboxes {
+  display: inline-block;
+  margin: 0 5px;
+  position: relative;
+  top: 6px;
+}
+/* line 98, ../scss/_d3.scss */
+#graph #categories .checkboxes .category {
+  padding-left: 4px;
+  margin: 0 3px;
+}
+/* line 101, ../scss/_d3.scss */
+#graph #categories .checkboxes .category input {
+  margin-right: 3px;
+}
+/* line 104, ../scss/_d3.scss */
+#graph #categories .checkboxes .category:before {
+  width: 22px;
+}
+
+/* line 112, ../scss/_d3.scss */
+.category {
   color: #000;
   display: inline-block;
   line-height: 20px;
@@ -547,15 +568,15 @@ textarea {
   -o-border-radius: 3px;
   border-radius: 3px;
   border: 1px solid;
-  padding: 1px 6px 1px 23px;
+  padding: 1px 6px;
   margin: 0 0 6px 8px;
   text-decoration: none;
   position: relative;
   overflow: hidden;
   z-index: 1;
 }
-/* line 108, ../scss/_d3.scss */
-#meta .category:before {
+/* line 127, ../scss/_d3.scss */
+.category:before {
   content: " ";
   font-size: 13px;
   position: absolute;
@@ -574,64 +595,78 @@ textarea {
   line-height: 20px;
   line-height: 2rem;
 }
-/* line 124, ../scss/_d3.scss */
-#meta .umwelt {
+/* line 143, ../scss/_d3.scss */
+.category.umwelt {
   border-color: #74c476;
 }
-/* line 126, ../scss/_d3.scss */
-#meta .umwelt:hover {
+/* line 145, ../scss/_d3.scss */
+.category.umwelt:hover {
   color: #74c476;
   border-color: none;
 }
-/* line 127, ../scss/_d3.scss */
-#meta .umwelt:before {
+/* line 146, ../scss/_d3.scss */
+.category.umwelt:before {
   background: #74c476;
 }
-/* line 129, ../scss/_d3.scss */
-#meta .politik {
+/* line 148, ../scss/_d3.scss */
+.category.politik {
   border-color: #fd8d3c;
 }
-/* line 131, ../scss/_d3.scss */
-#meta .politik:hover {
+/* line 150, ../scss/_d3.scss */
+.category.politik:hover {
   color: #fd8d3c;
   border-color: none;
 }
-/* line 132, ../scss/_d3.scss */
-#meta .politik:before {
+/* line 151, ../scss/_d3.scss */
+.category.politik:before {
   background: #fd8d3c;
 }
-/* line 134, ../scss/_d3.scss */
-#meta .wirtschaft {
+/* line 153, ../scss/_d3.scss */
+.category.wirtschaft {
   border-color: #207ec2;
 }
-/* line 136, ../scss/_d3.scss */
-#meta .wirtschaft:hover {
+/* line 155, ../scss/_d3.scss */
+.category.wirtschaft:hover {
   color: #207EC2;
   border-color: none;
 }
-/* line 137, ../scss/_d3.scss */
-#meta .wirtschaft:before {
+/* line 156, ../scss/_d3.scss */
+.category.wirtschaft:before {
   background: #207EC2;
 }
-/* line 139, ../scss/_d3.scss */
-#meta .technologie {
+/* line 158, ../scss/_d3.scss */
+.category.technologie {
   border-color: #9467bd;
 }
-/* line 141, ../scss/_d3.scss */
-#meta .technologie:hover  {
+/* line 160, ../scss/_d3.scss */
+.category.technologie:hover  {
   color: #9467bd;
   border-color: none;
 }
-/* line 142, ../scss/_d3.scss */
-#meta .technologie:before {
+/* line 161, ../scss/_d3.scss */
+.category.technologie:before {
   background: #9467bd;
 }
-/* line 145, ../scss/_d3.scss */
+
+/* line 165, ../scss/_d3.scss */
+#meta {
+  position: relative;
+}
+/* line 168, ../scss/_d3.scss */
+#meta .categories {
+  font-style: italic;
+  margin: 5px 0;
+}
+/* line 172, ../scss/_d3.scss */
+#meta .category {
+  padding-left: 23px;
+}
+/* line 177, ../scss/_d3.scss */
 #meta .connected {
   width: 100%;
   font-size: 80%;
 }
-/* line 149, ../scss/_d3.scss */
+/* line 181, ../scss/_d3.scss */
 #meta .incoming, #meta .outgoing, #meta .flex {
   width: 100%;
   display: -webkit-box;
@@ -654,7 +689,7 @@ textarea {
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-/* line 154, ../scss/_d3.scss */
+/* line 186, ../scss/_d3.scss */
 #meta .incoming .node, #meta .outgoing .node, #meta .flex .node {
   -webkit-box-flex: 0 0 48%;
   -moz-box-flex: 0 0 48%;
@@ -664,12 +699,12 @@ textarea {
   /* NEW, Spec - Opera 12.1, Firefox 20+ */
   width: 48%;
 }
-/* line 157, ../scss/_d3.scss */
+/* line 189, ../scss/_d3.scss */
 #meta .incoming .node a, #meta .outgoing .node a, #meta .flex .node a {
   margin-left: 5px;
 }
 
-/* line 165, ../scss/_d3.scss */
+/* line 197, ../scss/_d3.scss */
 .d3-tip, .ui-tooltip {
   line-height: 1;
   font-weight: bold;
@@ -685,14 +720,14 @@ textarea {
   z-index: 10;
 }
 
-/* line 176, ../scss/_d3.scss */
+/* line 208, ../scss/_d3.scss */
 .ui-tooltip {
   max-width: 250px;
   font-size: 80%;
 }
 
 /* Creates a small triangle extender for the tooltip */
-/* line 182, ../scss/_d3.scss */
+/* line 214, ../scss/_d3.scss */
 .d3-tip:after, .ui-tooltip .arrow:after {
   box-sizing: border-box;
   display: inline;
@@ -704,13 +739,13 @@ textarea {
   pointer-events: none;
 }
 
-/* line 192, ../scss/_d3.scss */
+/* line 224, ../scss/_d3.scss */
 .ui-tooltip .arrow:after {
   font-size: 12px;
 }
 
 /* Northward tooltips */
-/* line 197, ../scss/_d3.scss */
+/* line 229, ../scss/_d3.scss */
 .d3-tip.n:after, .ui-tooltip .arrow.bottom:after {
   content: "\25BC";
   margin: -2px 0 0 0;
@@ -720,7 +755,7 @@ textarea {
 }
 
 /* Eastward tooltips */
-/* line 206, ../scss/_d3.scss */
+/* line 238, ../scss/_d3.scss */
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -729,7 +764,7 @@ textarea {
 }
 
 /* Southward tooltips */
-/* line 214, ../scss/_d3.scss */
+/* line 246, ../scss/_d3.scss */
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -739,7 +774,7 @@ textarea {
 }
 
 /* Westward tooltips */
-/* line 223, ../scss/_d3.scss */
+/* line 255, ../scss/_d3.scss */
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;
@@ -748,7 +783,7 @@ textarea {
 }
 
 /* jquery tooltip log */
-/* line 231, ../scss/_d3.scss */
+/* line 263, ../scss/_d3.scss */
 .ui-helper-hidden-accessible {
   border: 0;
   clip: rect(0 0 0 0);

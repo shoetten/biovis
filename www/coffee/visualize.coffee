@@ -156,10 +156,13 @@ Network = () ->
   # and the network needs to be reset.
   update = () ->
     # filter data to show based on current filter settings.
-    # curNodesData = filterNodes(allData.nodes)
-    # curLinksData = filterLinks(allData.links, curNodesData)
-    curNodesData = allData.nodes
-    curLinksData = allData.links
+    if (filter.length > 0)                # if there're some filters set
+      curNodesData = filterNodes(allData.nodes)
+      curLinksData = filterLinks(allData.links, curNodesData)
+    else                                  # if not, just use all nodes
+      curNodesData = allData.nodes
+      curLinksData = allData.links
+
 
     # reset nodes in force layout
     force.nodes(curNodesData)
@@ -238,7 +241,7 @@ Network = () ->
   # Returns array of nodes
   filterNodes = (allNodes) ->
     filteredNodes = allNodes.filter (n) ->
-      n.category
+      anyMatchInArray(n.category, filter)
 
     filteredNodes
 
@@ -262,13 +265,18 @@ Network = () ->
 
     # Loop over all items in the `toMatch` array and see if any of
     # their values are in the map from before
-    while (i += 1) < toMatch.length && !found
+    i = 0
+    while ((i < toMatch.length) && !found)
       cur = toMatch[i]
       found = !!targetMap[cur]
       # If found, `targetMap[cur]` will return true, otherwise it
       # will return `undefined`...that's what the `!!` is for
-
+      i++
     found
+
+  network.setFilter = (newFilter) ->
+    filter = newFilter
+    update()
 
   # called once to clean up raw data and switch links to
   # point to node instances
@@ -548,12 +556,20 @@ Network = () ->
 $  ->
   myNetwork = Network()
 
-  $("#search").keyup () ->
+  $("#graph #search").keyup () ->
     searchTerm = $(this).val()
     myNetwork.updateSearch(searchTerm)
 
-  $("#reset").click () ->
+  $("#graph #reset").click () ->
     myNetwork.reset()
+
+  $('#graph #categories #filter').click () ->
+    filter = []
+    $('#graph #categories :checkbox:checked').each( () ->
+      filter.push($(this).val())
+    )
+    if (debug) then console.log("filter", filter)
+    myNetwork.setFilter(filter)
 
   $('#meta').tooltip({
     position: {
