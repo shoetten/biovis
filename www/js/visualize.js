@@ -28,7 +28,7 @@
     linkWeight = {};
     color = d3.scale.ordinal().range(["#74c476", "#fd8d3c", "#207ec2", "#9467bd"]);
     tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
-      return d.name;
+      return "" + d.name;
     }).direction('n').offset(function(d) {
       return [-(d.radius / 2 + 3), 0];
     });
@@ -101,33 +101,44 @@
       link.attr("d", function(d) {
         return linkPath(d);
       });
-      node.attr("cx", function(d) {
-        return xScale(d.x);
-      }).attr("cy", function(d) {
-        return yScale(d.y);
+      node.attr("transform", function(d) {
+        return "translate(" + (xScale(d.x)) + "," + (yScale(d.y)) + ")";
       });
       return node.each(collide(0.5));
     };
     updateNodes = function() {
-      node = nodesG.selectAll("circle.node").data(curNodesData, function(d) {
+      var arc, cScale, categories;
+      node = nodesG.selectAll(".node").data(curNodesData, function(d) {
         return d.id;
       });
-      node.enter().append("circle").attr("class", "node").attr("cx", function(d) {
-        return xScale(d.x);
-      }).attr("cy", function(d) {
-        return yScale(d.y);
-      }).attr("r", function(d) {
-        return d.radius;
-      }).style("fill", function(d) {
-        return color(d.category[0]);
-      }).call(drag).on('mouseover', tip.show).on('mouseout', tip.hide).on('click', showDetails);
+      node.enter().append("g").attr("class", "node").attr("transform", function(d) {
+        return "translate(" + (xScale(d.x)) + "," + (yScale(d.y)) + ")";
+      }).on('mouseover', tip.show).on('mouseout', tip.hide).on('click', showDetails);
+      cScale = d3.scale.linear().domain([0, 100]).range([0, 2 * Math.PI]);
+      arc = d3.svg.arc().innerRadius(0).outerRadius(function(d, i, j) {
+        return categories[j].parentNode.__data__.radius;
+      }).startAngle(function(d) {
+        return cScale(d.start);
+      }).endAngle(function(d) {
+        return cScale(d.end);
+      });
+      categories = node.selectAll("path").data(function(d) {
+        return d.arc;
+      });
+      categories.enter().append("path").attr("d", arc).style("fill", function(d) {
+        return color(d.category);
+      });
       return node.exit().remove();
     };
     updateLinks = function() {
       link = linksG.selectAll(".link").data(curLinksData, function(d) {
         return "" + d.source.id + "_" + d.target.id;
       });
-      link.enter().append("path").attr("class", "link").attr("d", function(d) {
+      link.enter().append("path").attr("from", function(d) {
+        return d.source.id;
+      }).attr("to", function(d) {
+        return d.target.id;
+      }).attr("class", "link").attr("d", function(d) {
         return linkPath(d);
       });
       return link.exit().remove();
@@ -186,7 +197,7 @@
       });
       circleRadius = d3.scale.sqrt().range([9, 17]).domain(degreeExtent);
       data.nodes.forEach(function(n) {
-        var randomnumber;
+        var randomnumber, split;
         if (n.id === 5) {
           n.x = width / 2;
           n.y = height / 2;
@@ -196,7 +207,16 @@
           n.y = randomnumber = Math.floor(Math.random() * height);
           n.fixed = false;
         }
-        return n.radius = circleRadius(n.degree);
+        n.radius = circleRadius(n.degree);
+        n.arc = [];
+        split = 100 / n.category.length;
+        return n.category.forEach(function(cat, i) {
+          return n.arc.push({
+            'category': cat,
+            'start': split * i,
+            'end': split * (i + 1)
+          });
+        });
       });
       nodesMap = mapNodes(data.nodes);
       data.links.forEach(function(l) {

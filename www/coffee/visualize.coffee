@@ -41,7 +41,7 @@ Network = () ->
   # setup tooltips
   tip = d3.tip()
     .attr('class', 'd3-tip')
-    .html((d) -> d.name)
+    .html((d) -> "#{d.name}")
     .direction('n')
     .offset((d) -> [-(d.radius / 2 + 3), 0])
 
@@ -183,26 +183,38 @@ Network = () ->
       .attr("d", (d) -> linkPath(d))
 
     node
-      .attr("cx", (d) -> xScale(d.x))
-      .attr("cy", (d) -> yScale(d.y))
+      .attr("transform", (d) -> "translate(#{xScale(d.x)},#{yScale(d.y)})")
+      # .attr("cx", (d) -> xScale(d.x))
+      # .attr("cy", (d) -> yScale(d.y))
 
     node.each(collide(0.5))     # collision detection
 
   # enter/exit display for nodes
   updateNodes = () ->
-    node = nodesG.selectAll("circle.node")
+    node = nodesG.selectAll(".node")
       .data(curNodesData, (d) -> d.id)
 
-    node.enter().append("circle")
+    node.enter().append("g")
       .attr("class", "node")
-      .attr("cx", (d) -> xScale(d.x))
-      .attr("cy", (d) -> yScale(d.y))
-      .attr("r", (d) -> d.radius)
-      .style("fill", (d) -> color(d.category[0]))
-      .call(drag)
+      .attr("transform", (d) -> "translate(#{xScale(d.x)},#{yScale(d.y)})")
+      # .call(drag)
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
       .on('click', showDetails)
+
+    cScale = d3.scale.linear().domain([0, 100]).range([0, 2 * Math.PI])
+    arc = d3.svg.arc()
+      .innerRadius(0)
+      .outerRadius((d,i,j) -> categories[j].parentNode.__data__.radius)   # j is the current selection group, used to reference the selection array
+      .startAngle((d) -> cScale(d.start))
+      .endAngle((d) -> cScale(d.end))
+
+    categories = node.selectAll("path")
+      .data((d) -> d.arc)
+
+    categories.enter().append("path")
+      .attr("d", arc)
+      .style("fill", (d) -> color(d.category))
 
     node.exit().remove()
 
@@ -211,6 +223,8 @@ Network = () ->
     link = linksG.selectAll(".link")
       .data(curLinksData, (d) -> "#{d.source.id}_#{d.target.id}")
     link.enter().append("path")
+      .attr("from", (d) -> d.source.id)
+      .attr("to", (d) -> d.target.id)
       .attr("class", "link")
       .attr("d", (d) -> linkPath(d))
 
@@ -300,6 +314,13 @@ Network = () ->
 
       # add radius to the node so we can use it later
       n.radius = circleRadius(n.degree)
+      # add calculations for the arcs, displaying the categories
+      n.arc = []
+      split = 100 / n.category.length
+      n.category.forEach (cat, i) ->
+        n.arc.push({'category': cat, 'start': split*i, 'end': split*(i+1)})
+
+
 
     # id's -> node objects
     nodesMap = mapNodes(data.nodes)
@@ -501,7 +522,7 @@ Network = () ->
   collide = (alpha) ->
     quadtree = d3.geom.quadtree(curNodesData)
     return (d) ->
-      rb = 2* d.radius + 10      # min of 3px padding between nodes
+      rb = 2* d.radius + 10      # min of 10px padding between nodes
       nx1 = d.x - rb
       nx2 = d.x + rb
       ny1 = d.y - rb
