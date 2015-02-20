@@ -446,6 +446,9 @@ Network = () ->
         )
         .text((n) -> n.name)
         .on('click', (n) -> zoomToNode(n))
+        # .on('mouseover', (n) -> d3.select(n).classed('selected': true) )
+        # .on('mouseout', (n) -> d3.select(n).classed('selected': false) )
+
     
     connected.append("h3").text("Wird beeinflusst von..")
     incoming = connected.append("div").attr("class", "incoming")
@@ -465,6 +468,8 @@ Network = () ->
         )
         .text((n) -> n.name)
         .on('click', (n) -> zoomToNode(n))
+        # .on('mouseover', (n) -> d3.select(n).classed('selected': true) )
+        # .on('mouseout', (n) -> d3.select(n).classed('selected': false) )
 
 
   # click on background function
