@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "homepage": "https://github.com/shoetten/biovis",
   "authors": [
-    "Simon <simon@hoetten.org>"
+    "Simon <simon [ät] hoetten.org>"
   ],
   "description": "Visualizing a causal loop diagram, created during a participatory modeling project.",
   "keywords": [
