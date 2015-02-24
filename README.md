@@ -5,24 +5,13 @@ Analyse und Visualisierung von causal-loop Diagrammen.
 ToDo
 ------------
 - +/- arrow types
-- node category colors
 - feedback loop visualization
-- filters (by category and degree of consent)
-- meta info of node in sidebar
-	add node description
-	- add type of influence in list (+/-)
-	- tooltip on hover (e.g. "Mehr x verursacht weniger y")
 - zoom to node
 - [clustered force layout](http://bl.ocks.org/mbostock/7881887)?
 
-Ideen
+Credits
 ------------
 - [d3.js](http://d3js.org/)
+- [d3-tip](http://labratrevenge.com/d3-tip/)
 - [networkx](https://networkx.github.io/)
-- Node-Kategorien durch Farben visualisiert
-- Bei Klick auf Node
-	- Feedbackloops durch Einfärbung der Kanten (Berechnung nach D.B. Johnson, Implementierung in [networkx](https://networkx.github.io/documentation/latest/reference/generated/networkx.algorithms.cycles.simple_cycles.html))
-	- Anzeige der Zentralität (Degree)
-	- Wahlweise Anzeige der Nachbarknoten
-- Größe der Nodes über Zentralität
-- Konsensindikator eines Feedbackloops
+- [jQuery](http://jquery.com/)
